@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scrum.IT</title>
+
+    <!-- jQuery is not required -->
+    <!-- <script src="//code.jquery.com/jquery-1.11.0.min.js"></script> -->
+
+    <!-- angular is the only dependency! -->
+    <script src="libs/angular.js"></script>
+    <script src="libs/angular-drag-and-drop-lists.min.js"></script>
+    <script src="libs/angular-route.min.js"></script>
+    <script src="libs/angular-animate.js"></script>
+    <script src="libs/ui-bootstrap-tpls-1.3.2.js"></script>
+    <!-- Stuff that is only required in this demo (no need to copy) -->
+    <link rel="stylesheet" href="libs/bootstrap.min.css">
+    <link rel="stylesheet" href="libs/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body ng-app="demo">
+    <div ng-view></div>
+
+    <script src="controller/routes/route.js"></script>
+    <script src="controller/kanban.js"></script>
+    <script src="controller/dialog.js"></script>
+</body>
