@@ -3,9 +3,7 @@ var app = express();
 var fs = require("fs");
 
 app.get('/listUsers', function (req, res) {
-	console.log(__dirname);
    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
-       console.log( err );
        res.end( data );
    });
 })

@@ -1,11 +1,10 @@
 // angular.module('demo', ['ngAnimate', 'ui.bootstrap']);  
 angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, $log) {
-
-  $scope.items = ['item1', 'item2', 'item3'];
+  $scope.dialog = {};
   $scope.selected = null;
   $scope.animationsEnabled = true;
 
-  $scope.open = function (selected,size) {
+  $scope.open = function (size) {
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: 'view/dialog.html',
@@ -13,8 +12,9 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
       size: size,
       resolve: {
         items: function () {
-          $scope.selected = selected;
-          return $scope.selected;
+          $scope.dialog.selected = $scope.models.selected;
+          $scope.dialog.dataAmazon = $scope.dataAmazon;
+          return $scope.dialog;
         }
       }
     });
@@ -36,10 +36,10 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
 // It is not the same as the $uibModal service used above.
 
 angular.module('demo').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
-  $scope.selected = items;
+  $scope.dialog = items;
 
   $scope.ok = function () {
-    $uibModalInstance.close($scope.selected.item);
+    $uibModalInstance.close($scope.dialog.selected.item);
   };
 
   $scope.cancel = function () {

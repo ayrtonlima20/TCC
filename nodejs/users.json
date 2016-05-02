@@ -1,7 +1,7 @@
 {
-	[
-		{name: "Ayrton"},
-		{name: "Diego"},
-		{name: "Marcelo"}
+	"atividades":[
+		{"name": "Ayrton"},
+		{"name": "Diego"},
+		{"name": "Marcelo"}
 	]
 }

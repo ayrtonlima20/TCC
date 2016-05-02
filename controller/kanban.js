@@ -1,4 +1,6 @@
-angular.module("demo").controller("KanbanController", function($scope) {
+angular.module("demo").controller("KanbanController", function($scope, forecast) {
+
+    $scope.dataAmazon = null;   
     $scope.models = {
         selected: null,
         lists: {
@@ -29,7 +31,13 @@ angular.module("demo").controller("KanbanController", function($scope) {
     //     $scope.models.lists.Doing.push({label: "Item B " + i});
     // }
     // Model to JSON for demo purpose
-    $scope.$watch('models', function(model) {
-        $scope.modelAsJson = angular.toJson(model, true);
-    }, true);
+    // $scope.$watch('models', function(model) {
+    //     $scope.modelAsJson = angular.toJson(model, true);
+    // }, true);
+    forecast.success(function(data) {
+        $scope.dataAmazon = data;
+        $scope.$watch('models', function(model) {
+            $scope.modelAsJson = angular.toJson($scope.dataAmazon, true);
+        }, true);
+    });
 });
