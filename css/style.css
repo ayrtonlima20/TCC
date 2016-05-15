@@ -33,7 +33,7 @@
  */
 .simpleDemo ul[dnd-list] .dndPlaceholder {
     display: block;
-    background-color: #ddd;
+    background-color: #EEE;
     min-height: 42px;
 }
 
@@ -46,18 +46,168 @@
  */
 .simpleDemo ul[dnd-list] li {
     background-color: #fff;
-    border: 1px solid #ddd;
-    border-top-right-radius: 4px;
-    border-top-left-radius: 4px;
+    border: 1px solid #DDD;
+/*    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;*/
+    border-radius: 10px;
     display: block;
-    padding: 10px 15px;
-    margin-bottom: -1px;
+    /*padding: 10px 15px;*/
+    /*margin-bottom: -1px;*/
 }
 
 /**
  * Show selected elements in green
  */
-.simpleDemo ul[dnd-list] li.selected {
+/*.simpleDemo ul[dnd-list] li.selected {
     background-color: #dff0d8;
     color: #3c763d;
+}*/
+
+ul[dnd-list] li:hover{
+    background-color: #DDD;
+}
+ul[dnd-list] li:hover .kanban-gear{
+    background-color: #AAA;
+}
+ul[dnd-list] li:hover .kanban-header{
+    border-bottom: 1px solid #AAA;  
+}
+ul[dnd-list] li:hover .kanban-footer{
+    border-top: 1px solid #AAA;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+/*KANBAN CUSTOMIZED STYLE*/
+.kanban-square{
+    padding: 0px 2.5px 0px 2.5px;
+}
+.kanban-act-square{
+    height: 95px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: grab;
+    position: relative;
+}
+.flag{  
+    width: 100%;
+    border-bottom: 1px solid #DDD; 
+    border-top-left-radius: 10px; 
+    border-top-right-radius: 10px;
+    padding-top: 5px;
+}
+.flag.flag-success{
+    background-color: #00D900;
+}
+.flag .flag-warning{
+    background-color: #FFFF66;
+}
+.flag .flag-error{
+    background-color: #FF0000;
+}
+.flag .flag-blocked{
+    background-color: #ddd;
+}
+.kanban-text{
+    padding-left: 5px;
+    margin-top: 3px;
+    display: inline-block;
+    font-family: Calibri;
+    width: 100%;
+    word-wrap:break-word;
+}
+.kanban-text.kanban-text-id{
+    font-weight: 700;
+    font-size: 15px;
+}
+.kanban-text.kanban-text-main{
+    font-weight: 400;
+    font-size: 14px;
+}
+.kanban-text.kanban-text-time{
+    font-weight: 100;
+    font-size: 14px;
+}
+.kanban-pic{
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    height: 30px;
+    width: 30px;
+    background-color: black;
+}
+.kanban-gear{
+    position: absolute;
+    right: 2px;
+    height: 19px;
+    width: 19px;
+    padding: 3px 2.5px 3px 2.5px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+.kanban{
+    padding: 0px;
+    margin: 10px;
+    border: 1px solid #222;
+    padding-top: 15px;
+}
+.kanban-header{
+    border-bottom: 1px solid #DDD;     
+    padding: 0px;
+}
+.kanban-footer{
+    border-top: 1px solid #DDD;
+    padding-left: 0px; 
+    bottom: 0px;
+    height: 40px;
+    width: 100%;
+}
+.kanban-content{
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+.sprint-text{
+    font-family: Calibri;
+    word-wrap:break-word;
+}
+.sprint-text.sprint-description{
+    border: 1px solid #DDD;  
+    border-radius: 5px; 
+    display: inline-block;
+}
+.sprint-div-date{
+    right: 0px;
+}
+.sprint-input-date{
+    display: inline-block;
+    width: 95px;
+}
+.sprint-header{
+    padding-left: 0px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.sprint-div-description{
+    padding-left: 0px;  
+    display: block; 
+}
+.sprint-label{
+    display: inline-block;
+}
+
+/*DIALOG ATIVIDADE*/
+.dialog-title{
+    word-wrap:break-word;
+    font-size: 18px;
+}
+.dialog-div-input{
+    padding: 0px;
 }

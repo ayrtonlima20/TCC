@@ -4,15 +4,16 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
   $scope.selected = null;
   $scope.animationsEnabled = true;
 
-  $scope.open = function (size) {
+  $scope.open = function (size, item) {
     var modalInstance = $uibModal.open({
-      animation: $scope.animationsEnabled,
+      animation: true,
       templateUrl: 'view/dialog.html',
       controller: 'ModalInstanceCtrl',
       size: size,
       resolve: {
         items: function () {
-          $scope.dialog.selected = $scope.models.selected;
+          // $scope.dialog.selected = $scope.models.selected;
+          $scope.dialog.selected = item;
           $scope.dialog.dataAmazon = $scope.dataAmazon;
           return $scope.dialog;
         }

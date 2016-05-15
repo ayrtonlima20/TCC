@@ -37,7 +37,8 @@ angular.module("demo").controller("KanbanController", function($scope, forecast)
     forecast.success(function(data) {
         $scope.dataAmazon = data;
         $scope.$watch('models', function(model) {
-            $scope.modelAsJson = angular.toJson($scope.dataAmazon, true);
+            // $scope.modelAsJson = angular.toJson($scope.dataAmazon, true);
+            $scope.modelAsJson = angular.toJson($scope.models, true);
         }, true);
     });
 });

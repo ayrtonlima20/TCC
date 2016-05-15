@@ -1,9 +1,28 @@
-<h1>Demo: Kanban</h1>
+<!-- <div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Kanban</h1>
+    </div>
+    <!-/.col-lg-12 ->
+</div>   -->
+<div class="row sprint-header" ng-controller="DateParserCtrl">
+        <div class="sprint-div-description col-md-6">
+            <label class="sprint-label col-md-2">Descrição: </label>
+            <div class="sprint-text sprint-description col-md-8">CNZHPOIFJSAÓDJAOSZIHDOSAIZDJXÃSZDHXOASLKHDXOASDJOAISZJDASPOLJDASZDJAPSOhdASOIJKDÇA</div>
+        </div>
+        <div class="col-md-3">
+            <label class="sprint-label col-md-6">Data Inicial:</label>
+            <pre class="sprint-text sprint-input-date col-md-6">13/05/2016</pre>
+        </div>
+        <div class="col-md-3">
+            <label class="sprint-label col-md-6">Data Final:</label>
+            <pre class="sprint-text sprint-input-date col-md-6">20/08/1995</pre>
+        </div>
+</div>
 <div class="simpleDemo row">
     <div class="col-md-12">
         <div class="row">
-            <div ng-repeat="(listName, list) in models.lists" class="col-md-3">
-                <div class="panel panel-info">
+            <div ng-repeat="(listName, list) in models.lists" class="kanban-square col-md-3">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">{{listName}}</h3>
                     </div>
@@ -13,7 +32,7 @@
         </div>
         <div view-source="simple"></div>
     </div>
-    <div class="col-md-12">
+  <!--   <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Generated Model</h3>
@@ -22,5 +41,5 @@
                 <pre class="code">{{modelAsJson}}</pre>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>

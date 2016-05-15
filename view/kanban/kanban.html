@@ -1,6 +1,6 @@
 <!-- The dnd-list directive allows to drop elements into it.
      The dropped data will be added to the referenced list -->
-<ul dnd-list="list">
+<ul dnd-list="list" >
     <!-- The dnd-draggable directive makes an element draggable and will
          transfer the object that was assigned to it. If an element was
          dragged away, you have to remove it from the original list
@@ -9,10 +9,22 @@
         ng-repeat="item in list"
         dnd-draggable="item"
         dnd-moved="list.splice($index, 1)"
-        dnd-effect-allowed="move"
         dnd-selected="models.selected = item"
+        dnd-effect-allowed="move"
         ng-class="{'selected': models.selected === item}"
-        ng-dblclick="open()">
-        {{item.label}}
+        class="kanban-act-square noselect">
+        <!-- dnd-selected="models.selected = item" -->
+            <div class="kanban-content">
+                <div class="flag flag-success"></div>
+                <div class="kanban-header col-md-12 col-xs-12">
+                    <span class="kanban-text kanban-text-id col-md-6 col-sm-6">ID:1234</span>
+                    <div ng-click="open(null, item)" class="kanban-gear glyphicon glyphicon-cog col-md-6 col-sm-6"></div>
+                </div>
+                <span class="kanban-text kanban-text-main col-md-12">{{item.label}}</span>
+                <div class="kanban-footer col-md-12 col-xs-12">
+                    <span class="kanban-text kanban-text-time col-md-3">8hrs</span>
+                    <div class="kanban-pic col-md-9"></div>
+                </div>
+            </div>
     </li>
 </ul>

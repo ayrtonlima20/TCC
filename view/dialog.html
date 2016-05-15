@@ -1,16 +1,75 @@
 <div class="modal-header">
-    <h3 class="modal-title">Im a modal!</h3>
+    <h3 class="modal-title dialog-title">{{dialog.selected.label}}</h3>
 </div>
 <div class="modal-body">
-    <ul>
-        <!-- <li ng-repeat="item in items">
-            <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
-        </li> -->
-    </ul>
-    Selected: <b>{{ dialog.selected.label }}</b>
-    Data:	  <b>{{ dialog.dataAmazon.city_name }}</b>
+    <div class="row" ng-controller="DatepickerCtrl">
+        <div class="col-md-6">
+            <label class="col-md-5">Data Inicio:</label>
+            <p class="input-group">
+                <input type="text" class="form-control col-md-4" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </p>
+        </div>
+        <div class="col-md-6">
+            <label class="col-md-5">Data Fim:</label>
+            <p class="input-group">
+                <input type="text" class="form-control col-md-4" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label class="col-md-5">Participante:</label>
+            <div class="dialog-div-input col-md-6">
+                <select class="form-control" ng-model="hstep" ng-options="opt for opt in options.hstep"></select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label class="col-md-5">Prioridade:</label>
+            <div class="dialog-div-input col-md-6">
+                <select class="form-control dialog-input" ng-model="hstep" ng-options="opt for opt in options.hstep"></select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label class="col-md-5">Estimativa:</label>
+            <div class="dialog-div-input col-md-6">
+                <select class="form-control" ng-model="hstep" ng-options="opt for opt in options.hstep"></select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label class="col-md-5">História:</label>
+            <div class="dialog-div-input col-md-6">
+                <select class="form-control dialog-input" ng-model="hstep" ng-options="opt for opt in options.hstep"></select>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <button class="btn btn-success" type="button" >Bloquear</button>
+        </div>
+        <label>Descrição</label>
+        <textarea class="form-control col-md-12">sdas</textarea>
+    </div>
+
+<!--     <div class="form-group">
+        <label>Selected:</label> 
+        <input type="text" class="form-control" required ng-model="dialog.selected.label">
+        </input>
+    </div>
+    <div class="form-group">
+        <label>Cidade:</label> 
+        <input type="text" class="form-control" required ng-model="dialog.dataAmazon.city_name">
+        </input>
+    </div> -->
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-danger col-md-2" type="button" ng-click="cancel()">Excluir</button>
+    <button class="btn btn-primary col-md-3  " type="button" ng-click="cancel()">Teste de Aceitação</button>
+    <button class="btn btn-success col-md-3" type="button" ng-click="ok()">Salvar</button>
+    <button class="btn btn-default col-md-3" type="button" ng-click="cancel()">Cancel</button>
 </div>

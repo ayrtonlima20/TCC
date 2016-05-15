@@ -1,6 +1,10 @@
-angular.module("demo", ["ngRoute", "dndLists", "ngAnimate", "ui.bootstrap"])
+angular.module("demo", ["ngRoute", "dndLists", "ngAnimate", "ui.bootstrap", "uiSortableConfig", "$parse"])
     .config(function($routeProvider) {
         $routeProvider
+            .when('/home', {
+                templateUrl:'view/home.html',
+                controller: 'HomeController'
+            })
             .when('/kanban', {
                 templateUrl: 'view/kanban/kanban-frame.html',
                 controller: 'KanbanController'
@@ -9,8 +13,12 @@ angular.module("demo", ["ngRoute", "dndLists", "ngAnimate", "ui.bootstrap"])
                 templateUrl: 'view/dialog.html',
                 controller: 'ModalDemoCtrl'
             })
-            .when('/',{redirectTo: '/kanban'})
-            .otherwise({redirectTo: '/kanban'});
+            .when('/fillSprint', {
+                templateUrl: 'view/fillSprint.html',
+                controller: 'FillSprintCtrl'
+            })
+            .when('/',{redirectTo: '/home'})
+            .otherwise({redirectTo: '/home'});
     })
     .directive('navigation', function($rootScope, $location) {
         return {
