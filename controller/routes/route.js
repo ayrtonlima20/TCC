@@ -1,4 +1,4 @@
-angular.module("demo", ["ngRoute", "dndLists", "ngAnimate", "ui.bootstrap", "uiSortableConfig", "$parse"])
+angular.module("demo", ["ngRoute", "dndLists", "ngAnimate", "ui.bootstrap"])
     .config(function($routeProvider) {
         $routeProvider
             .when('/home', {

@@ -1,0 +1,18 @@
+{
+		"lines":[
+			{
+				"name":"Trident", 
+				"endereco":"mudou",
+				"telefone":"12346"
+			},{
+				"name":"Ayrton", 
+				"endereco":"endereçador",
+				"telefone":"321"
+			},{
+				"name":"Bla", 
+				"endereco":"endereçado",
+				"telefone":"456"
+			},
+		]
+	};
+}
