@@ -6,13 +6,12 @@
     dnd-effect-allowed="move"
     ng-class="{'selected': models.selected === item}"
     class="kanban-act-square noselect"> -->
-
 <div class="row" ng-controller="FillSprintCtrl">
 	<div ng-repeat="(tableName, tables) in table.historias"  
 		class="col-lg-6">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				DataTables Advanced Tables
+				{{tableName}}
 			</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
@@ -23,7 +22,7 @@
 								<th>Nome</th>
 								<th>Prioridade</th>
 								<th>Esforço</th>
-								<th ng-if="tableName === 'sprintBacklog'">Atividades</th>
+								<th ng-if="tableName === 'SprintBacklog'">Atividades</th>
 							</tr>
 						</thead>
 						<tbody class="noselect" 
@@ -38,9 +37,10 @@
 								<td>{{line.name}}</td>
 								<td>{{line.endereco}}</td>
 								<td>{{line.telefone}}</td>
-								<td ng-if="tableName === 'sprintBacklog'" 
-									class="fa fa-plus-circle"
-									ng-click="open('lg', line)"></td>
+								<td ng-controller="TabsActCtrl"
+									ng-if="tableName === 'SprintBacklog'" 
+									class="act-open fa fa-plus-circle"
+									ng-click="openDialogAtividade('lg', line)"></td>
 							</tr>
 						</tbody>
 						<!-- <tbody dnd-list="list">
