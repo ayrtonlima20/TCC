@@ -8,15 +8,6 @@ angular.module('demo').controller('TabsActCtrl', function ($scope, $window,  $ui
             estimativa:"sad",
             descricao:"asda"
         } 
-    },{ 
-        title:'Dynamic Title 2', 
-        content: {
-            nome:"bvb",
-            participante:"bvb",
-            prioridade:"bv",
-            estimativa:"bvb",
-            descricao:"bvbv"
-        } 
     }];
 
     $scope.addAtividade = function() {

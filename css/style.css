@@ -83,6 +83,52 @@ ul[dnd-list] li:hover .kanban-footer{
     border-top: 1px solid #AAA;
 }
 
+
+/*DND-LIST TR-TD*/
+/**
+ * For the correct positioning of the placeholder element, the dnd-list and
+ * it's children must have position: relative
+ */
+tbody[dnd-list],
+tbody[dnd-list] > tr {
+    position: relative;
+}
+
+/**
+ * The dnd-list should always have a min-height,
+ * otherwise you can't drop to it once it's empty
+ */
+tbody[dnd-list] {
+    min-height: 42px;
+    padding-left: 0px;
+}
+tr{
+    min-height: 10px;
+}
+td{
+    min-height: 10px;
+}
+
+/**
+ * The dndDraggingSource class will be applied to
+ * the source element of a drag operation. It makes
+ * sense to hide it to give the user the feeling
+ * that he's actually moving it.
+ */
+tbody[dnd-list] .dndDraggingSource {
+    display: none;
+}
+
+/**
+ * An element with .dndPlaceholder class will be
+ * added to the dnd-list while the user is dragging
+ * over it.
+ */
+tbody[dnd-list] .dndPlaceholder {
+    display: block;
+    min-height: 42px;
+}
+
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none;   /* Chrome/Safari/Opera */
@@ -113,13 +159,13 @@ ul[dnd-list] li:hover .kanban-footer{
 .flag.flag-success{
     background-color: #00D900;
 }
-.flag .flag-warning{
+.flag.flag-warning{
     background-color: #FFFF66;
 }
-.flag .flag-error{
+.flag.flag-error{
     background-color: #FF0000;
 }
-.flag .flag-blocked{
+.flag.flag-blocked{
     background-color: #ddd;
 }
 .kanban-text{
@@ -222,10 +268,34 @@ ul[dnd-list] li:hover .kanban-footer{
 /*tela adicionar sprint*/
 .act-open{
     display: block;
+    cursor: pointer;
 }
 .dialog-act-descr{
     min-height: 100px;
 }
 form.tab-form-demo .tab-pane {
     margin: 20px 20px;
+}
+
+/*botões*/
+.button-icon{
+    cursor: pointer;
+}
+.button-div-icon:hover{
+    display: block;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #DDD;
+}
+.button-div-icon{
+    float: right;
+    padding-right: 0px;
+}
+.button-location{
+    float: inherit;
+}
+
+/*ROW DEFINITION*/
+.row.row-space{
+    margin-bottom: 10px;
 }

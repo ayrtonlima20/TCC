@@ -15,14 +15,14 @@
         class="kanban-act-square noselect">
         <!-- dnd-selected="models.selected = item" -->
             <div class="kanban-content">
-                <div class="flag flag-success"></div>
+                <div class="flag" ng-class="item.flag === 'ok'?'flag-success':(item.flag === 'warn'?'flag-warning':(item.flag === 'error'?'flag-error':null))"></div>
                 <div class="kanban-header col-md-12 col-xs-12">
-                    <span class="kanban-text kanban-text-id col-md-6 col-sm-6">ID:1234</span>
-                    <div ng-click="open('lg', item)" class="kanban-gear glyphicon glyphicon-cog col-md-6 col-sm-6"></div>
+                    <span class="kanban-text kanban-text-id col-md-6 col-sm-6">ID: {{item.idAtividade}}</span>
+                    <div ng-click="open(null, item)" class="kanban-gear glyphicon glyphicon-cog col-md-6 col-sm-6"></div>
                 </div>
-                <span class="kanban-text kanban-text-main col-md-12">{{item.label}}</span>
+                <span class="kanban-text kanban-text-main col-md-12">{{item.nome}}</span>
                 <div class="kanban-footer col-md-12 col-xs-12">
-                    <span class="kanban-text kanban-text-time col-md-3">8hrs</span>
+                    <span class="kanban-text kanban-text-time col-md-3">{{item.duracao}}h</span>
                     <div class="kanban-pic col-md-9"></div>
                 </div>
             </div>

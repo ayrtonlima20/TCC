@@ -1,12 +1,14 @@
+
 <div class="modal-header">
-    <h3 class="modal-title dialog-title">{{dialog.selected.label}}</h3>
+    <button type="button" ng-click="cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title dialog-title">{{dialog.selected.nome}}</h3>
 </div>
 <div class="modal-body">
     <div class="row" ng-controller="DatepickerCtrl">
         <div class="col-md-6">
             <label class="col-md-5">Data Inicio:</label>
             <p class="input-group">
-                <input type="text" class="form-control col-md-4" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                <input type="text" class="form-control col-md-4" uib-datepicker-popup="{{format}}" ng-model="dialog.dataInicio" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
@@ -15,45 +17,73 @@
         <div class="col-md-6">
             <label class="col-md-5">Data Fim:</label>
             <p class="input-group">
-                <input type="text" class="form-control col-md-4" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                <input type="text" class="form-control col-md-4" uib-datepicker-popup="{{format}}" ng-model="dialog.dataFim" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
             </p>
         </div>
     </div>
-    <div class="row">
+    <div class="row row-space">
         <div class="col-md-6">
             <label class="col-md-5">Participante:</label>
             <div class="dialog-div-input col-md-6">
-                <select class="form-control" ng-model="hstep" ng-options="opt for opt in options.hstep"></select>
+                <select class="form-control" ng-model="dialog.participantes.selected" ng-options="opt.nome for opt in dialog.participantes.options"></select>
             </div>
         </div>
         <div class="col-md-6">
             <label class="col-md-5">Prioridade:</label>
             <div class="dialog-div-input col-md-6">
-                <select class="form-control dialog-input" ng-model="hstep" ng-options="opt for opt in options.hstep"></select>
+                <select class="form-control dialog-input" ng-model="dialog.prioridade.selected" ng-options="opt for opt in dialog.prioridade.options"></select>
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row row-space">
         <div class="col-md-6">
             <label class="col-md-5">Estimativa:</label>
             <div class="dialog-div-input col-md-6">
-                <select class="form-control" ng-model="hstep" ng-options="opt for opt in options.hstep"></select>
+                <select class="form-control" ng-model="dialog.estimativa.selected" ng-options="opt for opt in dialog.estimativa.options"></select>
             </div>
         </div>
         <div class="col-md-6">
             <label class="col-md-5">História:</label>
             <div class="dialog-div-input col-md-6">
-                <select class="form-control dialog-input" ng-model="hstep" ng-options="opt for opt in options.hstep"></select>
+                <select class="form-control dialog-input" ng-model="dialog.historias.selected" ng-options="opt.nome for opt in dialog.historias.options"></select>
             </div>
         </div>
-        <div class="col-md-12">
-            <button class="btn btn-success" type="button" >Bloquear</button>
+    </div>
+    <div class="row row-space noselect">
+        <div class="col-md-5 button-div-icon" >
+            <span class="col-md-10 button-icon" ng-click="cancel()">Bloquear Atividade</span>
+            <div class="fa fa-th-list button-icon"  ng-click="cancel()"></div>
         </div>
-        <label>Descrição</label>
-        <textarea class="form-control col-md-12">sdas</textarea>
+    </div>
+    <div class="row row-space noselect">
+        <div class="col-md-5 button-div-icon">
+            <span class="col-md-10 button-icon" ng-click="cancel()">Teste de Aceitação</span>
+            <div class="fa fa-th-list button-icon" ng-click="cancel()"></div>
+        </div>
+    </div>
+    <div class="row">
+        <label class="col-md-12">Descrição {{dialog.deleted}}</label>
+        <textarea class="form-control col-md-12" ng-model="dialog.descricao">{{dialog.descricao}}</textarea>
+    </div>
+    <div id="test2" class="modal fade" role="dialog" style="z-index: 1600;display:inline-table">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title dialog-title">Confirmação</h3>
+                </div>
+                <div class="modal-body">
+                    <label>Deseja excluir o registro?{{dialog.deleted}}</label> 
+               <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="delete()" data-dismiss="modal">Sim</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                </div>
+                </div>      
+            </div>
+        </div>
     </div>
 
 <!--     <div class="form-group">
@@ -68,8 +98,6 @@
     </div> -->
 </div>
 <div class="modal-footer">
-    <button class="btn btn-danger col-md-2" type="button" ng-click="cancel()">Excluir</button>
-    <button class="btn btn-primary col-md-3  " type="button" ng-click="cancel()">Teste de Aceitação</button>
-    <button class="btn btn-success col-md-3" type="button" ng-click="ok()">Salvar</button>
-    <button class="btn btn-default col-md-3" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success button-location col-md-3" type="button" ng-click="save(dialog)">Salvar</button> 
+    <button class="btn btn-danger button-location col-md-3" type="button" data-toggle="modal" data-target="#test2">Excluir</button>
 </div>

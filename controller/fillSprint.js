@@ -1,4 +1,4 @@
-angular.module("demo").controller("FillSprintCtrl", function($scope, forecast) {
+angular.module("demo").controller("FillSprintCtrl", function($scope) {
 	
 	$scope.table = {
 		selected:null,

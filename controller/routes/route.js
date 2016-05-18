@@ -1,4 +1,4 @@
-angular.module("demo", ["ngRoute", "dndLists", "ngAnimate", "ui.bootstrap"])
+angular.module("demo", ["ngRoute", "dndLists", "ngAnimate", "ui.bootstrap", 'angular-confirm'])
     .config(function($routeProvider) {
         $routeProvider
             .when('/home', {
