@@ -1,0 +1,52 @@
+-Variáveis Sprint
+horaTrabInicio = 09:00h
+horaTrabFim    = 18:00h
+-Variáveis Atividades
+dataInicioAtiv = 19-05-2016
+horaInicioAtiv = 09:00h
+duracaoAtiv    = 4h
+dataFimAtiv    = ???
+horaFimAtiv	   = ???
+
+--Calcular hora e data fim atividade
+if(horaInicioAtiv + duracaoAtiv > horaTrabFim){
+	//determinação hora final atividade
+	var horaAux = (horaInicioAtiv + duracaoAtiv - horaTrabFim);
+	horaFimAtiv = horaInicioAtiv + horaAux;
+	//determinação data final atividade
+	dataFimAtiv = dataInicioAtiv + 1;
+}else{
+	dataFimAtiv = dataInicioAtiv;
+	horaFimAtiv = horaInicioAtiv + duracaoAtiv; 
+}
+
+--Calcular duração real da atividade
+var duracaoTotAtiv;
+if(dataInicioAtiv < dataFimAtiv){
+	var diasTrab = dataFimAtiv - dataInicioAtiv;
+	var count = 1;
+	duracaoTotAtiv = horaInicioAtiv - horaTrabFim;	
+
+	while(count < diasTrab){
+		if((count + 1) === diasTrab){
+			duracaoTotAtiv += horaFimAtiv - horaTrabInicio;
+		}else{
+			duracaoTotAtiv += horaTrabFim - horaTrabInicio;
+		}
+		count++; 
+	}
+}else{
+	duracaoTotAtiv = horaFimAtiv - horaInicioAtiv;
+}
+
+--Calcular flag Kanban
+var flag;
+if(duracaoTotAtiv > duracaoAtiv){
+	flag = "red";
+}else{
+	if( ( 100 - ((100 * duracaoTotAtiv) / 4)) < 25 ){
+		flag = "yellow"
+	}else{
+		flag = "green";
+	}
+}

@@ -36,9 +36,6 @@ models.sequelize.sync().then(function() {
 							  "		INNER JOIN historias as hist ON hist.idHistoria = act.idHistoria" +
 							  "		INNER JOIN usuarios as user ON user.idUsuario = act.idParticipante",function(err,data){
 						if(err) throw err;
-						// console.log('Data received from Db:\n');
-						// console.log(JSON.stringify(data));
-						var database = data;
 						var models = {
 					        selected: null,
 					        lists: {
@@ -49,32 +46,34 @@ models.sequelize.sync().then(function() {
 					        }
 					    };
 
-						for (var i = 0; i < database.length; i++) {
+						for (var i = 0; i < data.length; i++) {
 							// muda o formato de saida da data
-							dataInicio = new Date(database[i].dataInicio);
-							database[i].dataInicio = getDateFormatDDMMYY(dataInicio);
+							dataInicio = new Date(data[i].dataInicio);
+							data[i].dataInicio = getDateFormatDDMMYY(dataInicio);
+							data[i].horaInicio = getTimeFormatHHMMSS(dataInicio);
 
-							dataFim = new Date(database[i].dataFim);
-							database[i].dataFim = getDateFormatDDMMYY(dataFim);
+							dataFim = new Date(data[i].dataFim);
+							data[i].dataFim = getDateFormatDDMMYY(dataFim);
+							data[i].horaFim = getTimeFormatHHMMSS(dataFim);
 							// if (dataInicio.getTime() < dataFim.getTime()) {
 							// 	console.log(dataFim.getTime() + "-" + dataInicio.getTime());
 							// 	console.log(dataFim.getTime() - dataInicio.getTime());
 							// };
-							// qual cor a atividade tera
 
-
-
+							// qual cor a atividade terá
+							data[i].flag = getFlagKanban("09", "18", dataInicio, dataFim, data[i].duracao);
 							// verifica em qual quadro se enquadrará	
-							if (database[i].status === "ToDo") {
-								models.lists.ToDo.push(database[i]);	
-							}else if (database[i].status === "Doing") {
-								models.lists.Doing.push(database[i]);	
-							}else if (database[i].status === "Testing") {
-								models.lists.Testing.push(database[i]);	
-							}else if (database[i].status === "Done") {
-								models.lists.Done.push(database[i]);	
+							if (data[i].status === "ToDo") {
+								models.lists.ToDo.push(data[i]);	
+							}else if (data[i].status === "Doing") {
+								models.lists.Doing.push(data[i]);	
+							}else if (data[i].status === "Testing") {
+								models.lists.Testing.push(data[i]);	
+							}else if (data[i].status === "Done") {
+								models.lists.Done.push(data[i]);	
 							};
 						};
+
 		   				res.end( JSON.stringify(models) );
 					});
 				};
@@ -189,8 +188,6 @@ models.sequelize.sync().then(function() {
 					console.log('Error connecting to Sprint Database');
 					return;
 				}else{	
-					console.log("teste");
-					console.log(req.body);
 					var idAtividade = req.body.idAtividade === undefined ? 0 : req.body.idAtividade;
 					var idParticipante = req.body.idParticipante === undefined ? 0 : req.body.idParticipante;
 					var idHistoria = req.body.idHistoria === undefined ? 0 : req.body.idHistoria;
@@ -209,6 +206,31 @@ models.sequelize.sync().then(function() {
 								'", descricao = "' + descricao  +
 								'", bloqueada = "' + bloqueada  +
 								'", prioridade = "' + prioridade +
+								'" where idAtividade = ' + idAtividade,function(err,data){
+						if(err) throw err;
+					});
+				};
+
+				// console.log('Connection established');
+			});
+		});
+		app.post('/setStatusAtividade', function (req, res) {
+			console.log("12321");
+			var con = mysql.createConnection({
+				host: "localhost",
+			  	user: "root",
+			  	password: "root",
+				database: "scrum"
+			});
+			con.connect(function(err){
+				if(err){
+					console.log('Error connecting to Sprint Database');
+					return;
+				}else{	
+					var idAtividade = req.body.idAtividade === undefined ? 0 : req.body.idAtividade;
+					var status = req.body.status === undefined ? "" : req.body.status;
+					
+					con.query('update atividades set status = "' + status +
 								'" where idAtividade = ' + idAtividade,function(err,data){
 						if(err) throw err;
 					});
@@ -241,11 +263,23 @@ models.sequelize.sync().then(function() {
 		});
 		function getMes (date) {
 			var month = date.getMonth() + 1;
-    		return month < 10 ? '0' + month : '' + month; // ('' + month) for string result
+    		return month < 10 ? '0' + month : '' + month; 
 		};
 		function getDia (date) {
 			var day = date.getDate();
-    		return day < 10 ? '0' + day : '' + day; // ('' + month) for string result
+    		return day < 10 ? '0' + day : '' + day; 
+		};
+		function getHora (date) {
+			var hour = date.getHours();
+    		return hour < 10 ? '0' + hour : '' + hour; 
+		};
+		function getMinutes (date) {
+			var minutes = date.getMinutes();
+    		return minutes < 10 ? '0' + minutes : '' + minutes; 
+		};
+		function getSeconds (date) {
+			var seconds = date.getSeconds();
+    		return seconds < 10 ? '0' + seconds : '' + seconds; 
 		};
 		function getDateFormatDDMMYY(date){
 			return getDia(date) + '-' + getMes(date) + '-' + date.getFullYear();
@@ -255,8 +289,69 @@ models.sequelize.sync().then(function() {
 			// database[i].year = date.getFullYear();
 		};
 		function getTimeFormatHHMMSS(time) {
-			console.log(time);
-			return time.getHours() + '' + time.getMinutes(); + '' + time.getSeconds();
+			return getHora(time) + ':' + getMinutes(time) + ':' + getSeconds(time);
+		};
+		function getFlagKanban (horaTrabInicio, horaTrabFim, dataInicioAtiv, dataFimAtiv, duracaoAtiv) {
+			// Calcular duração real da atividade
+			var duracaoTotAtiv;
+			var dateAtivDiff = getConvDateDiff(dataInicioAtiv, dataFimAtiv);
+			if(dataInicioAtiv < dataFimAtiv){
+				var diasTrab = dateAtivDiff.days;
+				// console.log(diasTrab);
+				var count = 1;
+				if (dateAtivDiff.days === 0) {
+					duracaoTotAtiv = dataFimAtiv.getHours() - horaTrabInicio;
+				}else{
+					duracaoTotAtiv = horaTrabFim - dataInicioAtiv.getHours() ;	
+				};
+				// console.log(duracaoTotAtiv);
+				while(count < diasTrab){
+					if((count + 1) === diasTrab){
+						duracaoTotAtiv += dataFimAtiv.getHours() - horaTrabInicio;
+					}else{
+						duracaoTotAtiv += horaTrabFim - dataInicioAtiv.getHours();
+					}
+					count++; 
+				}
+				// console.log(duracaoTotAtiv);
+			}else{
+				duracaoTotAtiv = dataFimAtiv.getHours() - dataInicioAtiv.getHours();
+				// console.log(duracaoTotAtiv);
+			};
+			// Calcular flag Kanban
+			if(duracaoTotAtiv > duracaoAtiv){
+				// console.log("red");
+				return "red";
+			}else{
+				if( ( 100 - ((100 * duracaoTotAtiv) / 4)) < 25 ){
+				// console.log("yellow");
+					return "yellow";
+				}else{
+				// console.log("green");
+					return "green";
+				}
+			};
+		};
+		function getConvDateDiff (dataInicio, dataFim) {
+			//Get 1 day in milliseconds
+			// var one_day = 1000 * 60 * 60 * 24;
+			var date = {};
+
+			// Convert both dates to milliseconds
+			var date1_ms = dataInicio.getTime();
+			var date2_ms = dataFim.getTime();
+			// Calculate the difference in milliseconds
+			var difference_ms = date2_ms - date1_ms;
+			//take out milliseconds
+			difference_ms = difference_ms/1000;
+			date.seconds = Math.floor(difference_ms % 60);
+			difference_ms = difference_ms/60; 
+			date.minutes = Math.floor(difference_ms % 60);
+			difference_ms = difference_ms/60; 
+			date.hours = Math.floor(difference_ms % 24);  
+			date.days = Math.floor(difference_ms/24);
+
+			return date;
 		};
  	});
 });

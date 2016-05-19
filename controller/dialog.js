@@ -1,6 +1,7 @@
 // angular.module('demo', ['ngAnimate', 'ui.bootstrap']);  
-angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, $log, participantes, historias) {
+angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, $log, participantes, historias, atividades) {
   $scope.dialog = {};
+  $scope.status = null;
   $scope.selected = null;
   $scope.animationsEnabled = true;
   $scope.estimativa = {
@@ -112,7 +113,23 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
   $scope.toggleAnimation = function () {
     $scope.animationsEnabled = !$scope.animationsEnabled;
   };
+  $scope.setStatus = function(idAtividade,status, listName, item, index){
+    console.log(idAtividade);
+    console.log(status);
+    console.log(listName);
+    console.log(item);
+    console.log(index);
+    // atividades.updateStatus(idAtividade, status).success(function(data) {
+    // });
+  };
+  $scope.changeStatusScope = function(status){
+    $scope.status = status;
+    console.log($scope.status);
+  };
+  $scope.logEvent = function(event){
+    console.log(event);
 
+  };
 });
 
 // Please note that $uibModalInstance represents a modal window (instance) dependency.

@@ -68,23 +68,7 @@
         <label class="col-md-12">Descrição {{dialog.deleted}}</label>
         <textarea class="form-control col-md-12" ng-model="dialog.descricao">{{dialog.descricao}}</textarea>
     </div>
-    <div id="test2" class="modal fade" role="dialog" style="z-index: 1600;display:inline-table">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title dialog-title">Confirmação</h3>
-                </div>
-                <div class="modal-body">
-                    <label>Deseja excluir o registro?{{dialog.deleted}}</label> 
-               <div class="modal-footer">
-                    <button type="button" class="btn btn-default" ng-click="delete()" data-dismiss="modal">Sim</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
-                </div>
-                </div>      
-            </div>
-        </div>
-    </div>
+
 
 <!--     <div class="form-group">
         <label>Selected:</label> 
@@ -100,4 +84,21 @@
 <div class="modal-footer">
     <button class="btn btn-success button-location col-md-3" type="button" ng-click="save(dialog)">Salvar</button> 
     <button class="btn btn-danger button-location col-md-3" type="button" data-toggle="modal" data-target="#test2">Excluir</button>
+</div>
+<div id="test2" class="modal fade col-md-12" role="dialog" style="z-index: 1600;display:inline-table">
+    <div class="modal-dialog modal-dialog-custom">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title dialog-title">Confirmação</h3>
+            </div>
+            <div class="modal-body">
+                <label>Deseja excluir o registro?</label> 
+           <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="delete()" data-dismiss="modal">Sim</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+            </div>
+            </div>      
+        </div>
+    </div>
 </div>

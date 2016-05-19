@@ -299,3 +299,7 @@ form.tab-form-demo .tab-pane {
 .row.row-space{
     margin-bottom: 10px;
 }
+/*DIALOG MODAL*/
+.modal-dialog-custom{
+    padding: 60px 60px 25px 25px;
+}

@@ -1,21 +1,24 @@
 <!-- The dnd-list directive allows to drop elements into it.
      The dropped data will be added to the referenced list -->
 <ul dnd-list="list" >
+    <!-- dnd-drop="changeStatusScope(listName);"> -->
     <!-- The dnd-draggable directive makes an element draggable and will
          transfer the object that was assigned to it. If an element was
          dragged away, you have to remove it from the original list
          yourself using the dnd-moved attribute -->
+         <!-- setStatus(item.idAtividade, item.status, external); -->
     <li ng-controller="ModalDemoCtrl" 
         ng-repeat="item in list"
         dnd-draggable="item"
         dnd-moved="list.splice($index, 1)"
+        dnd-dragend"logEvent(event);"
         dnd-selected="models.selected = item"
         dnd-effect-allowed="move"
         ng-class="{'selected': models.selected === item}"
         class="kanban-act-square noselect">
         <!-- dnd-selected="models.selected = item" -->
             <div class="kanban-content">
-                <div class="flag" ng-class="item.flag === 'ok'?'flag-success':(item.flag === 'warn'?'flag-warning':(item.flag === 'error'?'flag-error':null))"></div>
+                <div class="flag" ng-class="item.flag === 'green'?'flag-success':(item.flag === 'yellow'?'flag-warning':(item.flag === 'red'?'flag-error':null))"></div>
                 <div class="kanban-header col-md-12 col-xs-12">
                     <span class="kanban-text kanban-text-id col-md-6 col-sm-6">ID: {{item.idAtividade}}</span>
                     <div ng-click="open(null, item)" class="kanban-gear glyphicon glyphicon-cog col-md-6 col-sm-6"></div>
