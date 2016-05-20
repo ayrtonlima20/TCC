@@ -126,11 +126,19 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
     $scope.status = status;
     console.log($scope.status);
   };
-  $scope.logEvent = function(event){
+  $scope.logEvent = function(event, listName){
     console.log(event);
+    console.log(listName);
 
   };
-});
+  $scope.getColumn = function(item){
+    setTimeout(function(){
+      var newColum = $("[taskID='" + item.id + "']").parent().attr('name');
+      console.log(item);
+      console.log(newColum);
+      }, 100);
+    };
+  });
 
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
@@ -152,18 +160,13 @@ angular.module('demo').controller('ModalInstanceCtrl', function ($scope, $uibMod
   };
 
   $scope.delete = function () {
+    console.log("2131");
     atividades.delete($scope.dialog.selected.idAtividade).success(function(data) {
-      console.log("12312");
-      atividades.get().success(function(data) {
-        console.log("teste");
-        console.log(data);
-        items = data;
-        $scope.$watch('models', function(model) {
-          $scope.modelAsJson = angular.toJson($scope.dataAmazon, true);
-            // $scope.modelAsJson = angular.toJson($scope.models, true);
-          $scope.models = data;    
-          }, true);
-      });
+      console.log("2131");
+      console.log(items);
+    }).error(function(error){
+      console.log("erro");
+      
     });
     // $uibModalInstance.close($scope.dialog.selected.item);
     $uibModalInstance.close(items.selected.item);
