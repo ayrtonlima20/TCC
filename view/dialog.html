@@ -5,33 +5,23 @@
 </div>
 <div class="modal-body">
     <div class="row" ng-controller="DatepickerCtrl">
-        <div class="col-md-6">
+        <div class="col-md-6 dialog-settings">
             <label class="col-md-5">Data Inicio:</label>
-            <p class="input-group">
-                <input type="text" class="form-control col-md-4" uib-datepicker-popup="{{format}}" ng-model="dialog.dataInicio" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-                </span>
-            </p>
+            <pre class="sprint-text col-md-6">{{dialog.dataInicio}}  {{dialog.horaInicio}}</pre>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 dialog-settings">
             <label class="col-md-5">Data Fim:</label>
-            <p class="input-group">
-                <input type="text" class="form-control col-md-4" uib-datepicker-popup="{{format}}" ng-model="dialog.dataFim" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-                </span>
-            </p>
+            <pre class="sprint-text col-md-6">{{dialog.dataFim}}  {{dialog.horaFim}}</pre>
         </div>
     </div>
     <div class="row row-space">
-        <div class="col-md-6">
+        <div class="col-md-6 dialog-settings">
             <label class="col-md-5">Participante:</label>
             <div class="dialog-div-input col-md-6">
                 <select class="form-control" ng-model="dialog.participantes.selected" ng-options="opt.nome for opt in dialog.participantes.options"></select>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 dialog-settings">
             <label class="col-md-5">Prioridade:</label>
             <div class="dialog-div-input col-md-6">
                 <select class="form-control dialog-input" ng-model="dialog.prioridade.selected" ng-options="opt for opt in dialog.prioridade.options"></select>
@@ -39,17 +29,15 @@
         </div>
     </div>
     <div class="row row-space">
-        <div class="col-md-6">
+        <div class="col-md-6 dialog-settings">
             <label class="col-md-5">Estimativa:</label>
             <div class="dialog-div-input col-md-6">
                 <select class="form-control" ng-model="dialog.estimativa.selected" ng-options="opt for opt in dialog.estimativa.options"></select>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 dialog-settings">
             <label class="col-md-5">História:</label>
-            <div class="dialog-div-input col-md-6">
-                <select class="form-control dialog-input" ng-model="dialog.historias.selected" ng-options="opt.nome for opt in dialog.historias.options"></select>
-            </div>
+            <pre class="sprint-text col-md-6">{{dialog.historia.nome}}</pre>
         </div>
     </div>
     <div class="row row-space noselect">

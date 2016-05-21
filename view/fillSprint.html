@@ -25,10 +25,11 @@
 						        dnd-moved="tables.splice($index, 1)"
         						dnd-selected="table.selected = line"
 							    dnd-effect-allowed="move"
-        						ng-class="{'selected': table.selected === line}">
-								<td>{{line.name}}</td>
-								<td>{{line.endereco}}</td>
-								<td>{{line.telefone}}</td>
+        						ng-class="{'selected': table.selected === line}"
+        						ng-controller="ModalDemoCtrl">
+								<td>{{line.nome}}</td>
+								<td>{{line.prioridade}}</td>
+								<td>{{line.esforco}}</td>
 								<td ng-controller="TabsActCtrl"
 									ng-if="tableName === 'SprintBacklog'" 
 									class="act-open fa fa-plus-circle"

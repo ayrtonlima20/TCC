@@ -276,7 +276,9 @@ tbody[dnd-list] .dndPlaceholder {
 form.tab-form-demo .tab-pane {
     margin: 20px 20px;
 }
-
+.dialog-settings{
+    padding: 0px;
+}
 /*botões*/
 .button-icon{
     cursor: pointer;

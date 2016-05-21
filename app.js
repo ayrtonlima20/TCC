@@ -73,7 +73,7 @@ models.sequelize.sync().then(function() {
 								models.lists.Done.push(data[i]);	
 							};
 						};
-
+						console.log(JSON.stringify(models));
 		   				res.end( JSON.stringify(models) );
 					});
 				};
@@ -114,7 +114,7 @@ models.sequelize.sync().then(function() {
 					console.log('Error connecting to Historias Database');
 					return;
 				}else{
-					con.query('SELECT * FROM historias',function(err,data){
+					con.query('SELECT * FROM historias ORDER BY prioridade',function(err,data){
 						if(err) throw err;
 		   				res.end( JSON.stringify(data) );
 					});

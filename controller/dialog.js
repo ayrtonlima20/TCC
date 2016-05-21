@@ -3,7 +3,12 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
   $scope.dialog = {};
   $scope.status = null;
   $scope.selected = null;
+  $scope.dialogHide = true;
   $scope.animationsEnabled = true;
+  $scope.participantes = {};
+  $scope.historia = {};
+  var historiasAtiv = {};
+
   $scope.estimativa = {
     selected: 3,
     options: [
@@ -25,16 +30,13 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
       "Baixa"
     ]
   };
-  for (var i = 0; i < 0; i--) {
-    Things[i]
-  };
 
   participantes.success(function(data) {
     $scope.participantes = data;
-  });  
+  });   
 
-  historias.success(function(data) {
-    $scope.historias = data;
+  historias.get().success(function(data) {
+    historiasAtiv = data;
   });
 
   $scope.open = function (size, item) {
@@ -68,17 +70,19 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
             selected: $scope.participantes[indexPart],
             options: $scope.participantes
           };
-          console.log($scope.dialog.participantes);
-          for(i = 0; i < $scope.historias.length; i++){
-            if (item.idHistoria === $scope.historias[i].idHistoria) {
+          // console.log($scope.dialog.participantes);
+          for(i = 0; i < historiasAtiv.length; i++){
+            if (item.idHistoria === historiasAtiv[i].idHistoria) {
               indexHist = i;
-              i = $scope.historias.length;
+              i = historiasAtiv.length;
             };
           };
-          $scope.dialog.historias = { 
-            selected: $scope.historias[indexHist],
-            options: $scope.historias
+          $scope.dialog.historia = { 
+            idHistoria: historiasAtiv[indexHist].idHistoria,
+            nome: historiasAtiv[indexHist].nome
           };
+          console.log($scope.dialog.historia);
+          // $scope.dialog.historia = historiasAtiv[indexHist].nome;
           for(var i = 0; i < $scope.estimativa.options.length; i++){
             if (item.duracao === $scope.estimativa.options[i]) {
               indexEsti = i;
@@ -95,15 +99,19 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
           };
           $scope.dialog.prioridade.selected = $scope.prioridade.options[indexPrio];
 
-          $scope.dialog.dataInicio = new Date(item.dataInicio.substring(6,10), item.dataInicio.substring(3,5),item.dataInicio.substring(0,2));
-          $scope.dialog.dataFim = new Date(item.dataFim.substring(6,10), item.dataFim.substring(3,5),item.dataFim.substring(0,2));
+          // $scope.dialog.dataInicio = new Date(item.dataInicio.substring(6,10), item.dataInicio.substring(3,5),item.dataInicio.substring(0,2));
+          // $scope.dialog.dataFim = new Date(item.dataFim.substring(6,10), item.dataFim.substring(3,5),item.dataFim.substring(0,2));
+          $scope.dialog.dataInicio =  item.dataInicio;
+          $scope.dialog.dataFim = item.dataFim;
+          $scope.dialog.horaInicio =  item.horaInicio;
+          $scope.dialog.horaFim = item.horaFim;
 
           return $scope.dialog;
         }
       }
     });
 
-    modalInstance.result.then(function (selectedItem) {
+  modalInstance.result.then(function (selectedItem) {
       $scope.selected = selectedItem;
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
@@ -133,9 +141,9 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
   };
   $scope.getColumn = function(item){
     setTimeout(function(){
-      var newColum = $("[taskID='" + item.id + "']").parent().attr('name');
-      console.log(item);
-      console.log(newColum);
+      var newColum = $("[taskID='" + item.idAtividade + "']").parent().attr('name');
+      atividades.updateStatus(item.idAtividade, newColum).success(function(data) {
+      });
       }, 100);
     };
   });
@@ -147,12 +155,15 @@ angular.module('demo').controller('ModalInstanceCtrl', function ($scope, $uibMod
   $scope.dialog = items;
 
   $scope.save = function (itemDialog) {
-    items.selected.idHistoria = itemDialog.historias.selected.idHistoria;
+    console.log("12312");
+    items.selected.idHistoria = itemDialog.historia.idHistoria;
     items.selected.idParticipante = itemDialog.participantes.selected.idUsuario;
     items.selected.duracao = itemDialog.estimativa.selected;
     items.selected.descricao = itemDialog.descricao;
     items.selected.bloqueada = itemDialog.bloqueada;
     items.selected.prioridade = itemDialog.prioridade.selected;
+    console.log("$scope.dialog.selected");
+    console.log($scope.dialog.selected);
     atividades.update($scope.dialog.selected).success(function(data) {
     });
     // $uibModalInstance.close($scope.dialog.selected.item);
@@ -160,10 +171,7 @@ angular.module('demo').controller('ModalInstanceCtrl', function ($scope, $uibMod
   };
 
   $scope.delete = function () {
-    console.log("2131");
     atividades.delete($scope.dialog.selected.idAtividade).success(function(data) {
-      console.log("2131");
-      console.log(items);
     }).error(function(error){
       console.log("erro");
       

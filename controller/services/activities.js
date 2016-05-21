@@ -56,14 +56,18 @@ angular.module("demo").factory('participantes', ['$http', function($http) {
 }]);
 angular.module("demo").factory('historias', ['$http', function($http) { 
   // return $http.get('https://s3.amazonaws.com/codecademy-content/courses/ltp4/forecast-api/forecast.json') 
-    
-  return $http.get('http://127.0.0.1:8090/listHistorias') 
-    .success(function(data) { 
-      return data; 
-    }) 
-    .error(function(err) { 
-      return err; 
-    }); 
+  var historias = {};
+
+  historias.get = function(){
+    return $http.get('http://127.0.0.1:8090/listHistorias') 
+      .success(function(data) { 
+        return data; 
+      }) 
+      .error(function(err) { 
+        return err; 
+      });
+    }; 
+  return historias;
 }]);
 angular.module("demo").factory('sprint', ['$http', function($http) { 
   // return $http.get('https://s3.amazonaws.com/codecademy-content/courses/ltp4/forecast-api/forecast.json') 

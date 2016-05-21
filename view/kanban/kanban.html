@@ -15,7 +15,7 @@
         ng-class="{'selected': models.selected === item}"
         dnd-moved="getColumn(item); list.splice($index, 1);"
         class="kanban-act-square noselect"
-        taskID={{item.id}}>
+        taskID={{item.idAtividade}}>
         <!-- dnd-selected="models.selected = item" -->
             <div class="kanban-content">
                 <div class="flag" ng-class="item.flag === 'green'?'flag-success':(item.flag === 'yellow'?'flag-warning':(item.flag === 'red'?'flag-error':null))"></div>
