@@ -30,6 +30,13 @@ angular.module('demo').controller('TabsActCtrl', function ($scope, $window,  $ui
         "Baixa"
         ]
     };     
+    $scope.participantes = [{
+        idUsuario: 1,
+        nome: "Josué"
+    },{
+        idUsuario: 2,
+        nome: "Ayrton"
+    }];
     $scope.atividades = [{ 
         // title:'Atividade 1', 
         // content: {
@@ -37,22 +44,24 @@ angular.module('demo').controller('TabsActCtrl', function ($scope, $window,  $ui
         idSprint: 1,
         idHistoria: null,
         nome: "Atividade 1",
-        participantes: null,
         prioridade: $scope.prioridade,
+        participantes: {
+            selected: $scope.participantes[0],
+            options: $scope.participantes
+        },
         estimativa: null,
         descricao: null
         // } 
     }];
 
-    participantes.success(function(data) {
-        $scope.participantes = data;
-        $scope.atividades[0].participantes = {
-            selected: $scope.participantes[0],
-            options: $scope.participantes
-        };
-        console.log("$scope.atividades");
-        console.log($scope.atividades);
-    });  
+    // participantes.success(function(data) {
+    //     $scope.participantes = data;
+    //     $scope.atividades[0].participantes = {
+    //         selected: $scope.participantes[0],
+    //         options: $scope.participantes
+    //     };
+    //     console.log($scope.atividades);
+    // });  
 
     $scope.addAtividade = function() {
         $scope.atividades.push({ 
@@ -64,9 +73,13 @@ angular.module('demo').controller('TabsActCtrl', function ($scope, $window,  $ui
             idParticipante: null,
             nome:'Atividade '+ ($scope.atividades.length + 1),
             participantes: null,
-            prioridade: null,
-            estimativda: null,
-            descricao:null
+            prioridade: $scope.prioridade,
+            participantes: {
+                selected: $scope.participantes[0],
+                options: $scope.participantes
+            },
+            estimativa: null,
+            descricao: null
             // } 
         }); 
     };

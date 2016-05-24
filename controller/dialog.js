@@ -58,9 +58,16 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
           $scope.dialog.prioridade = $scope.prioridade;
           $scope.dialog.descricao = item.descricao;
           $scope.dialog.bloqueada = item.bloqueada;
-          $scope.dialog.block = {
-            nome: "Bloquear Atividade" ,
-            status: false
+          if (item.bloqueada === "X"){
+            $scope.dialog.block = {
+              nome: "Desbloquear Atividade" ,
+              status: true
+            };
+          }else{
+            $scope.dialog.block = {
+              nome: "Bloquear Atividade" ,
+              status: false
+            };
           };
           // todos esses for são para preencher os campos da tela de dialog 
           // quando abre uma atividade
@@ -149,6 +156,7 @@ angular.module('demo').controller('ModalInstanceCtrl', function ($scope, $uibMod
     items.selected.descricao = itemDialog.descricao;
     items.selected.bloqueada = itemDialog.bloqueada;
     items.selected.prioridade = itemDialog.prioridade.selected;
+    console.log(items.selected);
     atividades.update($scope.dialog.selected).success(function(data) {
     });
     // $uibModalInstance.close($scope.dialog.selected.item);
@@ -170,12 +178,13 @@ angular.module('demo').controller('ModalInstanceCtrl', function ($scope, $uibMod
   $scope.setBlock = function(status){
     console.log(status);
     if (status === false) {
-      console.log("asasda");
       $scope.dialog.block.nome = "Desbloquar Atividade";
       $scope.dialog.block.status = true;
+      $scope.dialog.bloqueada = "X";
     }else{
       $scope.dialog.block.nome = "Bloquear Atividade";
       $scope.dialog.block.status = false;
+      $scope.dialog.bloqueada = "";
     };
   };
 });
