@@ -1,7 +1,8 @@
-angular.module('demo').controller('TabsActCtrl', function ($scope, $window,  $uibModal, $log, historias) {
+angular.module('demo').controller('TabsActCtrl', function ($scope, $window,  $uibModal, $log, historias, participantes) {
 
-    $scope.dialog = {};
-    $scope.status = "XXX";
+    // $scope.dialog = {};
+    $scope.item = {};
+    $scope.status = null;
     $scope.selected = null;
     $scope.dialogHide = true;
     $scope.animationsEnabled = true;
@@ -9,7 +10,7 @@ angular.module('demo').controller('TabsActCtrl', function ($scope, $window,  $ui
     $scope.historia = null;
 
     $scope.estimativa = {
-        selected: 3,
+        selected: null,
         options: [
         1,
         2,
@@ -22,39 +23,54 @@ angular.module('demo').controller('TabsActCtrl', function ($scope, $window,  $ui
         ]
     };
     $scope.prioridade = {
-        selected: "Média",
+        selected: null,
         options: [
         "Alta",
         "Média",
         "Baixa"
         ]
-    };
+    };     
     $scope.atividades = [{ 
-        title:'Title 1', 
-        content: {
-            nome:"asd",
-            participante:"aa",
-            prioridade:"asda",
-            estimativa:"sad",
-            descricao:"asda"
-        } 
+        // title:'Atividade 1', 
+        // content: {
+        idAtividade: null,
+        idSprint: 1,
+        idHistoria: null,
+        nome: "Atividade 1",
+        participantes: null,
+        prioridade: $scope.prioridade,
+        estimativa: null,
+        descricao: null
+        // } 
     }];
+
+    participantes.success(function(data) {
+        $scope.participantes = data;
+        $scope.atividades[0].participantes = {
+            selected: $scope.participantes[0],
+            options: $scope.participantes
+        };
+        console.log("$scope.atividades");
+        console.log($scope.atividades);
+    });  
 
     $scope.addAtividade = function() {
         $scope.atividades.push({ 
-            title:'Atividade '+ ($scope.atividades.length + 1),
-            content: {
-                nome:"",
-                participante:"",
-                prioridade:"",
-                estimativda:"",
-                descricao:""
-            } 
+            // title:'Atividade '+ ($scope.atividades.length + 1),
+            // content: {
+            idAtividade: null,
+            idSprint: 1,
+            idHistoria: null,
+            idParticipante: null,
+            nome:'Atividade '+ ($scope.atividades.length + 1),
+            participantes: null,
+            prioridade: null,
+            estimativda: null,
+            descricao:null
+            // } 
         }); 
     };
 
-    $scope.dialog = {};
-    $scope.selected = null;
     $scope.animationsEnabled = true;
 
     $scope.openDialogAtividade = function (size, line) {
@@ -70,35 +86,41 @@ angular.module('demo').controller('TabsActCtrl', function ($scope, $window,  $ui
                     var indexEsti = 0;
                     var indexPrio = 0;
                     // $scope.dialog.selected = $scope.models.selected;
-                    $scope.dialog.historia = line;
-                    $scope.dialog.estimativa = $scope.estimativa;
-                    $scope.dialog.prioridade = $scope.prioridade;
-                    $scope.dialog.participantes = {
+                    $scope.item.historia = line;
+                    $scope.item.estimativa = $scope.estimativa;
+                    $scope.item.prioridade = $scope.prioridade;
+                    $scope.item.participantes = {
                         selected: null,
                         options: $scope.participantes
                     };
-                    return $scope.dialog;
+                    return $scope.item;
                 }
             }
         });
 
-modalInstance.result.then(function (selectedItem) {
-    $scope.selected = selectedItem;
-}, function () {
-    $log.info('Modal dismissed at: ' + new Date());
-});
-};
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+    };
 
-$scope.toggleAnimation = function () {
-    $scope.animationsEnabled = !$scope.animationsEnabled;
-};
+    $scope.toggleAnimation = function () {
+        $scope.animationsEnabled = !$scope.animationsEnabled;
+    };
 });
 
 angular.module('demo').controller('ModalAtividadeCtrl', function ($scope, $uibModalInstance, items) {
     $scope.dialog = items;
-
-    $scope.ok = function () {
-        $uibModalInstance.close($scope.dialog.selected.item);
+    $scope.save = function (activs) {
+        for (var i = 0; i < activs.length; i++) {
+            activs[i].idHistoria = items.historia.idHistoria;
+        };
+        console.log("items");
+        console.log(items);
+        console.log("activs");
+        console.log(activs);
+        $uibModalInstance.dismiss('cancel');
     };
 
     $scope.cancel = function () {

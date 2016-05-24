@@ -1,6 +1,7 @@
 <!-- The dnd-list directive allows to drop elements into it.
      The dropped data will be added to the referenced list -->
-<ul dnd-list="list" name={{listName}}>
+<ul dnd-list="list" 
+    name={{listName}}>
     <!-- dnd-drop="changeStatusScope(listName);"> -->
     <!-- The dnd-draggable directive makes an element draggable and will
          transfer the object that was assigned to it. If an element was
@@ -13,11 +14,12 @@
         dnd-selected="models.selected = item"
         dnd-effect-allowed="move"
         ng-class="{'selected': models.selected === item}"
-        dnd-moved="getColumn(item); list.splice($index, 1);"
+        dnd-moved="setColumn(item); list.splice($index, 1);"
         class="kanban-act-square noselect"
         taskID={{item.idAtividade}}>
         <!-- dnd-selected="models.selected = item" -->
-            <div class="kanban-content">
+            <div class="kanban-content"
+                 index={{$index}}>
                 <div class="flag" ng-class="item.flag === 'green'?'flag-success':(item.flag === 'yellow'?'flag-warning':(item.flag === 'red'?'flag-error':null))"></div>
                 <div class="kanban-header col-md-12 col-xs-12">
                     <span class="kanban-text kanban-text-id col-md-6 col-sm-6">ID: {{item.idAtividade}}</span>

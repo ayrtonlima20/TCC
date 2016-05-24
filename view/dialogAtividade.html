@@ -1,41 +1,41 @@
 <div class="modal-header">
     <button type="button" ng-click="cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <h3 class="modal-title dialog-title">Atividades</h3>
+    <h3 class="modal-title dialog-title">{{dialog.historia.nome}}</h3>
 </div>
 <div ng-controller="TabsActCtrl" class="modal-body">
     <uib-tabset active="0">
-        <uib-tab index="$index" selected="true" ng-repeat="atividades in atividades" heading="{{atividades.title}}" active="0" disable="atividades.disabled">
-            <div class="row">
+        <uib-tab index="$index" selected="true" ng-repeat="atividade in atividades" heading="{{atividade.nome}}" active="0" disable="atividade.disabled">
+            <div class="row row-space row-top-space">
                 <div class="col-md-6">
-                    <label class="col-md-3">Nome:{{dialog}}</label>
+                    <label class="col-md-3">Nome:</label>
                     <div class="dialog-div-input col-md-8">
-                        <input class="form-control" ng-model="atividades.content.nome"></input>
+                        <input class="form-control" ng-model="atividade.nome"></input>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <label class="col-md-3">Participante:</label>
                     <div class="dialog-div-input col-md-8">
-                        <select class="form-control dialog-input" ng-model="atividades.content.participante" ng-options="opt for opt in options.hstep"></select>
+                        <select class="form-control dialog-input" ng-model="atividade.participantes.selected" ng-options="activ.nome for activ in atividade.participantes.options track by activ.nome"></select>
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row row-space">
                 <div class="col-md-6">
-                    <label class="col-md-3">Prioridade:{{dialog.prioridade}}</label>
+                    <label class="col-md-3">Prioridade:</label>
                     <div class="dialog-div-input col-md-8">
-                        <select class="form-control" ng-model="dialog.prioridade.selected" ng-options="opt for opt in dialog.prioridade.options"></select>
+                        <select class="form-control" ng-model="atividade.prioridade.selected" ng-options="opt for opt in atividade.prioridade.options"></select>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <label class="col-md-3">Estimativa:</label>
                     <div class="dialog-div-input col-md-8">
-                        <select class="form-control dialog-input" ng-model="atividades.content.estimativa" ng-options="opt for opt in options.hstep"></select>
+                        <select class="form-control dialog-input" ng-model="dialog.estimativa.selected" ng-options="opt for opt in dialog.estimativa.options"></select>
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row row-space col-md-12 row-descr">
                 <label>Descrição:</label>
-                <textarea class="form-control dialog-act-descr col-md-12">{{atividades.content.descricao}}</textarea>
+                <textarea class="form-control dialog-act-descr col-md-12">{{atividade.descricao}}</textarea>
             </div>
         </uib-tab>
         <uib-tab index="$index" ng-click="addAtividade()" deselect="true";>
@@ -46,7 +46,7 @@
     </uib-tabset>
 <!-- <input type="text" class="form-control" required ng-model="model.name"/> -->
 </div>
-<div class="modal-footer">
-    <button class="btn btn-success col-md-3" type="button" ng-click="ok()">Salvar</button>
+<div class="modal-footer" ng-controller="TabsActCtrl">
+    <button class="btn btn-success col-md-3" type="button" ng-click="save(atividades)">Salvar</button>
     <button class="btn btn-danger col-md-3" type="button" ng-click="cancel()">Excluir</button>
 </div>

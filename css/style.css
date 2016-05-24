@@ -270,6 +270,9 @@ tbody[dnd-list] .dndPlaceholder {
     display: block;
     cursor: pointer;
 }
+.row-descr{
+    float: none;
+}
 .dialog-act-descr{
     min-height: 100px;
 }
@@ -300,6 +303,9 @@ form.tab-form-demo .tab-pane {
 /*ROW DEFINITION*/
 .row.row-space{
     margin-bottom: 10px;
+}
+.row-top-space{
+    margin-top: 20px;
 }
 /*DIALOG MODAL*/
 .modal-dialog-custom{

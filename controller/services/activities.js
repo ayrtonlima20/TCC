@@ -29,9 +29,9 @@ angular.module("demo").factory('atividades', ['$http', function($http) {
       return err; 
     }); 
   };
-  atividades.updateStatus = function (idAtividade, status) {
-    var atividade = {"idAtividade": idAtividade,
-                     "status": status};
+  atividades.updateStatus = function (atividade) {
+    // var atividade = {"idAtividade": idAtividade,
+    //                  "status": status};
     return $http.post('http://127.0.0.1:8090/setStatusAtividade', atividade) 
     .success(function(data) { 
       return data; 

@@ -47,6 +47,9 @@ CREATE TABLE if not exists atividades (
     FOREIGN KEY (idParticipante) REFERENCES usuarios (idUsuario),
     FOREIGN KEY (idSprint) REFERENCES sprint (idSprint)
 );
+
+ALTER TABLE atividades AUTO_INCREMENT = 1;
+
 INSERT INTO atividades (idAtividade, idHistoria, idParticipante, idSprint, nome, duracao, dataInicio, dataFim, status, descricao, bloqueada, prioridade) value(
     (1,1,2,1,"Atividade 1",8,str_to_date('03-03-2016 01:01:01','%d-%m-%Y %H:%i:%s'),
     str_to_date('04-03-2016 10:10:10','%d-%m-%Y %H:%i:%s'),"ToDo","Teste1","",0),
@@ -69,6 +72,43 @@ INSERT INTO atividades (idAtividade, idHistoria, idParticipante, idSprint, nome,
     (10,2,1,1,"Atividade 10",4,str_to_date('22-03-2016 17:01:09','%d-%m-%Y %H:%i:%s'),
     str_to_date('22-03-2016 18:01:09','%d-%m-%Y %H:%i:%s'),"Done","Teste10","X",0)
 );
+INSERT INTO atividades (idAtividade, idHistoria, idParticipante, idSprint, nome, duracao, dataInicio, dataFim, status, descricao, bloqueada, prioridade) values
+    (1,1,2,1,"Atividade 1",8,str_to_date('03-03-2016 01:01:01','%d-%m-%Y %H:%i:%s'),
+    str_to_date('04-03-2016 10:10:10','%d-%m-%Y %H:%i:%s'),"Doing","Teste1","",0),
+    (2,2,1,1,"Atividade 2",4,str_to_date('05-03-2016 10:01:09','%d-%m-%Y %H:%i:%s'),
+    str_to_date('06-03-2016 12:01:09','%d-%m-%Y %H:%i:%s'),"ToDo","Teste2","",0),
+    (3,1,2,1,"Atividade 3",6,str_to_date('07-03-2016 12:01:09','%d-%m-%Y %H:%i:%s'),
+    str_to_date('08-03-2016 09:01:09','%d-%m-%Y %H:%i:%s'),"Doing","Teste3","",0),
+    (4,2,1,1,"Atividade 4",5,str_to_date('09-03-2016 13:01:09','%d-%m-%Y %H:%i:%s'),
+    str_to_date('10-03-2016 09:01:09','%d-%m-%Y %H:%i:%s'),"Doing","Teste4","",0),
+    (5,1,2,1,"Atividade 5",1,str_to_date('11-03-2016 15:01:09','%d-%m-%Y %H:%i:%s'),
+    str_to_date('12-03-2016 11:01:09','%d-%m-%Y %H:%i:%s'),"ToDo","Teste5","",0),
+    (6,2,1,1,"Atividade 6",8,str_to_date('13-03-2016 18:01:09','%d-%m-%Y %H:%i:%s'),
+    str_to_date('14-03-2016 10:01:09','%d-%m-%Y %H:%i:%s'),"Testing","Teste6","",0),
+    (7,1,2,1,"Atividade 7",7,str_to_date('15-03-2016 09:01:09','%d-%m-%Y %H:%i:%s'),
+    str_to_date('16-03-2016 08:01:09','%d-%m-%Y %H:%i:%s'),"Doing","Teste7","",0),
+    (8,2,1,1,"Atividade 8",1,str_to_date('17-03-2016 08:01:09','%d-%m-%Y %H:%i:%s'),
+    str_to_date('18-03-2016 10:01:09','%d-%m-%Y %H:%i:%s'),"Doing","Teste8","",0),
+    (9,1,2,1,"Atividade 9",3,str_to_date('20-03-2016 11:01:09','%d-%m-%Y %H:%i:%s'),
+    str_to_date('20-03-2016 16:01:09','%d-%m-%Y %H:%i:%s'),"Done","Teste9","X",0),
+    (10,2,1,1,"Atividade 10",4,str_to_date('22-03-2016 17:01:09','%d-%m-%Y %H:%i:%s'),
+    str_to_date('22-03-2016 18:01:09','%d-%m-%Y %H:%i:%s'),"Done","Teste10","X",0),
+    (11,2,1,1,"Atividade 10",4,str_to_date('22-03-2016 17:01:09','%d-%m-%Y %H:%i:%s'),
+    str_to_date('22-03-2016 18:01:09','%d-%m-%Y %H:%i:%s'),"Done","Teste10","X",0),
+    (12,2,1,1,"Atividade 10",4,str_to_date('22-03-2016 17:01:09','%d-%m-%Y %H:%i:%s'),
+    str_to_date('22-03-2016 18:01:09','%d-%m-%Y %H:%i:%s'),"Done","Teste10","X",0)
+on duplicate key update 
+    idHistoria = values(idHistoria),
+    idParticipante = values(idParticipante),
+    idSprint = values(idSprint),
+    nome = values(nome),
+    duracao = values(duracao),
+    dataInicio = values(dataInicio),
+    status = values(status),
+    descricao = values(descricao),
+    bloqueada = values(bloqueada),
+    prioridade = values(prioridade);
+    select * from atividades;
 select * from atividades;
 
 CREATE TABLE if not exists sprint (

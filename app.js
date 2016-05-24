@@ -73,7 +73,6 @@ models.sequelize.sync().then(function() {
 								models.lists.Done.push(data[i]);	
 							};
 						};
-						console.log(JSON.stringify(models));
 		   				res.end( JSON.stringify(models) );
 					});
 				};
@@ -167,7 +166,6 @@ models.sequelize.sync().then(function() {
 				}else{	
 					var idSprint  = 1; 
 					var descricao = req.body.teste
-					console.log(descricao);
 					con.query('update sprint set descricao = "'+ descricao + '" where idSprint = 1',function(err,data){
 						if(err) throw err;
 					});
@@ -194,7 +192,6 @@ models.sequelize.sync().then(function() {
 					var duracao = req.body.duracao === undefined ? 8 : req.body.duracao;
 					// var dataInicio = req.body.dataInicio;
 					// var dataFim	= req.body.dataFim;
-					var status = req.body.status === undefined ? "" : req.body.status;
 					var descricao = req.body.descricao === undefined ? "" : req.body.descricao;
 					var bloqueada = req.body.bloqueada === undefined ? "" : req.body.bloqueada;
 					var prioridade = req.body.prioridade === undefined ? 0 : req.body.prioridade;
@@ -202,10 +199,9 @@ models.sequelize.sync().then(function() {
 					con.query('update atividades set idParticipante = '+ idParticipante + 
 								', idHistoria = ' + idHistoria +
 								',duracao = ' + duracao  +
-								',status = "' + status +
-								'", descricao = "' + descricao  +
-								'", bloqueada = "' + bloqueada  +
-								'", prioridade = "' + prioridade +
+								',descricao = "' + descricao  +
+								'",bloqueada = "' + bloqueada  +
+								'",prioridade = "' + prioridade +
 								'" where idAtividade = ' + idAtividade,function(err,data){
 						if(err) throw err;
 					});
@@ -215,7 +211,6 @@ models.sequelize.sync().then(function() {
 			});
 		});
 		app.post('/setStatusAtividade', function (req, res) {
-			console.log("12321");
 			var con = mysql.createConnection({
 				host: "localhost",
 			  	user: "root",
@@ -228,11 +223,47 @@ models.sequelize.sync().then(function() {
 					return;
 				}else{	
 					var idAtividade = req.body.idAtividade === undefined ? 0 : req.body.idAtividade;
-					var status = req.body.status === undefined ? "" : req.body.status;
+					var queryStatus = req.body.status === undefined ? "" : 'status = "' + req.body.status + '"';
+					var queryDataInicio = "";
+					var queryDataFim = "";
+					var dataInicio = null;
+					var horaInicio = null;
+					var dataFim = null;
+					var horaFim = null;
+					var date = new Date();
+					var hours = new Date();
+					if (req.body.oldColumn === "ToDo"  && req.body.status != "ToDo"){
+						dataInicio = getDateFormatDDMMYY(date);
+						horaInicio = getTimeFormatHHMMSS(date);
+						dataFim = getDateFormatDDMMYY(getDataFim(date, req.body.estimativa, "09", "18"));
+						horaFim = getTimeFormatHHMMSS(getDataFim(hours, req.body.estimativa, "09", "18"));
+						var queryDataInicio = ",dataInicio = str_to_date('" + dataInicio + horaInicio + "' ,'%d-%m-%Y %H:%i:%s')";
+						var queryDataFim = ",dataFim = str_to_date('" + dataFim + horaFim + "' ,'%d-%m-%Y %H:%i:%s')";
+					}else if(req.body.status === "Done"){
+						dataFim = getDateFormatDDMMYY(date);
+						horaFim = getTimeFormatHHMMSS(hours);
+						var queryDataFim = ",dataFim = str_to_date('" + dataFim + horaFim + "' ,'%d-%m-%Y %H:%i:%s')";
+					}else if (req.body.oldColumn === "Done"  && req.body.status != "Done" && req.body.status != "ToDo") {
+						dataFim = getDateFormatDDMMYY(getDataFim(date, req.body.estimativa, "09", "18"));
+						horaFim = getTimeFormatHHMMSS(getDataFim(hours, req.body.estimativa, "09", "18"));
+						var queryDataFim = ",dataFim = str_to_date('" + dataFim + horaFim + "' ,'%d-%m-%Y %H:%i:%s')";
+					}else if (req.body.oldColumn != "ToDo"  && req.body.status === "ToDo"){
+						var queryDataInicio = ",dataInicio = null ";
+						var queryDataFim = ",dataFim = null ";
+						dataInicio = 0;
+						horaInicio = 0;
+						dataFim = 0;
+						horaFim = 0;
+					};
 					
-					con.query('update atividades set status = "' + status +
-								'" where idAtividade = ' + idAtividade,function(err,data){
+					con.query('update atividades set ' + queryStatus +   queryDataInicio + queryDataFim + 
+							  ' where idAtividade = '   + idAtividade,function(err,data){
 						if(err) throw err;
+						data.dataInicio = dataInicio;
+						data.horaInicio = horaInicio;
+						data.dataFim = dataFim;
+						data.horaFim = horaFim;
+		   				res.end( JSON.stringify(data));
 					});
 				};
 
@@ -261,6 +292,56 @@ models.sequelize.sync().then(function() {
 				// console.log('Connection established');
 			});
 		});
+		app.post('/crateAtividades', function(req, res){
+			var con = mysql.createConnection({
+				host: "localhost",
+			  	user: "root",
+			  	password: "root",
+				database: "scrum"
+			});
+			con.connect(function(err){
+				if(err){
+					console.log('Error connecting to Create Database');
+					return;
+				}else{	
+					var query = "";
+					var atividades = req.body.atividades === undefined ? null : req.body.atividades;
+					for (var i = 0; i < atividades.length; i++) {
+						query += "(" + atividades[i].idAtividade + "," +  atividades[i].idHistoria + "," +
+								 atividades[i].idSprint + "," + atividades[i].nome + "," + atividades[i].descricao + "," +
+								 atividades[i].prioridade + ")";
+						if ((i + 1) < atividades.length) {
+							query += ",";
+						}
+					};
+					var idAtividade = req.body.idAtividade === undefined ? 0 : req.body.idAtividade;
+
+
+					con.query('insert into atividades (idAtividade,idHistoria,idParticipante,idSprint,'+ 
+							  'nome, descricao, prioridade)values' + query +
+							  'on duplicated key update idHistoria = values(idHistoria),' +
+							  'idParticipante = values(idParticipante), idSprint = values(idSprint),' + 
+							  'nome = values(nome), descricao = values(descricao), prioridade = values(prioridade)' ,function(err,data){
+						if(err) throw err;
+					});
+				};
+
+				// console.log('Connection established');
+			});
+		});
+		function getDataFim(date, estimativa, horaTrabInicio, horaTrabFim){
+			var horasTrab = 0;
+			if ((getHora(date) + estimativa) > horaTrabFim){
+				console.log("modificação de data errada");
+				horasTrab = horaTrabFim - getHora(date);
+				console.log("---");
+				date.setDate(getDia(date) + 1);
+				date.setHours(horaTrabInicio + Math.abs(horasTrab - estimativa));
+			}else{
+				date.setHours(date.getHours() + estimativa);
+			};
+			return date;
+		};
 		function getMes (date) {
 			var month = date.getMonth() + 1;
     		return month < 10 ? '0' + month : '' + month; 
@@ -295,12 +376,13 @@ models.sequelize.sync().then(function() {
 			// Calcular duração real da atividade
 			var duracaoTotAtiv;
 			var dateAtivDiff = getConvDateDiff(dataInicioAtiv, dataFimAtiv);
+			var actualDate = new Date();
 			if(dataInicioAtiv < dataFimAtiv){
 				var diasTrab = dateAtivDiff.days;
-				// console.log(diasTrab);
 				var count = 1;
 				if (dateAtivDiff.days === 0) {
-					duracaoTotAtiv = dataFimAtiv.getHours() - horaTrabInicio;
+					// duracaoTotAtiv = dataFimAtiv.getHours() - horaTrabInicio;
+					duracaoTotAtiv = actualDate.getHours() - dataInicioAtiv.getHours();
 				}else{
 					duracaoTotAtiv = horaTrabFim - dataInicioAtiv.getHours() ;	
 				};
@@ -323,7 +405,7 @@ models.sequelize.sync().then(function() {
 				// console.log("red");
 				return "red";
 			}else{
-				if( ( 100 - ((100 * duracaoTotAtiv) / 4)) < 25 ){
+				if( Math.abs(100 - ((100 * duracaoTotAtiv) / duracaoAtiv)) < 25 ){
 				// console.log("yellow");
 					return "yellow";
 				}else{

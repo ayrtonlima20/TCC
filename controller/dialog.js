@@ -58,6 +58,10 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
           $scope.dialog.prioridade = $scope.prioridade;
           $scope.dialog.descricao = item.descricao;
           $scope.dialog.bloqueada = item.bloqueada;
+          $scope.dialog.block = {
+            nome: "Bloquear Atividade" ,
+            status: false
+          };
           // todos esses for são para preencher os campos da tela de dialog 
           // quando abre uma atividade
           for(var i = 0; i < $scope.participantes.length; i++){
@@ -121,15 +125,6 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
   $scope.toggleAnimation = function () {
     $scope.animationsEnabled = !$scope.animationsEnabled;
   };
-  $scope.setStatus = function(idAtividade,status, listName, item, index){
-    console.log(idAtividade);
-    console.log(status);
-    console.log(listName);
-    console.log(item);
-    console.log(index);
-    // atividades.updateStatus(idAtividade, status).success(function(data) {
-    // });
-  };
   $scope.changeStatusScope = function(status){
     $scope.status = status;
     console.log($scope.status);
@@ -139,13 +134,6 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
     console.log(listName);
 
   };
-  $scope.getColumn = function(item){
-    setTimeout(function(){
-      var newColum = $("[taskID='" + item.idAtividade + "']").parent().attr('name');
-      atividades.updateStatus(item.idAtividade, newColum).success(function(data) {
-      });
-      }, 100);
-    };
   });
 
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
@@ -155,15 +143,12 @@ angular.module('demo').controller('ModalInstanceCtrl', function ($scope, $uibMod
   $scope.dialog = items;
 
   $scope.save = function (itemDialog) {
-    console.log("12312");
     items.selected.idHistoria = itemDialog.historia.idHistoria;
     items.selected.idParticipante = itemDialog.participantes.selected.idUsuario;
     items.selected.duracao = itemDialog.estimativa.selected;
     items.selected.descricao = itemDialog.descricao;
     items.selected.bloqueada = itemDialog.bloqueada;
     items.selected.prioridade = itemDialog.prioridade.selected;
-    console.log("$scope.dialog.selected");
-    console.log($scope.dialog.selected);
     atividades.update($scope.dialog.selected).success(function(data) {
     });
     // $uibModalInstance.close($scope.dialog.selected.item);
@@ -181,5 +166,16 @@ angular.module('demo').controller('ModalInstanceCtrl', function ($scope, $uibMod
   };
   $scope.cancel = function () {
     $uibModalInstance.close(items.selected.item);
+  };
+  $scope.setBlock = function(status){
+    console.log(status);
+    if (status === false) {
+      console.log("asasda");
+      $scope.dialog.block.nome = "Desbloquar Atividade";
+      $scope.dialog.block.status = true;
+    }else{
+      $scope.dialog.block.nome = "Bloquear Atividade";
+      $scope.dialog.block.status = false;
+    };
   };
 });
