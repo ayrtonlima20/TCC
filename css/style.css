@@ -311,3 +311,23 @@ form.tab-form-demo .tab-pane {
 .modal-dialog-custom{
     padding: 60px 60px 25px 25px;
 }
+
+/*alert*/
+.alert-scrum{
+    width: 350px;
+}
+.repeat-item.ng-enter,
+.repeat-item.ng-leave {
+  -webkit-transition: 0.5s linear all;
+  transition: 0.5s linear all;
+}
+
+.repeat-item.ng-enter,
+.repeat-item.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+
+.repeat-item.ng-leave,
+.repeat-item.ng-enter.ng-enter-active {
+  opacity: 1;
+}

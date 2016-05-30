@@ -8,78 +8,73 @@ angular.module('demo').controller('TabsActCtrl', function ($scope, $window,  $ui
     $scope.animationsEnabled = true;
     $scope.participantes = {};
     $scope.historia = null;
-
-    $scope.estimativa = {
-        selected: null,
-        options: [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8
-        ]
-    };
-    $scope.prioridade = {
-        selected: null,
-        options: [
-        "Alta",
-        "Média",
-        "Baixa"
-        ]
-    };     
-    $scope.participantes = [{
-        idUsuario: 1,
-        nome: "Josué"
-    },{
-        idUsuario: 2,
-        nome: "Ayrton"
-    }];
+    $scope.estimativa = [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+    ];
+    $scope.prioridade =[
+    "Alta",
+    "Média",
+    "Baixa"
+    ];  
     $scope.atividades = [{ 
         // title:'Atividade 1', 
         // content: {
-        idAtividade: null,
-        idSprint: 1,
-        idHistoria: null,
-        nome: "Atividade 1",
-        prioridade: $scope.prioridade,
-        participantes: {
-            selected: $scope.participantes[0],
-            options: $scope.participantes
-        },
-        estimativa: null,
-        descricao: null
+            idAtividade: null,
+            idSprint: 1,
+            idHistoria: null,
+            nome: "Atividade 1",
+            prioridades: {
+                selected: null,
+                options: $scope.prioridade
+            },
+            participantes: null,
+            estimativas:{
+                selected: null,
+                options: $scope.estimativa
+            },
+            descricao: null
         // } 
     }];
 
-    // participantes.success(function(data) {
-    //     $scope.participantes = data;
-    //     $scope.atividades[0].participantes = {
-    //         selected: $scope.participantes[0],
-    //         options: $scope.participantes
-    //     };
-    //     console.log($scope.atividades);
-    // });  
+    participantes.success(function(data) {
+        $scope.participantes = data;
+        $scope.atividades[0].participantes = {
+            selected: null,
+            options: $scope.participantes
+        };
+        console.log($scope.atividades);
+    });  
 
     $scope.addAtividade = function() {
         $scope.atividades.push({ 
             // title:'Atividade '+ ($scope.atividades.length + 1),
             // content: {
-            idAtividade: null,
-            idSprint: 1,
-            idHistoria: null,
-            idParticipante: null,
-            nome:'Atividade '+ ($scope.atividades.length + 1),
-            participantes: null,
-            prioridade: $scope.prioridade,
-            participantes: {
-                selected: $scope.participantes[0],
-                options: $scope.participantes
-            },
-            estimativa: null,
-            descricao: null
+                idAtividade: null,
+                idSprint: 1,
+                idHistoria: null,
+                idParticipante: null,
+                nome:'Atividade '+ ($scope.atividades.length + 1),
+                participantes: null,
+                prioridades: {
+                    selected: null,
+                    options: $scope.prioridade
+                },
+                participantes: {
+                    selected: null,
+                    options: $scope.participantes
+                },
+                estimativas:{
+                    selected: null,
+                    options: $scope.estimativa
+                },
+                descricao: null
             // } 
         }); 
     };
@@ -107,6 +102,9 @@ angular.module('demo').controller('TabsActCtrl', function ($scope, $window,  $ui
                         options: $scope.participantes
                     };
                     return $scope.item;
+                },
+                alerts: function(){
+                    return $scope.alerts;
                 }
             }
         });
@@ -123,16 +121,18 @@ angular.module('demo').controller('TabsActCtrl', function ($scope, $window,  $ui
     };
 });
 
-angular.module('demo').controller('ModalAtividadeCtrl', function ($scope, $uibModalInstance, items) {
+angular.module('demo').controller('ModalAtividadeCtrl', function ($scope, $uibModalInstance, items, atividades, alerts) {
     $scope.dialog = items;
     $scope.save = function (activs) {
         for (var i = 0; i < activs.length; i++) {
             activs[i].idHistoria = items.historia.idHistoria;
         };
-        console.log("items");
-        console.log(items);
-        console.log("activs");
         console.log(activs);
+        atividades.create(activs).success(function(data) {
+            alerts.push({
+                type: 'success', msg: 'Atividades adicionadas ao Sprint'
+            });
+        });
         $uibModalInstance.dismiss('cancel');
     };
 

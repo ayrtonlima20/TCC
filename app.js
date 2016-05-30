@@ -204,6 +204,7 @@ models.sequelize.sync().then(function() {
 								'",prioridade = "' + prioridade +
 								'" where idAtividade = ' + idAtividade,function(err,data){
 						if(err) throw err;
+		   				res.end( JSON.stringify(data));
 					});
 				};
 
@@ -286,6 +287,7 @@ models.sequelize.sync().then(function() {
 
 					con.query('delete from atividades where idAtividade = ' + idAtividade,function(err,data){
 						if(err) throw err;
+		   				res.end( JSON.stringify(data));
 					});
 				};
 
@@ -305,24 +307,27 @@ models.sequelize.sync().then(function() {
 					return;
 				}else{	
 					var query = "";
-					var atividades = req.body.atividades === undefined ? null : req.body.atividades;
+					var atividades = req.body === undefined ? null : req.body;
 					for (var i = 0; i < atividades.length; i++) {
-						query += "(" + atividades[i].idAtividade + "," +  atividades[i].idHistoria + "," +
-								 atividades[i].idSprint + "," + atividades[i].nome + "," + atividades[i].descricao + "," +
-								 atividades[i].prioridade + ")";
+						query += "(" + atividades[i].idAtividade + "," +  atividades[i].idHistoria + "," + 
+								 atividades[i].participantes.selected.idUsuario + ",'ToDo'," +
+								 atividades[i].idSprint + ",'" + atividades[i].nome + "'," +  atividades[i].estimativas.selected +
+								 ",'" + atividades[i].descricao + "','" + atividades[i].prioridades.selected + "')";
 						if ((i + 1) < atividades.length) {
 							query += ",";
 						}
 					};
-					var idAtividade = req.body.idAtividade === undefined ? 0 : req.body.idAtividade;
+					console.log(query);
+					con.query('insert into atividades (idAtividade,idHistoria,idParticipante,status,idSprint,'+ 
+							  'nome, duracao,descricao, prioridade)values' + query ,function(err,data){
 
-
-					con.query('insert into atividades (idAtividade,idHistoria,idParticipante,idSprint,'+ 
-							  'nome, descricao, prioridade)values' + query +
-							  'on duplicated key update idHistoria = values(idHistoria),' +
-							  'idParticipante = values(idParticipante), idSprint = values(idSprint),' + 
-							  'nome = values(nome), descricao = values(descricao), prioridade = values(prioridade)' ,function(err,data){
+							  // 'on duplicated key update idHistoria = values(idHistoria),' +
+							  // 'idParticipante = values(idParticipante), idSprint = values(idSprint),' + 
+							  // 'nome = values(nome), duracao = values(duracao), descricao = values(descricao), prioridade = values(prioridade)'
 						if(err) throw err;
+						console.log(data);
+						console.log(query);
+		   				res.end( JSON.stringify(data));
 					});
 				};
 

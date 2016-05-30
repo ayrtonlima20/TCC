@@ -10,6 +10,15 @@ angular.module("demo").factory('atividades', ['$http', function($http) {
       return err; 
     });
   };
+  atividades.create = function(dataCreate){
+    return $http.post('http://127.0.0.1:8090/crateAtividades', dataCreate) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
   atividades.update = function(dataUpd){
     return $http.post('http://127.0.0.1:8090/setAtividade', dataUpd) 
     .success(function(data) { 

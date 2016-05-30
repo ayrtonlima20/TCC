@@ -43,12 +43,12 @@
     <div class="row row-space noselect "ng-click="setBlock(dialog.block.status)">
         <div class="col-md-5 button-div-icon" >
             <span class="col-md-10 button-icon" >{{dialog.block.nome}}</span>
-            <div class="fa fa-th-list button-icon"></div>
+            <div class="button-icon"ng-class=" dialog.block.status === true ? 'glyphicon glyphicon-ok-circle':'glyphicon glyphicon-ban-circle'"></div>
         </div>
     </div>
     <div class="row row-space noselect">
         <div class="col-md-5 button-div-icon">
-            <span class="col-md-10 button-icon" ng-click="cancel()">Teste de Aceitação</span>
+            <span class="col-md-10 button-icon" >Teste de Aceitação</span>
             <div class="fa fa-th-list button-icon" ng-click="cancel()"></div>
         </div>
     </div>

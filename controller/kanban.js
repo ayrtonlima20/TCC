@@ -3,14 +3,22 @@ angular.module("demo").controller("KanbanController", function($scope, atividade
     $scope.dataAmazon = null;   
     sprint.success(function(data) {
         $scope.sprint = data[0];
-
     });
+    $scope.alerts = [];
+
+    $scope.addAlert = function() {
+        $scope.alerts.push({msg: 'Another alert!'});
+    };
+
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
     atividades.get().success(function(data) {
         $scope.dataAmazon = data;
         $scope.$watch('models', function(model) {
             $scope.modelAsJson = angular.toJson($scope.dataAmazon, true);
             // $scope.modelAsJson = angular.toJson($scope.models, true);
-            $scope.models = $scope.dataAmazon;    
+            $scope.models = $scope.dataAmazon;  
         }, true);
     });
     $scope.setColumn = function(item){
@@ -47,5 +55,5 @@ angular.module("demo").controller("KanbanController", function($scope, atividade
             //     };
             // };
         }, 100);
-    };
+};
 });

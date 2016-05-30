@@ -8,7 +8,6 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
   $scope.participantes = {};
   $scope.historia = {};
   var historiasAtiv = {};
-
   $scope.estimativa = {
     selected: 3,
     options: [
@@ -30,7 +29,6 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
       "Baixa"
     ]
   };
-
   participantes.success(function(data) {
     $scope.participantes = data;
   });   
@@ -118,6 +116,12 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
           $scope.dialog.horaFim = item.horaFim;
 
           return $scope.dialog;
+        },
+        alerts: function(){
+          return $scope.alerts;
+        },
+        lists: function(){
+          return $scope.models.lists;
         }
       }
     });
@@ -146,9 +150,8 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
 
-angular.module('demo').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, $confirm, items, atividades) {
+angular.module('demo').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, $confirm, items, atividades, alerts, lists) {
   $scope.dialog = items;
-
   $scope.save = function (itemDialog) {
     items.selected.idHistoria = itemDialog.historia.idHistoria;
     items.selected.idParticipante = itemDialog.participantes.selected.idUsuario;
@@ -156,23 +159,33 @@ angular.module('demo').controller('ModalInstanceCtrl', function ($scope, $uibMod
     items.selected.descricao = itemDialog.descricao;
     items.selected.bloqueada = itemDialog.bloqueada;
     items.selected.prioridade = itemDialog.prioridade.selected;
-    console.log(items.selected);
     atividades.update($scope.dialog.selected).success(function(data) {
+      var msgAlert = 'Alteração realizada no item: ' + items.selected.nome;
+      alerts.push({
+        type: 'success', msg: msgAlert
+      });
     });
     // $uibModalInstance.close($scope.dialog.selected.item);
     $uibModalInstance.close(items.selected.item);
   };
 
   $scope.delete = function () {
+    var index = $("[taskID='" + items.selected.idAtividade + "']").children().attr('index');
     atividades.delete($scope.dialog.selected.idAtividade).success(function(data) {
-    }).error(function(error){
-      console.log("erro");
-      
+      lists[items.selected.status].splice(index,1);
+      var msgAlert = 'Item: ' + items.selected.nome + ' excluido';
+      alerts.push({
+        type: 'success', msg: msgAlert
+      });
+    }).error(function(error){      
     });
     // $uibModalInstance.close($scope.dialog.selected.item);
     $uibModalInstance.close(items.selected.item);
   };
   $scope.cancel = function () {
+    alerts.push({
+      type: 'danger', msg: 'Ação Cancelada'
+    });
     $uibModalInstance.close(items.selected.item);
   };
   $scope.setBlock = function(status){

@@ -43,3 +43,4 @@
         </div>
     </div> -->
 </div>
+<uib-alert class="alert-scrum repeat-item" ng-repeat="alert in alerts" type="{{alert.type}}" dismiss-on-timeout="2500" close="closeAlert($index)">{{alert.msg}}</uib-alert>

@@ -1,4 +1,4 @@
-<div class="row" ng-controller="FillSprintCtrl">
+<div class="row">
 	<div ng-repeat="(tableName, tables) in table.historias"  
 		class="col-lg-6">
 		<div class="panel panel-default">
@@ -52,4 +52,5 @@
         </div>
     </div> -->
 </div>
+<uib-alert class="alert-scrum repeat-item" ng-repeat="alert in alerts" type="{{alert.type}}" dismiss-on-timeout="2500" close="closeAlert($index)">{{alert.msg}}</uib-alert>
 	
