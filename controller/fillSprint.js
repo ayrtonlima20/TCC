@@ -36,24 +36,35 @@ angular.module("demo").controller("FillSprintCtrl", function($scope, historias) 
     	$scope.table = {
 			selected:null,
 			historias:{
-				"ProductBacklog": data,
-				"SprintBacklog":[{
-					nome:"História 4", 
-					prioridade:"1",
-					esforco:"10"
-				},{
-					nome:"História 5", 
-					prioridade:"2",
-					esforco:"50"
-				},{
-					nome:"História 6", 
-					prioridade:"3",
-					esforco:"100"
-				}]
+				"ProductBacklog": [],
+				"SprintBacklog": []
 			}
 		};
+		for (var i = 0; i < data.length; i++) {
+			if (data[i].status === "SprintBacklog"){
+				$scope.table.historias["SprintBacklog"].push(data[i]);
+			}else{
+				$scope.table.historias["ProductBacklog"].push(data[i]);
+			};
+		}
 	});	
    $scope.closeAlert = function(index) {
         $scope.alerts.splice(index, 1);
+    };
+    $scope.setStatusHistoria = function(historia){
+        setTimeout(function(){	
+            var oldColumn = historia.status;
+            var newColumn = $("[histID='" + historia.idHistoria + "']").parent().attr('nameHist');
+            var index = $("[histID='" + historia.idHistoria + "']").children().attr('index');
+            if (newColumn != oldColumn){
+            	var setHistoria = {
+            		idHistoria: historia.idHistoria,
+            		status: newColumn
+            	};
+                historias.updateStatus(setHistoria).success(function(data) {
+                    $scope.table.historias[newColumn][index].status = newColumn;
+                });
+            };
+        }, 100);
     };
 });

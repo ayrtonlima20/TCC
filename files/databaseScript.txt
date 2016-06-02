@@ -128,3 +128,13 @@ INSERT INTO sprint value(
 );
 
 select * from sprint;
+
+
+create table testeAceitacao(
+    idTeste int(4) auto_increment not null,
+    idHistoria int(4) not null,
+    acao char(200) not null,
+    resultado char(200) not null,
+    primary key(idTeste),
+    FOREIGN KEY (idHistoria) REFERENCES historias (idHistoria)
+);

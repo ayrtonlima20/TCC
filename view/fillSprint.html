@@ -18,16 +18,18 @@
 							</tr>
 						</thead>
 						<tbody class="noselect" 
-								dnd-list="tables">
+								dnd-list="tables"
+								nameHist={{tableName}}>
 							<tr class="odd gradeX noselect"
 								ng-repeat="line in tables"
 							    dnd-draggable="line"
-						        dnd-moved="tables.splice($index, 1)"
+						        dnd-moved="setStatusHistoria(line); tables.splice($index, 1);"
         						dnd-selected="table.selected = line"
 							    dnd-effect-allowed="move"
         						ng-class="{'selected': table.selected === line}"
-        						ng-controller="ModalDemoCtrl">
-								<td>{{line.nome}}</td>
+        						ng-controller="ModalDemoCtrl"
+        						histID={{line.idHistoria}}>
+								<td index={{$index}}>{{line.nome}}</td>
 								<td>{{line.prioridade}}</td>
 								<td>{{line.esforco}}</td>
 								<td ng-controller="TabsActCtrl"

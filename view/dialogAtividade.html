@@ -8,7 +8,7 @@
             <uib-tab index="$index" selected="true" ng-repeat="atividade in atividades" heading="{{atividade.nome}}" active="0" disable="atividade.disabled">
                 <div class="row row-space row-top-space">
                     <div class="col-md-6">
-                        <label class="col-md-3">Nome:</label>
+                        <label class="col-md-3">Nome:{{teste}}</label>
                         <div class="dialog-div-input col-md-8">
                             <input class="form-control" ng-model="atividade.nome"></input>
                         </div>

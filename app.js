@@ -122,6 +122,28 @@ models.sequelize.sync().then(function() {
 				// console.log('Connection established');
 			});
 		});
+		app.post('/setStatusHistoria', function (req, res) {
+			var con = mysql.createConnection({
+				host: "localhost",
+			  	user: "root",
+			  	password: "root",
+				database: "scrum"
+			});
+			con.connect(function(err){
+				if(err){
+					console.log('Error connecting to Historia Database');
+					return;
+				}else{	
+					var idHistoria = req.body.idHistoria === undefined ? 0 : req.body.idHistoria;
+					var status = req.body.status === undefined ? "ProductBacklog" : req.body.status;
+					con.query('update historias set status = "' + status +
+						'" where idHistoria = ' + idHistoria,function(err,data){
+						if(err) throw err;
+		   				res.end( JSON.stringify(data));
+					});
+				};
+			});
+		});
 		app.get('/getSprintActive', function (req, res) {
 			var con = mysql.createConnection({
 				host: "localhost",
@@ -186,19 +208,19 @@ models.sequelize.sync().then(function() {
 					console.log('Error connecting to Sprint Database');
 					return;
 				}else{	
-					var idAtividade = req.body.idAtividade === undefined ? 0 : req.body.idAtividade;
-					var idParticipante = req.body.idParticipante === undefined ? 0 : req.body.idParticipante;
-					var idHistoria = req.body.idHistoria === undefined ? 0 : req.body.idHistoria;
-					var duracao = req.body.duracao === undefined ? 8 : req.body.duracao;
-					// var dataInicio = req.body.dataInicio;
-					// var dataFim	= req.body.dataFim;
+					var idAtividade = req.body.idAtividade === (undefined || null) ? 0 : req.body.idAtividade;
+					var idParticipante = req.body.idParticipante === (undefined || null) ? 0 : req.body.idParticipante;
+					var idHistoria = req.body.idHistoria === (undefined || null) ? 0 : req.body.idHistoria;
+					var nome = req.body.nome === (undefined || null) ? "" : req.body.nome;
+					var duracao = req.body.duracao === (undefined || null) ? 8 : req.body.duracao;
 					var descricao = req.body.descricao === undefined ? "" : req.body.descricao;
-					var bloqueada = req.body.bloqueada === undefined ? "" : req.body.bloqueada;
-					var prioridade = req.body.prioridade === undefined ? 0 : req.body.prioridade;
+					var bloqueada = req.body.bloqueada === (undefined || null)? "" : req.body.bloqueada;
+					var prioridade = req.body.prioridade === (undefined || null) ? 0 : req.body.prioridade;
 
 					con.query('update atividades set idParticipante = '+ idParticipante + 
 								', idHistoria = ' + idHistoria +
-								',duracao = ' + duracao  +
+								', nome = "' + nome + 
+								'",duracao = ' + duracao  +
 								',descricao = "' + descricao  +
 								'",bloqueada = "' + bloqueada  +
 								'",prioridade = "' + prioridade +
@@ -308,9 +330,11 @@ models.sequelize.sync().then(function() {
 				}else{	
 					var query = "";
 					var atividades = req.body === undefined ? null : req.body;
+					var idUsuario = 0;
 					for (var i = 0; i < atividades.length; i++) {
+						idUsuario = atividades[i].participantes.selected === null? 0: atividades[i].participantes.selected.idUsuario;
 						query += "(" + atividades[i].idAtividade + "," +  atividades[i].idHistoria + "," + 
-								 atividades[i].participantes.selected.idUsuario + ",'ToDo'," +
+								 idUsuario + ",'ToDo'," +
 								 atividades[i].idSprint + ",'" + atividades[i].nome + "'," +  atividades[i].estimativas.selected +
 								 ",'" + atividades[i].descricao + "','" + atividades[i].prioridades.selected + "')";
 						if ((i + 1) < atividades.length) {
@@ -332,6 +356,94 @@ models.sequelize.sync().then(function() {
 				};
 
 				// console.log('Connection established');
+			});
+		});
+		app.post('/getAtividadesSprintBacklog', function (req, res) {
+			var con = mysql.createConnection({
+				host: "localhost",
+			  	user: "root",
+			  	password: "root",
+				database: "scrum"
+			});
+			con.connect(function(err){
+				if(err){
+					console.log('Error connecting to Sprint Database');
+					return;
+				}else{	
+					var idHistoria = req.body.idHistoria === undefined ? 0 : req.body.idHistoria;
+
+					con.query('select * from atividades where idHistoria = ' + idHistoria +
+						 	  ' and status = "ToDo"',function(err,data){
+						if(err) throw err;
+		   				res.end( JSON.stringify(data));
+					});
+				};
+
+				// console.log('Connection established');
+			});
+		});
+		app.post('/getTesteAceitacao', function (req, res) {
+			var con = mysql.createConnection({
+				host: "localhost",
+			  	user: "root",
+			  	password: "root",
+				database: "scrum"
+			});
+			con.connect(function(err){
+				if(err){
+					console.log('Error connecting to Historia Database');
+					return;
+				}else{	
+					var idHistoria = req.body.idHistoria === (undefined || null) ? 0 : req.body.idHistoria;
+					con.query('select * from testeAceitacao where idHistoria = ' + idHistoria +
+							  ' ORDER by idTeste',function(err,data){
+						if(err) throw err;
+		   				res.end( JSON.stringify(data));
+					});
+				};
+			});
+		});
+		app.post('/deleteTesteAceitacao', function (req, res) {
+			var con = mysql.createConnection({
+				host: "localhost",
+			  	user: "root",
+			  	password: "root",
+				database: "scrum"
+			});
+			con.connect(function(err){
+				if(err){
+					console.log('Error connecting to Historia Database');
+					return;
+				}else{	
+					var idTeste = req.body.idTeste === (undefined || null) ? 0 : req.body.idTeste;
+					con.query('delete from testeAceitacao where idTeste = ' + idTeste,function(err,data){
+						if(err) throw err;
+		   				res.end( JSON.stringify(data));
+					});
+				};
+			});
+		});
+		app.post('/createTesteAceitacao', function (req, res) {
+			var con = mysql.createConnection({
+				host: "localhost",
+			  	user: "root",
+			  	password: "root",
+				database: "scrum"
+			});
+			con.connect(function(err){
+				if(err){
+					console.log('Error connecting to Historia Database');
+					return;
+				}else{
+					var idHistoria = req.body.idHistoria === (undefined || null) ? 0 : req.body.idHistoria;
+					var acao = req.body.acao === (undefined || null) ? "" : req.body.acao;
+					var resultado = req.body.resultado === (undefined || null) ? 0 : req.body.resultado;
+					con.query('insert into testeAceitacao (idHistoria,acao,resultado) value(' + idHistoria + ',"' +
+							  acao + '","' + resultado + '")',function(err,data){
+						if(err) throw err;
+		   				res.end( JSON.stringify(data));
+					});
+				};
 			});
 		});
 		function getDataFim(date, estimativa, horaTrabInicio, horaTrabFim){
@@ -375,6 +487,8 @@ models.sequelize.sync().then(function() {
 			// database[i].year = date.getFullYear();
 		};
 		function getTimeFormatHHMMSS(time) {
+			// fdsfs
+			// fdsfs
 			return getHora(time) + ':' + getMinutes(time) + ':' + getSeconds(time);
 		};
 		function getFlagKanban (horaTrabInicio, horaTrabFim, dataInicioAtiv, dataFimAtiv, duracaoAtiv) {

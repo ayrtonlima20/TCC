@@ -49,6 +49,16 @@ angular.module("demo").factory('atividades', ['$http', function($http) {
       return err; 
     }); 
   };
+  atividades.getAtividadesSprintBacklog = function (idHistoria) {
+    var atividade = {"idHistoria": idHistoria};
+    return $http.post('http://127.0.0.1:8090/getAtividadesSprintBacklog', atividade) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
   return atividades;
    
 }]);
@@ -75,7 +85,16 @@ angular.module("demo").factory('historias', ['$http', function($http) {
       .error(function(err) { 
         return err; 
       });
-    }; 
+  }; 
+  historias.updateStatus = function (historia) {
+    return $http.post('http://127.0.0.1:8090/setStatusHistoria', historia) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
   return historias;
 }]);
 angular.module("demo").factory('sprint', ['$http', function($http) { 
@@ -88,4 +107,39 @@ angular.module("demo").factory('sprint', ['$http', function($http) {
     .error(function(err) { 
       return err; 
     }); 
+}]);
+angular.module("demo").factory('testeAceitacao', ['$http', function($http) { 
+  // return $http.get('https://s3.amazonaws.com/codecademy-content/courses/ltp4/forecast-api/forecast.json') 
+  var testeAceitacao = {};
+
+  testeAceitacao.get = function (idHist) {
+    var historia = {idHistoria: idHist}
+    return $http.post('http://127.0.0.1:8090/getTesteAceitacao', historia) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  testeAceitacao.delete = function (idTesteAceitacao) {
+    var teste = {idTeste: idTesteAceitacao}
+    return $http.post('http://127.0.0.1:8090/deleteTesteAceitacao', teste) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  testeAceitacao.create = function (teste) {
+    return $http.post('http://127.0.0.1:8090/createTesteAceitacao', teste) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  return testeAceitacao;
 }]);

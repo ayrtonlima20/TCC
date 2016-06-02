@@ -126,7 +126,7 @@ tbody[dnd-list] .dndDraggingSource {
  */
 tbody[dnd-list] .dndPlaceholder {
     display: block;
-    min-height: 42px;
+    /*min-height: 42px;*/
 }
 
 .noselect {

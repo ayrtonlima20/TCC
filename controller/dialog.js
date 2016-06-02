@@ -159,6 +159,7 @@ angular.module('demo').controller('ModalInstanceCtrl', function ($scope, $uibMod
     items.selected.descricao = itemDialog.descricao;
     items.selected.bloqueada = itemDialog.bloqueada;
     items.selected.prioridade = itemDialog.prioridade.selected;
+    console.log($scope.dialog.selected);
     atividades.update($scope.dialog.selected).success(function(data) {
       var msgAlert = 'Alteração realizada no item: ' + items.selected.nome;
       alerts.push({

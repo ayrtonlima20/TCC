@@ -17,6 +17,14 @@ angular.module("demo", ["ngRoute", "dndLists", "ngAnimate", "ui.bootstrap", 'ang
                 templateUrl: 'view/fillSprint.html',
                 controller: 'FillSprintCtrl'
             })
+            .when('/testeAceitacao', {
+                templateUrl: 'view/testeAceitacao.html',
+                controller: 'TesteAceitacao'
+            })
+            .when('/sprintBurndown', {
+                templateUrl: 'view/sprintBurndown.html',
+                controller: 'SprintBurndown'
+            })
             .when('/',{redirectTo: '/home'})
             .otherwise({redirectTo: '/home'});
     })

@@ -1,3 +1,18 @@
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+-------------------------------------Sprint Burndown-----------------------------------------------
+Adicionar campo data de criação à uma atividade
+Fazer update dessa data quando for gerado o sprint
+horas 					- Definido por soma das estimativas das atividades do sprint
+dias  					- Definido por dias úteis cadastrados no sprint
+calculo horas/atividade - Cada atividade deve iniciar no gráfico na sua data de criação
+calculo descer horas    - Pegar a data fim da atividade e ali fazer qndHorasTotal - estimativa
+
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 -Variáveis Sprint
 horaTrabInicio = 09:00h
 horaTrabFim    = 18:00h

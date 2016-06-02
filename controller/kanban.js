@@ -55,5 +55,5 @@ angular.module("demo").controller("KanbanController", function($scope, atividade
             //     };
             // };
         }, 100);
-};
+    };
 });
