@@ -61,7 +61,11 @@ models.sequelize.sync().then(function() {
 							// };
 
 							// qual cor a atividade terá
-							data[i].flag = getFlagKanban("09", "18", dataInicio, dataFim, data[i].duracao);
+							if (data[i].status === "Done"){
+								// preencher com flag que foi para done
+							}else{
+								data[i].flag = getFlagKanban("09", "18", dataInicio, dataFim, data[i].duracao);
+							}
 							// verifica em qual quadro se enquadrará	
 							if (data[i].status === "ToDo") {
 								models.lists.ToDo.push(data[i]);	
@@ -217,6 +221,8 @@ models.sequelize.sync().then(function() {
 					var bloqueada = req.body.bloqueada === (undefined || null)? "" : req.body.bloqueada;
 					var prioridade = req.body.prioridade === (undefined || null) ? 0 : req.body.prioridade;
 
+					console.log(req.body.length);
+
 					con.query('update atividades set idParticipante = '+ idParticipante + 
 								', idHistoria = ' + idHistoria +
 								', nome = "' + nome + 
@@ -336,14 +342,14 @@ models.sequelize.sync().then(function() {
 						query += "(" + atividades[i].idAtividade + "," +  atividades[i].idHistoria + "," + 
 								 idUsuario + ",'ToDo'," +
 								 atividades[i].idSprint + ",'" + atividades[i].nome + "'," +  atividades[i].estimativas.selected +
-								 ",'" + atividades[i].descricao + "','" + atividades[i].prioridades.selected + "')";
+								 ",'" + atividades[i].descricao + "','" + atividades[i].prioridades.selected + "', 'green')";
 						if ((i + 1) < atividades.length) {
 							query += ",";
 						}
 					};
 					console.log(query);
 					con.query('insert into atividades (idAtividade,idHistoria,idParticipante,status,idSprint,'+ 
-							  'nome, duracao,descricao, prioridade)values' + query ,function(err,data){
+							  'nome, duracao,descricao, prioridade, flag)values' + query ,function(err,data){
 
 							  // 'on duplicated key update idHistoria = values(idHistoria),' +
 							  // 'idParticipante = values(idParticipante), idSprint = values(idSprint),' + 
@@ -494,8 +500,9 @@ models.sequelize.sync().then(function() {
 		function getFlagKanban (horaTrabInicio, horaTrabFim, dataInicioAtiv, dataFimAtiv, duracaoAtiv) {
 			// Calcular duração real da atividade
 			var duracaoTotAtiv;
-			var dateAtivDiff = getConvDateDiff(dataInicioAtiv, dataFimAtiv);
 			var actualDate = new Date();
+			// var dateAtivDiff = getConvDateDiff(dataInicioAtiv, dataFimAtiv);
+			var dateAtivDiff = getConvDateDiff(dataInicioAtiv, actualDate);
 			if(dataInicioAtiv < dataFimAtiv){
 				var diasTrab = dateAtivDiff.days;
 				var count = 1;

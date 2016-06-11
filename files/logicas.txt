@@ -4,6 +4,7 @@
 -------------------------------------Sprint Burndown-----------------------------------------------
 Adicionar campo data de criação à uma atividade
 Fazer update dessa data quando for gerado o sprint
+Ordenar select por data de criação
 horas 					- Definido por soma das estimativas das atividades do sprint
 dias  					- Definido por dias úteis cadastrados no sprint
 calculo horas/atividade - Cada atividade deve iniciar no gráfico na sua data de criação
