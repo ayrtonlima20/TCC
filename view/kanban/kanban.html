@@ -28,7 +28,7 @@
                 <span class="kanban-text kanban-text-main col-md-12">{{item.nome}}</span>
                 <div class="kanban-footer col-md-12 col-xs-12">
                     <span class="kanban-text kanban-text-time col-md-3">{{item.duracao}}h</span>
-                    <div class="kanban-pic col-md-9"></div>
+                    <div class="div-kanban-pic col-md-9"><img class="kanban-pic" ng-if="item.foto != undefined" ng-src="{{item.foto}}"></img></div>
                 </div>
             </div>
     </li>

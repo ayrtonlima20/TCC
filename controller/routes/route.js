@@ -5,6 +5,10 @@ angular.module("demo", ["ngRoute", "dndLists", "ngAnimate", "ui.bootstrap", 'ang
                 templateUrl:'view/home.html',
                 controller: 'HomeController'
             })
+            .when('/productBacklog', {
+                templateUrl: 'view/productBacklog.html',
+                controller: 'ProductBacklogCtrl'
+            })
             .when('/kanban', {
                 templateUrl: 'view/kanban/kanban-frame.html',
                 controller: 'KanbanController'
@@ -24,6 +28,18 @@ angular.module("demo", ["ngRoute", "dndLists", "ngAnimate", "ui.bootstrap", 'ang
             .when('/sprintBurndown', {
                 templateUrl: 'view/sprintBurndown.html',
                 controller: 'SprintBurndown'
+            })
+            .when('/sprintReview', {
+                templateUrl: 'view/sprintReview.html',
+                controller: 'SprintReview'
+            })
+            .when('/licoesAprendidas', {
+                templateUrl: 'view/licoesAprendidas.html',
+                controller: 'LicoesAprendidasCtrl'
+            })
+            .when('/release', {
+                templateUrl: 'view/release.html',
+                controller: 'ReleaseCtrl'
             })
             .when('/',{redirectTo: '/home'})
             .otherwise({redirectTo: '/home'});

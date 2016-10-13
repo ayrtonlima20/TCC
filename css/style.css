@@ -188,13 +188,17 @@ tbody[dnd-list] .dndPlaceholder {
     font-weight: 100;
     font-size: 14px;
 }
-.kanban-pic{
+.div-kanban-pic{
     position: absolute;
     bottom: 5px;
     right: 5px;
     height: 30px;
     width: 30px;
-    background-color: black;
+    padding: 0px;
+}
+.kanban-pic{
+    width: 30px;
+    height: 30px;
 }
 .kanban-gear{
     position: absolute;
@@ -330,4 +334,11 @@ form.tab-form-demo .tab-pane {
 .repeat-item.ng-leave,
 .repeat-item.ng-enter.ng-enter-active {
   opacity: 1;
+}
+
+/*Sprint Backlog*/
+.sprint-backlog-header{
+    padding-left: 0px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

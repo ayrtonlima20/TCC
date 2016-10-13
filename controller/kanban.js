@@ -32,7 +32,8 @@ angular.module("demo").controller("KanbanController", function($scope, atividade
                 status: newColumn,
                 dataInicio: item.dataInicio,
                 dataFim: item.dataFim,
-                estimativa: item.duracao
+                estimativa: item.duracao,
+                flag: item.flag
             };
 
             if (newColumn != oldColumn){
@@ -46,6 +47,9 @@ angular.module("demo").controller("KanbanController", function($scope, atividade
                         $scope.models.lists[newColumn][index].horaFim = data.horaFim;
                     };
                     $scope.models.lists[newColumn][index].status = newColumn;
+                    if (newColumn === "ToDo") {
+                        $scope.models.lists[newColumn][index].flag = "green";
+                    };
                 });
             };
             // for (var i = 0 ; i < column.length; i++) {

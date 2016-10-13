@@ -1,0 +1,52 @@
+PROBLEMAS
+
+Sprint backlog
+- Gerar Sprint não funciona 
+
+Kanban
+- Problema com a data
+- Definir como a data deve aparecer 
+- Perguntar pro andre como vai ficar isso de finalizar o sprint
+- Botão de Adicionar nova atividade
+- Tratar pra das 9 as 18	
+- Quando muda de dia, calcular as flags
+
+Teste de Aceitação
+- Perguntar pro andre como vai ficar isso de finalizar os testes
+
+Sprint Burndown
+- Calcular por mês
+
+Cadastrar Usuário
+- Não tem
+
+Login
+- Não tem
+
+Cadastrar Projeto
+- Não tem
+
+Consultar Projetos
+- Não tem
+
+Product Backlog
+- Flag quando atividade estiver em algum sprint
+- Perguntar pro andre se quando tem uma atividade da historia no sprint, se pode se adicionar mais atividades na historia ou não
+
+Lições aprendidas
+- Fazer filtro por lições
+- Perguntar pro andre sobre assuntos padrões
+- Ligar com projeto, pra no popup deixar como o projeto ativo
+
+Release
+- Perguntar pro andre como vai ficar isso de um release iniciar(release é por historia, mas e se colocar outras historias no sprint, como fica?)
+- Filtrar por releases (select box)
+
+Apontamentos
+- Como após o apontamento a história volta pro Product Backlog?
+
+Problemas Gerais
+- Contas do kanban não estão prontas para administrar diferença entre mês
+
+Perguntas Gerais
+- Cada projeto vai ser cadastrado por empresa? Ou as lições aprendidas só vão ser válidas por projeto?

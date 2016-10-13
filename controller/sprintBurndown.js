@@ -1,60 +1,98 @@
-angular.module("demo").controller("SprintBurndown", function($scope) {
-	$('#container').highcharts({
-		title: {
-			text: 'Sprint Burndown',
-			  x: -20 //center
-		},
-		colors: ['blue', 'red'],
-		plotOptions: {
-			line: {
-				lineWidth: 3
+angular.module("demo").controller("SprintBurndown", function($scope, sprintBurndown) {
+
+	sprintBurndown.get().success(function(data) {
+        var dias = [];
+        var horas = [];	
+        var horasEsperado = [];
+        var aux = 0;
+        var esperadoSub = 0;
+        $.each(data,function(index, value){
+        	dias[index] = "Dia " + value.dia;
+        	horas[index] = value.estimativa;
+        	if (index === 0) {
+        		horasEsperado[index] = horas[index];
+        		esperadoSub = horas[index] / ( data.length - 1);
+        	}else{
+	        	if (data[index - 1].estimativa < horas[index]) {
+	        		horasEsperado[index] = horas[index];
+	        		esperadoSub = horas[index] / ( data.length - (index + 1));
+	        	}else{
+	        		horasEsperado[index] = horasEsperado[index - 1] - esperadoSub;
+	        		if (horasEsperado[index] < 0 ) {
+	        			horasEsperado[index] = 0;
+	        		}
+	        	};
+
+        	};
+        });
+  //       do {
+  //       	if (horasEsperado.length === 0) {
+  //       		horasEsperado[0] = horas[0];
+  //       		esperadoSub = horas[0] / ( dias.length - 1);
+  //       	}else{
+  //       		horasEsperado[aux] = horasEsperado[aux - 1] - esperadoSub;
+  //       		if (horasEsperado[aux] < 0 ) {
+  //       			horasEsperado[aux] = 0;
+  //       		}
+  //       	};  
+  //       	aux += 1;   	
+		// }
+		// while (horasEsperado.length < dias.length);
+		$('#container').highcharts({
+			title: {
+				text: 'Sprint Burndown',
+				  x: -20 //center
+			},
+			colors: ['blue', 'red'],
+			plotOptions: {
+				line: {
+					lineWidth: 3
+				},
+				tooltip: {
+					hideDelay: 200
+				}
+			},
+			subtitle: {
+				text: 'Sprint 1',
+				x: -20
+			},
+			xAxis: {
+				categories: dias
+			},
+			yAxis: {
+				title: {
+					text: 'Horas'
+				},
+				plotLines: [{
+					value: 0,
+					width: 1
+				}]
 			},
 			tooltip: {
-				hideDelay: 200
-			}
-		},
-		subtitle: {
-			text: 'Sprint 1',
-			x: -20
-		},
-		xAxis: {
-			categories: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6',
-			'Day 7', 'Day 8', 'Day 9', 'Day 10', 'Day 11', 
-			'Day 12', 'Day 13', 'Day 14', 'Day 15', 'Day 16']
-		},
-		yAxis: {
-			title: {
-				text: 'Horas'
+				valueSuffix: ' hrs',
+				crosshairs: true,
+				shared: true
 			},
-			plotLines: [{
-				value: 0,
-				width: 1
+			legend: {
+				layout: 'vertical',
+				align: 'right',
+				verticalAlign: 'middle',
+				borderWidth: 2
+			},
+			series: [{
+				name: 'Ideal',
+				color: 'rgba(255,0,0,0.25)',
+				lineWidth: 1,
+				data: horasEsperado,
+				dashStyle: 'longdash'
+			}, {
+				name: 'Atual',
+				color: 'rgba(0,120,200,0.75)',
+				marker: {
+					radius: 6
+				},
+				data: horas
 			}]
-		},
-		tooltip: {
-			valueSuffix: ' hrs',
-			crosshairs: true,
-			shared: true
-		},
-		legend: {
-			layout: 'vertical',
-			align: 'right',
-			verticalAlign: 'middle',
-			borderWidth: 2
-		},
-		series: [{
-			name: 'Ideal',
-			color: 'rgba(255,0,0,0.25)',
-			lineWidth: 1,
-			data: [120, 112, 104, 96, 88, 80, 72, 64, 56, 48, 40, 32, 24, 16, 8, 0],
-			dashStyle: 'longdash'
-		}, {
-			name: 'Atual',
-			color: 'rgba(0,120,200,0.75)',
-			marker: {
-				radius: 6
-			},
-			data: [120, 115, 110, 93, 105, 100, 90, 80, 60, 60, 30, 32, 23, 15, 10, 5]
-		}]
-	});
+		});
+    });
 });

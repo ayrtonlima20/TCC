@@ -36,7 +36,6 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
   historias.get().success(function(data) {
     historiasAtiv = data;
   });
-
   $scope.open = function (size, item) {
     var modalInstance = $uibModal.open({
       animation: true,
@@ -79,7 +78,6 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
             selected: $scope.participantes[indexPart],
             options: $scope.participantes
           };
-          // console.log($scope.dialog.participantes);
           for(i = 0; i < historiasAtiv.length; i++){
             if (item.idHistoria === historiasAtiv[i].idHistoria) {
               indexHist = i;
@@ -90,7 +88,6 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
             idHistoria: historiasAtiv[indexHist].idHistoria,
             nome: historiasAtiv[indexHist].nome
           };
-          console.log($scope.dialog.historia);
           // $scope.dialog.historia = historiasAtiv[indexHist].nome;
           for(var i = 0; i < $scope.estimativa.options.length; i++){
             if (item.duracao === $scope.estimativa.options[i]) {
@@ -128,6 +125,7 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
 
   modalInstance.result.then(function (selectedItem) {
       $scope.selected = selectedItem;
+      console.log(selectedItem);
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
@@ -138,11 +136,8 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
   };
   $scope.changeStatusScope = function(status){
     $scope.status = status;
-    console.log($scope.status);
   };
   $scope.logEvent = function(event, listName){
-    console.log(event);
-    console.log(listName);
 
   };
   });
@@ -159,7 +154,6 @@ angular.module('demo').controller('ModalInstanceCtrl', function ($scope, $uibMod
     items.selected.descricao = itemDialog.descricao;
     items.selected.bloqueada = itemDialog.bloqueada;
     items.selected.prioridade = itemDialog.prioridade.selected;
-    console.log($scope.dialog.selected);
     atividades.update($scope.dialog.selected).success(function(data) {
       var msgAlert = 'Alteração realizada no item: ' + items.selected.nome;
       alerts.push({
@@ -190,7 +184,6 @@ angular.module('demo').controller('ModalInstanceCtrl', function ($scope, $uibMod
     $uibModalInstance.close(items.selected.item);
   };
   $scope.setBlock = function(status){
-    console.log(status);
     if (status === false) {
       $scope.dialog.block.nome = "Desbloquar Atividade";
       $scope.dialog.block.status = true;

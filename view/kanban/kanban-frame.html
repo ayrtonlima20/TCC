@@ -24,7 +24,11 @@
             <div ng-repeat="(listName, list) in models.lists" class="kanban-square col-md-3">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{listName}}</h3>
+                        <h3 class="panel-title">
+                            <div ng-if="listName == 'ToDo'" class="col-md-11">{{listName}}</div>
+                            <div ng-if="listName == 'ToDo'" class="glyphicon glyphicon-plus" ng-click="adicionarAtividade(null)"></div>
+                            <div ng-if="listName != 'ToDo'"> {{listName}}</div>
+                        </h3>
                     </div>
                     <div class="panel-body" ng-include="'view/kanban/kanban.html'"></div>
                 </div>

@@ -1,5 +1,5 @@
 <div class="row col-md-12">
-	<button class="btn btn-default button-location col-md-1 sprint-backlog-header" type="button" ng-click="gerarSprint(table.historias)">Gerar Sprint</button>
+	<button class="btn btn-default button-location col-md-1 sprint-backlog-header" type="button" ng-click="openDialogRelease(null,table.historias)">Criar Release</button>
 </div>
 <div class="row">
 	<div ng-repeat="(tableName, tables) in table.historias"  
@@ -17,7 +17,6 @@
 								<th>Nome</th>
 								<th>Prioridade</th>
 								<th>Esforço</th>
-								<th ng-if="tableName === 'SprintBacklog'">Atividades</th>
 							</tr>
 						</thead>
 						<tbody class="noselect" 
@@ -26,7 +25,7 @@
 							<tr class="odd gradeX noselect"
 								ng-repeat="line in tables"
 							    dnd-draggable="line"
-						        dnd-moved="setStatusHistoria(line); tables.splice($index, 1);"
+						        dnd-moved="setRelease(line); tables.splice($index, 1);"
         						dnd-selected="table.selected = line"
 							    dnd-effect-allowed="move"
         						ng-class="{'selected': table.selected === line}"
@@ -35,10 +34,6 @@
 								<td index={{$index}}>{{line.nome}}</td>
 								<td>{{line.prioridade}}</td>
 								<td>{{line.esforco}}</td>
-								<td ng-controller="TabsActCtrl"
-									ng-if="tableName === 'SprintBacklog'" 
-									class="act-open fa fa-plus-circle"
-									ng-click="openDialogAtividade('lg', line)"></td>
 							</tr>
 						</tbody>
 					</table>

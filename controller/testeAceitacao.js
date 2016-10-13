@@ -26,7 +26,9 @@ angular.module("demo").controller("TesteAceitacao", function($scope, historias, 
 		};
 		testeAceitacao.create(teste).success(function(data) {
 			testeAceitacao.get(idHistoria).success(function(data) {
+				console.log($scope.testesAceitacao);
 				$scope.testesAceitacao = data;
+				console.log($scope.testesAceitacao);
 			});
 		});
 	};	

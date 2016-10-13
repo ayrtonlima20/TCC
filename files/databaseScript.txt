@@ -1,5 +1,32 @@
 use scrum;
 
+create table apontamentos(
+    idApontamento int(4) auto_increment not null,
+    idHistoria int(4) not null,
+    idAtividade int(4) not null,
+    apontamento char(200) not null,
+    primary key(idApontamento),
+    FOREIGN KEY (idHistoria) REFERENCES historias (idHistoria),
+    FOREIGN KEY (idAtividade) REFERENCES atividades (idAtividade)
+);
+CREATE TABLE licoes(
+    idLicao int(4) auto_increment not null,
+    dataLicao datetime not null,
+    assunto char(200) not null,
+    idUsuario int(4) not null,
+    idProjeto int(4) not null,
+    descricao char(200) not null,
+    primary key(idLicao),
+    FOREIGN KEY (idUsuario) REFERENCES usuarios (idUsuario),
+    foreign key (idProjeto) references projetos (idProjeto)
+);
+
+create table projetos(
+    idProjeto int(4) auto_increment not null,
+    nome char(200) not null,
+    primary key(idProjeto)
+);
+
 CREATE TABLE if not exists historias (
     idHistoria int(4) auto_increment not null ,
     nome char(50),

@@ -89,18 +89,14 @@ angular.module('demo').controller('ModalAtividadeCtrl', function ($scope, $uibMo
                 activUpd.push(activs[i]);
             };
         };
-        console.log("activCreate");
-        console.log(activCreate);
-        console.log("activUpd");
-        console.log(activUpd);
-        if (activCreate.length > 1) {
+        if (activCreate.length >= 1) {
             atividades.create(activCreate).success(function(data) {
                 alerts.push({
                     type: 'success', msg: 'Atividades adicionadas ao Sprint'
                 });
             });
         };
-        if(activUpd.length > 1){
+        if(activUpd.length >= 1){
             atividades.update(activUpd).success(function(data) {
                 alerts.push({
                     type: 'success', msg: 'Atividades Alteradas'

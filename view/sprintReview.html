@@ -1,0 +1,62 @@
+<div class="col-md-4">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+		</div>
+		<!-- /.panel-heading -->
+		<div class="panel-body">
+			<div>
+				<label class="col-md-3">História:</label>
+				<div class="dialog-div-input col-md-9">
+	                <select class="form-control" ng-model="historias.selected" ng-options="opt.nome for opt in historias.options" ng-change="getAtividades(historias.selected.idHistoria)"></select>
+	            </div>
+			</div>
+			<div>
+				<label class="col-md-3">Atividades:</label>
+				<div class="dialog-div-input col-md-9">
+	                <select class="form-control" ng-model="atividades.selected" ng-options="opt.nome for opt in atividades.options" ng-change="fillApontamentos(historias.selected.idHistoria, atividades.selected.idAtividade)"></select>
+	            </div>
+			</div>
+			<div>
+				<label>Apontamentos:</label>
+				<div class="dialog-div-input">
+	                <input type="text" class="form-control" ng-model="fields.apontamento">
+	            </div>
+			</div>
+			<button type="button" class="btn btn-default" ng-click="adicionarApontamento(fields,atividades.selected.idAtividade, historias.selected.idHistoria)">Adicionar Apontamento</button>
+		</div>
+	</div>	
+</div>
+<div class="col-md-8">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			Apontamentos
+		</div>
+		<!-- /.panel-heading -->
+		<div class="panel-body">
+			<div class="dataTable_wrapper">
+				<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+					<thead>
+						<tr>
+							<th class="col-md-1">ID</th>
+							<th class="col-md-5">Atividade</th>
+							<th class="col-md-5">Apontamento</th>
+							<th class="col-md-1">Excluir</th>
+						</tr>
+					</thead>
+					<tbody class="noselect" 
+							dnd-list="tables"
+							nameHist={{tableName}}>
+						<tr class="odd gradeX"
+							ng-repeat="apont in apontamentos"
+							taskID={{apont.idApontamento}}>
+							<td class="col-md-1" index={{$index}}>{{apont.idApontamento}}</td>
+							<td class="col-md-5">{{apont.atividade}}</td>
+							<td class="col-md-5">{{apont.apontamento}}</td>
+							<td class="col-md-1 glyphicon glyphicon-trash act-open" ng-click="excluirApontamento(apont.idApontamento)"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

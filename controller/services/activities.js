@@ -11,7 +11,7 @@ angular.module("demo").factory('atividades', ['$http', function($http) {
     });
   };
   atividades.create = function(dataCreate){
-    return $http.post('http://127.0.0.1:8090/crateAtividades', dataCreate) 
+    return $http.post('http://127.0.0.1:8090/createAtividades', dataCreate) 
     .success(function(data) { 
       return data; 
     }) 
@@ -59,6 +59,26 @@ angular.module("demo").factory('atividades', ['$http', function($http) {
       return err; 
     }); 
   };
+  atividades.getAtividades = function (idHistoria) {
+    var atividade = {"idHistoria": idHistoria};
+    return $http.post('http://127.0.0.1:8090/getAtividades', atividade) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  atividades.getAtividade = function (idAtividade) {
+    var atividade = {"idAtividade": idAtividade};
+    return $http.post('http://127.0.0.1:8090/getAtividade', atividade) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
   return atividades;
    
 }]);
@@ -88,6 +108,33 @@ angular.module("demo").factory('historias', ['$http', function($http) {
   }; 
   historias.updateStatus = function (historia) {
     return $http.post('http://127.0.0.1:8090/setStatusHistoria', historia) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  historias.updateRelease = function (historia) {
+    return $http.post('http://127.0.0.1:8090/setReleaseHistoria', historia) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  historias.create = function (historia) {
+    return $http.post('http://127.0.0.1:8090/createHistoria', historia) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  historias.editar = function (historia) {
+    return $http.post('http://127.0.0.1:8090/editarHistoria', historia) 
     .success(function(data) { 
       return data; 
     }) 
@@ -142,4 +189,126 @@ angular.module("demo").factory('testeAceitacao', ['$http', function($http) {
     }); 
   };
   return testeAceitacao;
+}]);
+angular.module("demo").factory('sprintBurndown', ['$http', function($http) { 
+  // return $http.get('https://s3.amazonaws.com/codecademy-content/courses/ltp4/forecast-api/forecast.json') 
+  var sprintBurndown = {};
+  sprintBurndown.get = function (teste) {
+    return $http.post('http://127.0.0.1:8090/getSprintBurndown', teste) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  return sprintBurndown;
+}]);
+angular.module("demo").factory('apontamento', ['$http', function($http) { 
+  // return $http.get('https://s3.amazonaws.com/codecademy-content/courses/ltp4/forecast-api/forecast.json') 
+  var apontamentos = {};
+  apontamentos.get = function (idApontamento) {
+    var apontamento = {"idApontamento": idApontamento};
+    return $http.post('http://127.0.0.1:8090/getApontamento', apontamento) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  apontamentos.getApontamentos = function (idHistoria, idAtividade) {
+    var apontamento = {
+      "idHistoria": idHistoria,
+      "idAtividade": idAtividade
+    };
+    return $http.post('http://127.0.0.1:8090/getApontamentos', apontamento) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  apontamentos.create = function (idHistoria, idAtividade, txtApontamento) {
+    var apontamento = {
+      "idHistoria": idHistoria,
+      "idAtividade": idAtividade,
+      "txtApontamento": txtApontamento
+    };
+    return $http.post('http://127.0.0.1:8090/createApontamento', apontamento) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  apontamentos.set = function (idHistoria, idAtividade, txtApontamento) {
+    var apontamento = {
+      "idHistoria": idHistoria,
+      "idAtividade": idAtividade,
+      "txtApontamento": txtApontamento
+    };
+    return $http.post('http://127.0.0.1:8090/setApontamento', apontamento) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  apontamentos.delete = function (idApontamento) {
+    var apontamento = {
+      idApontamento: idApontamento
+    };
+    return $http.post('http://127.0.0.1:8090/deleteApontamento', apontamento) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  return apontamentos;
+}]);
+
+angular.module("demo").factory('licoesAprendidas', ['$http', function($http) { 
+  // return $http.get('https://s3.amazonaws.com/codecademy-content/courses/ltp4/forecast-api/forecast.json') 
+  var licoesAprendidas = {};
+  licoesAprendidas.create = function (licaoAprendida) {
+    return $http.post('http://127.0.0.1:8090/createLicaoAprendida', licaoAprendida) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  licoesAprendidas.get = function () {
+    var filters =  {};
+    return $http.post('http://127.0.0.1:8090/getLicoesAprendidas', filters) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  return licoesAprendidas;
+}]);
+
+angular.module("demo").factory('releases', ['$http', function($http) { 
+  // return $http.get('https://s3.amazonaws.com/codecademy-content/courses/ltp4/forecast-api/forecast.json') 
+  var releases = {};
+  releases.create = function (release) {
+    return $http.post('http://127.0.0.1:8090/createRelease', release) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  return releases;
 }]);
