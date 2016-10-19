@@ -1,25 +1,25 @@
 <div class="col-md-4">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			Teste de Aceitação
+	<div class="widget-box">
+		<div class="widget-title">
+			<h5>Teste de Aceitação</h5>	
 		</div>
 		<!-- /.panel-heading -->
-		<div class="panel-body">
-			<div>
-				<label class="col-md-3">História:</label>
-				<div class="dialog-div-input col-md-9">
+		<div class="widget-content">
+			<div class="control-group control-space col-md-12">
+				<label class="col-md-3 control-label">História:</label>
+				<div class="controls col-md-9">
 	                <select class="form-control" ng-model="historias.selected" ng-options="opt.nome for opt in historias.options" ng-change="fillTestes(historias.selected.idHistoria)"></select>
 	            </div>
-			</div>
-			<div>
-				<label>Ação:</label>
-				<div class="dialog-div-input">
+			</div class="control-group control-space col-md-12">
+			<div class="control-group control-space col-md-12">
+				<label class="col-md-3 control-label">Ação:</label>
+				<div class="controls col-md-9">
 	                <input type="text" class="form-control" ng-model="fields.acao">
 	            </div>
 			</div>
-			<div>
-				<label>Resultado Esperado:</label>
-				<div class="dialog-div-input">
+			<div class="control-group control-space col-md-12">
+				<label class="col-md-3 control-label">Resultado Esperado:</label>
+				<div class="controls col-md-9">
 	                <input type="text" class="form-control" ng-model="fields.resultado">
 	            </div>
 			</div>
@@ -28,20 +28,21 @@
 	</div>	
 </div>
 <div class="col-md-8">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			Testes
+	<div class="widget-box">
+		<div class="widget-title"><span class="icon"> <i class="icon-th"></i></span>
+			<h5>Testes</h5>
 		</div>
 		<!-- /.panel-heading -->
-		<div class="panel-body">
+		<div class="widget-content nopadding">
 			<div class="dataTable_wrapper">
-				<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+				<table width="100%" class="table table-bordered table-striped" id="dataTables-example">
 					<thead>
 						<tr>
-							<th class="col-md-1">ID</th>
-							<th class="col-md-5">Ação</th>
-							<th class="col-md-5">Resultado</th>
-							<th class="col-md-1">Excluir</th>
+							<th class="col-md-0.3">ID</th>
+							<th class="col-md-5">Cenário</th>
+							<th class="col-md-5">Resultado Esperado</th>
+							<th class="2">Resultado</th>
+							<th class="col-md-0.5">Excluir</th>
 						</tr>
 					</thead>
 					<tbody class="noselect" 
@@ -50,10 +51,15 @@
 						<tr class="odd gradeX"
 							ng-repeat="teste in testesAceitacao"
 							taskID={{teste.idTeste}}>
-							<td class="col-md-1" index={{$index}}>{{teste.idTeste}}</td>
+							<td class="col-md-0.3" index={{$index}}>{{teste.idTeste}}</td>
 							<td class="col-md-5">{{teste.acao}}</td>
 							<td class="col-md-5">{{teste.resultado}}</td>
-							<td class="col-md-1 glyphicon glyphicon-trash act-open" ng-click="excluirTeste(teste.idTeste)"></td>
+							<td class="col-md-2">
+								<div class="glyphicon glyphicon-ok col-md-4" ng-class="'{{teste.status}}'==='{{status.correto}}'?'confirm-color':''" ng-click="setStatusTeste(teste, status.correto)"></div>
+								<div class="glyphicon glyphicon-remove col-md-4" ng-class="'{{teste.status}}'==='{{status.incorreto}}'?'error-color':''" ng-click="setStatusTeste(teste, status.incorreto)"></div>
+								<div class="glyphicon glyphicon-ban-circle col-md-4" ng-class="'{{teste.status}}'===''?'none-color':''" ng-click="setStatusTeste(teste, '')"></div>
+							</td>
+							<td class="col-md-0.5 glyphicon glyphicon-trash act-open" ng-click="excluirTeste(teste.idTeste)"></td>
 						</tr>
 					</tbody>
 				</table>

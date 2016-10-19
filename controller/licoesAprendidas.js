@@ -26,6 +26,7 @@ angular.module("demo").controller("LicoesAprendidasCtrl", function($scope, $uibM
 			animation: true,
 			templateUrl: 'view/dialogLicoesAprendidas.html',
 			controller: 'DialogLicoesAprendidas',
+            backdrop: "static",
 			size: size,
 			resolve: {
 				items: function () {

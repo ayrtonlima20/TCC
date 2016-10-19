@@ -4,89 +4,120 @@
     <h3 class="modal-title dialog-title">{{dialog.selected.nome}}</h3>
 </div>
 <div class="modal-body">
-    <div class="row">
+    <div class="control-group col-md-12">
         <div class="col-md-6 dialog-settings">
-            <label class="col-md-5">Data Inicio:</label>
+            <label class="col-md-5 control-label">Data Inicio:</label>
             <pre class="sprint-text col-md-6">{{dialog.dataInicio}}  {{dialog.horaInicio}}</pre>
         </div>
         <div class="col-md-6 dialog-settings">
-            <label class="col-md-5">Data Fim:</label>
+            <label class="col-md-5 control-label">Data Fim:</label>
             <pre class="sprint-text col-md-6">{{dialog.dataFim}}  {{dialog.horaFim}}</pre>
         </div>
     </div>
-    <div class="row row-space">
+    <div class="control-group control-space col-md-12">
         <div class="col-md-6 dialog-settings">
-            <label class="col-md-5">Participante:</label>
+            <label class="col-md-5 control-label">Participante:</label>
             <div class="dialog-div-input col-md-6">
                 <select class="form-control" ng-model="dialog.participantes.selected" ng-options="opt.nome for opt in dialog.participantes.options"></select>
             </div>
         </div>
         <div class="col-md-6 dialog-settings">
-            <label class="col-md-5">Prioridade:</label>
+            <label class="col-md-5 control-label">Prioridade:</label>
             <div class="dialog-div-input col-md-6">
                 <select class="form-control dialog-input" ng-model="dialog.prioridade.selected" ng-options="opt for opt in dialog.prioridade.options"></select>
             </div>
         </div>
     </div>
-    <div class="row row-space">
+    <div class="control-group control-space col-md-12">
         <div class="col-md-6 dialog-settings">
-            <label class="col-md-5">Estimativa:</label>
+            <label class="col-md-5 control-label">Estimativa:</label>
             <div class="dialog-div-input col-md-6">
                 <select class="form-control" ng-model="dialog.estimativa.selected" ng-options="opt for opt in dialog.estimativa.options"></select>
             </div>
         </div>
         <div class="col-md-6 dialog-settings">
-            <label class="col-md-5">História:</label>
+            <label class="col-md-5 control-label">História:</label>
             <pre class="sprint-text col-md-6">{{dialog.historia.nome}}</pre>
         </div>
     </div>
-    <div class="row row-space noselect "ng-click="setBlock(dialog.block.status)">
+    <div class="row-fluid row-space control-space noselect" data-toggle="modal" data-target="#popupImpedimento" > <!-- ng-click="setBlock(dialog.block.status)" -->
         <div class="col-md-5 button-div-icon" >
             <span class="col-md-10 button-icon" >{{dialog.block.nome}}</span>
-            <div class="button-icon"ng-class=" dialog.block.status === true ? 'glyphicon glyphicon-ok-circle':'glyphicon glyphicon-ban-circle'"></div>
+            <div class="button-icon" ng-class="dialog.block.status === true ? 'glyphicon glyphicon-ok-circle':'glyphicon glyphicon-ban-circle'"></div>
         </div>
     </div>
-    <div class="row row-space noselect">
+<!--     <div class="row-fluid row-space control-space noselect">
         <div class="col-md-5 button-div-icon">
             <span class="col-md-10 button-icon" >Teste de Aceitação</span>
             <div class="fa fa-th-list button-icon" ng-click="cancel()"></div>
         </div>
-    </div>
-    <div class="row">
-        <label class="col-md-12">Descrição {{dialog.deleted}}</label>
-        <textarea class="form-control col-md-12 dialog-act-descr" ng-model="dialog.descricao">{{dialog.descricao}}</textarea>
-    </div>
-
-
-<!--     <div class="form-group">
-        <label>Selected:</label> 
-        <input type="text" class="form-control" required ng-model="dialog.selected.label">
-        </input>
-    </div>
-    <div class="form-group">
-        <label>Cidade:</label> 
-        <input type="text" class="form-control" required ng-model="dialog.dataAmazon.city_name">
-        </input>
     </div> -->
+    <div class="row-fluid control-group control-space col-md-12">
+        <div class="col-md-12 dialog-settings">
+            <label class="col-md-2 control-label">Descrição:</label>
+            <div class="controls col-md-10">
+                <textarea class="form-control col-md-12 dialog-act-descr" ng-model="dialog.descricao">{{dialog.descricao}}</textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid"></div>
 </div>
 <div class="modal-footer">
     <button class="btn btn-success button-location col-md-3" type="button" ng-click="save(dialog)">Salvar</button> 
     <button class="btn btn-danger button-location col-md-3" type="button" data-toggle="modal" data-target="#popupDelete">Excluir</button>
 </div>
+
+<!-- dialog related to exclude option to confir -->
 <div id="popupDelete" class="modal fade col-md-12" role="dialog" ><!-- style="z-index: 1600;display:inline-table" -->
     <div class="modal-dialog modal-dialog-custom">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
+                <button type="button"  ng-click="cancel()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h3 class="modal-title dialog-title">Confirmação</h3>
             </div>
             <div class="modal-body">
                 <label>Deseja excluir o registro?</label> 
-           <div class="modal-footer">
-                <button type="button" class="btn btn-default" ng-click="delete()" data-dismiss="modal">Sim</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="delete()" data-dismiss="modal">Sim</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                </div>
             </div>      
+        </div>
+    </div>
+</div>
+
+<!-- dialog related to block activity button -->
+<div id="popupImpedimento" class="modal fade col-md-12" role="dialog" ><!-- style="z-index: 1600;display:inline-table" -->
+    <div class="modal-dialog modal-dialog-custom">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" ng-if="dialog.block.status === false" ng-click="cancelarImpedimento()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" ng-if="dialog.block.status === true" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title dialog-title">Impedimento</h3>
+            </div>
+            <div class="modal-body" ng-if="dialog.block.status === false">
+                    <div class="control-group control-space col-md-12">
+                        <label class="col-md-12">Digite o Impedimento da atividade: "{{dialog.selected.nome}}"</label>
+                        <textarea class="form-control col-md-12 dialog-act-descr" ng-model="dialog.impedimento">{{dialog.selected.impedimento}}</textarea>
+                    </div>
+            </div>  
+            <div class="modal-body" ng-if="dialog.block.status === true">
+                    <div class="control-group control-space col-md-12">
+                        <label class="col-md-12">Deseja desbloquear a atividade e excluir o impedimento abaixo?"</label>
+                        <pre class="impedimento-text col-md-12">{{dialog.selected.impedimento}}</pre>
+                    </div>
+            </div>     
+            <div class="row-fluid"></div> 
+           <div class="modal-footer" ng-if="dialog.block.status === false">
+                <button type="button" class="btn btn-success" ng-click="salvarImpedimento(dialog)" data-dismiss="modal">Registrar</button>
+                <button type="button" class="btn btn-default" ng-click="cancelarImpedimento()" data-dismiss="modal">Cancelar</button>
+            </div> 
+           <div class="modal-footer" ng-if="dialog.block.status === true">
+                <button type="button" class="btn btn-danger" ng-click="excluirImpedimento(dialog)" data-dismiss="modal">Excluir</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
         </div>
     </div>
 </div>

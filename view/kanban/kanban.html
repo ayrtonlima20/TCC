@@ -19,16 +19,22 @@
         taskID={{item.idAtividade}}>
         <!-- dnd-selected="models.selected = item" -->
             <div class="kanban-content"
-                 index={{$index}}>
-                <div class="flag" ng-class="item.flag === 'green'?'flag-success':(item.flag === 'yellow'?'flag-warning':(item.flag === 'red'?'flag-error':null))"></div>
+                index={{$index}} ng-class="item.flag === 'green' && listName !='ToDo'?'k-success':(item.flag === 'yellow'?'k-warning':(item.flag === 'red'?'k-error':null))">
                 <div class="kanban-header col-md-12 col-xs-12">
                     <span class="kanban-text kanban-text-id col-md-6 col-sm-6">ID: {{item.idAtividade}}</span>
-                    <div ng-click="open(null, item)" class="kanban-gear glyphicon glyphicon-cog col-md-6 col-sm-6"></div>
+                    <div ng-click="open('lg', item)" class="kanban-gear glyphicon glyphicon-cog col-md-6 col-sm-6"></div>
                 </div>
-                <span class="kanban-text kanban-text-main col-md-12">{{item.nome}}</span>
+                <div class="kanban-atividade col-md-12 col-xs-12">
+                    <span class="kanban-text kanban-text-main col-md-9">{{item.nome}}</span>
+                    <div ng-if="item.bloqueada === 'X'" class="kanban-alert glyphicon glyphicon-exclamation-sign col-md-3"
+                    uib-popover="{{item.impedimento}}" popover-placement="left" popover-trigger="mouseenter" ></div>
+                </div>
+                <div class="kanban-historia col-md-12 col-xs-12">
+                    <span class="kanban-text kanban-text-main col-md-12">{{item.historia}}</span>
+                </div>
                 <div class="kanban-footer col-md-12 col-xs-12">
                     <span class="kanban-text kanban-text-time col-md-3">{{item.duracao}}h</span>
-                    <div class="div-kanban-pic col-md-9"><img class="kanban-pic" ng-if="item.foto != undefined" ng-src="{{item.foto}}"></img></div>
+                    <div class="kanban-user glyphicon glyphicon-user col-md-6 col-sm-6"></div>
                 </div>
             </div>
     </li>

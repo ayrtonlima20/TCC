@@ -1,8 +1,13 @@
-angular.module('demo').controller('DialogLicoesAprendidas', function ($scope, $window,  $uibModal, $log, $uibModalInstance, participantes, licoesAprendidas) {
+angular.module('demo').controller('DialogLicoesAprendidas', function ($scope, $window,  $uibModal, $log, $uibModalInstance, participantes, licoesAprendidas, assuntos) {
     $scope.participantes = {
         selected: null,
         options: []
     };
+    $scope.assuntos = {
+        selected: null,
+        options: []
+    };
+
     $scope.dialog = {
         "idUsuario": null,
         "usuario": null,
@@ -15,14 +20,19 @@ angular.module('demo').controller('DialogLicoesAprendidas', function ($scope, $w
     participantes.success(function(data) {
         $scope.participantes.options = data;
     }); 
+    assuntos.success(function(data){
+        $scope.assuntos.options = data;
+    });
 
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
 
-    $scope.save = function (dialog, participante) {
+    $scope.save = function (dialog, participante, assunto) {
         dialog.idUsuario = participante.idUsuario;
         dialog.usuario = participante.nome;
+        dialog.idAssunto = assunto.idAssunto;
+        dialog.assunto = assunto.nome;
         licoesAprendidas.create(dialog).success(function(data) {
             // alerts.push({
             //     type: 'success', msg: 'Nova lição aprendida adicionada'
@@ -31,7 +41,9 @@ angular.module('demo').controller('DialogLicoesAprendidas', function ($scope, $w
         });
     };
 
-
+    $scope.cancelar = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
 
 
 //     // $scope.dialog = {};

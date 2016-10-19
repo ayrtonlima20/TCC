@@ -6,6 +6,7 @@ angular.module("demo").controller("SprintBurndown", function($scope, sprintBurnd
         var horasEsperado = [];
         var aux = 0;
         var esperadoSub = 0;
+        console.log(data);
         $.each(data,function(index, value){
         	dias[index] = "Dia " + value.dia;
         	horas[index] = value.estimativa;
@@ -14,8 +15,10 @@ angular.module("demo").controller("SprintBurndown", function($scope, sprintBurnd
         		esperadoSub = horas[index] / ( data.length - 1);
         	}else{
 	        	if (data[index - 1].estimativa < horas[index]) {
-	        		horasEsperado[index] = horas[index];
-	        		esperadoSub = horas[index] / ( data.length - (index + 1));
+	        		// horasEsperado[index] = horas[index];
+	        		horasEsperado[index] = (horas[index] - horas[index - 1]) + horasEsperado[index - 1] - esperadoSub;
+	        		// esperadoSub = horas[index] / ( data.length - (index + 1));
+	        		esperadoSub = horasEsperado[index] / ( data.length - (index + 1));
 	        	}else{
 	        		horasEsperado[index] = horasEsperado[index - 1] - esperadoSub;
 	        		if (horasEsperado[index] < 0 ) {

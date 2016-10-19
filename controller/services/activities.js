@@ -79,6 +79,21 @@ angular.module("demo").factory('atividades', ['$http', function($http) {
       return err; 
     }); 
   };
+  atividades.setImpedimento = function (idAtividade, impedimento,bloqueada) {
+    var atividade = {
+      "idAtividade": idAtividade,
+      "impedimento": impedimento,
+      "bloqueada": bloqueada
+    };
+    return $http.post('http://127.0.0.1:8090/setImpedimento', atividade) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+
   return atividades;
    
 }]);
@@ -87,6 +102,16 @@ angular.module("demo").factory('participantes', ['$http', function($http) {
     
   return $http.get('http://127.0.0.1:8090/listUsuarios') 
   	.success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+}]);
+angular.module("demo").factory('assuntos', ['$http', function($http) { 
+  // return $http.get('https://s3.amazonaws.com/codecademy-content/courses/ltp4/forecast-api/forecast.json') 
+  return $http.get('http://127.0.0.1:8090/listAssuntos') 
+    .success(function(data) { 
       return data; 
     }) 
     .error(function(err) { 
@@ -145,16 +170,29 @@ angular.module("demo").factory('historias', ['$http', function($http) {
   return historias;
 }]);
 angular.module("demo").factory('sprint', ['$http', function($http) { 
-  // return $http.get('https://s3.amazonaws.com/codecademy-content/courses/ltp4/forecast-api/forecast.json') 
-    
-  return $http.get('http://127.0.0.1:8090/getSprintActive') 
+  var sprints = {};
+  sprints.getAtivo = function () {
+    return $http.get('http://127.0.0.1:8090/getSprintActive') 
     .success(function(data) { 
       return data; 
     }) 
     .error(function(err) { 
       return err; 
     }); 
+  };
+  sprints.finalizarSprint = function (done) {
+
+    return $http.post('http://127.0.0.1:8090/finalizarSprint', done) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  return sprints;
 }]);
+
 angular.module("demo").factory('testeAceitacao', ['$http', function($http) { 
   // return $http.get('https://s3.amazonaws.com/codecademy-content/courses/ltp4/forecast-api/forecast.json') 
   var testeAceitacao = {};
@@ -181,6 +219,19 @@ angular.module("demo").factory('testeAceitacao', ['$http', function($http) {
   };
   testeAceitacao.create = function (teste) {
     return $http.post('http://127.0.0.1:8090/createTesteAceitacao', teste) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  testeAceitacao.setStatus = function (idTeste, status) {
+    var teste = {
+      "idTeste":idTeste,
+      "status":status
+    };
+    return $http.post('http://127.0.0.1:8090/setStatusTeste', teste) 
     .success(function(data) { 
       return data; 
     }) 

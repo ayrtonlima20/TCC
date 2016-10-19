@@ -37,11 +37,13 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
     historiasAtiv = data;
   });
   $scope.open = function (size, item) {
+    console.log(size);
     var modalInstance = $uibModal.open({
       animation: true,
       templateUrl: 'view/dialog.html',
       controller: 'ModalInstanceCtrl',
       size: size,
+      backdrop: "static",
       resolve: {
         items: function () {
           var indexPart = 0; 
@@ -104,14 +106,13 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
             };
           };
           $scope.dialog.prioridade.selected = $scope.prioridade.options[indexPrio];
-
+          $scope.dialog.idAtividade = item.idAtividade;
           // $scope.dialog.dataInicio = new Date(item.dataInicio.substring(6,10), item.dataInicio.substring(3,5),item.dataInicio.substring(0,2));
           // $scope.dialog.dataFim = new Date(item.dataFim.substring(6,10), item.dataFim.substring(3,5),item.dataFim.substring(0,2));
           $scope.dialog.dataInicio =  item.dataInicio;
           $scope.dialog.dataFim = item.dataFim;
           $scope.dialog.horaInicio =  item.horaInicio;
           $scope.dialog.horaFim = item.horaFim;
-
           return $scope.dialog;
         },
         alerts: function(){
@@ -125,7 +126,6 @@ angular.module('demo').controller('ModalDemoCtrl', function ($scope, $uibModal, 
 
   modalInstance.result.then(function (selectedItem) {
       $scope.selected = selectedItem;
-      console.log(selectedItem);
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
@@ -193,5 +193,23 @@ angular.module('demo').controller('ModalInstanceCtrl', function ($scope, $uibMod
       $scope.dialog.block.status = false;
       $scope.dialog.bloqueada = "";
     };
+  };
+  $scope.excluirImpedimento = function(dialog){
+    atividades.setImpedimento(dialog.selected.idAtividade,"","").success(function(data){
+      $scope.setBlock(dialog.block.status);
+      $scope.cancelarImpedimento();
+      items.selected.impedimento = "";
+      items.selected.bloqueada = "";
+    });
+  };
+  $scope.cancelarImpedimento = function(){
+    $scope.dialog.impedimento = "";
+  };
+  $scope.salvarImpedimento = function(dialog){
+    atividades.setImpedimento(dialog.selected.idAtividade,dialog.impedimento, "X").success(function(data){
+      $scope.setBlock(dialog.block.status);
+      items.selected.impedimento = dialog.impedimento;
+      items.selected.bloqueada = "X";
+    });
   };
 });

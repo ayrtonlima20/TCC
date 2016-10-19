@@ -1,52 +1,103 @@
 PROBLEMAS
 
+Kanban
+- OK - Quando bloquear atividade aparecer algo pra identificar que está bloqueado
+- OK - Colocar as historias na atividade do kanban
+- OK - Colocar algum indicador visual de impedimento( alerta, stop )
+- OK - Adicionar um popover pra dizer qual o impedimento em cima do icone de impedimento
+- OK - Botão de bloquear atividade abre uma página para registrar impedimento
+- OK - Caso a atividade tenha impedimento no popup de atividades aparecer o impedimento da atividade
+- Ter um botão de finalizar sprint, quando finalizar aparecer um popup de confirmarção pra ver se as histórias voltam pro productBacklog
+- Quando muda de dia, calcular as flags(não calcular só por hora, mas por dia/mes/ano)
+- Botão de Adicionar nova atividade
+- Bloquear arrastar atividade por usuário
+- Tratar pra das 9 as 18
+- Quando data não for preenchida deixar como branca
+- Quando atividade está em done e tenta adicionar impedimento não deixar e colocar que para bloquear deverá estar em outras colunas
+- Quando atividade for movida para done e estiver com impedimento perguntar se deseja excluir o impedimento e mudar a atividade de lugar
+- Quando uma historia voltar pro product backlog conseguir rastrear que ela participou do sprint de que data a que data e com que data de finalizado pra conseguir fazer o product burndown (o mesmo pra atividades)
+
+Teste de aceitação
+- OK - Um flag de finalizado com sucesso ou não 
+- Quando clicar no X registrar um impedimento
+- É basedo em história, não em atividade
+- OK - Mudar de ação para cenário
+- Mudar o Banco de dados de ação para cenário
+- Quando clica no botão, registrar se o teste foi com erro ou sem erro, caso seja com erro marcar qual foi o erro
+- Volta a atividade pro to do pra pessoa fazer o ajuste
+- Se for com erro gera impedimento com o erro de teste de aceitação(cara marcar que ta com erro e qual é o erro)
+
+Product Backlog
+- Quando historia vai pro sprint, ela sai da fila de prioridade, mas caso volte, volta em prioridade 1
+- OK - Backlog é estimado em tamanho, não em esforço 
+- Quando arrastar a historia, arrumar a prioridade dela automaticamente
+- Quando inserir uma historia com prioridade igual a outra atualizar todas as de baixo em sequencia
+- Mudar no banco e na lógica o nome de esforço pra tamanho
+
+Lições aprendidas
+- Fazer filtro por lições
+- Ligar com projeto, pra no popup deixar como o projeto ativo
+
+Apontamentos
+- Cada apontamento volta como um item do product backlog
+- Volta como item
+- Ter algo para definir se é nova história, bug ou etc
+- Ligar apontamento com botão de finalizar sprint para retornar as atividades para as historias
+----- quando finalizar o sprint como vai ser isso de ir para o product backlog?
+
+Atividades
+- OK - Medido em esforço
+----- Nome está como estimativa, deixar estimativa ou mudar para esforço?
+- Mudar o banco de duração pra esforço	
+- Mudar toda lógica/banco do flag de vez ser cor, passar a ser atrasada, ok,almost ok
+
 Sprint backlog
 - Gerar Sprint não funciona 
+- Quando gerar sprint verificar se história tem atividades no sprint ativo, se tiver não mostra essa história no product backlog
+- Ao gerar sprint redefinir prioridades das histórias, para que deixem de estar nas prioridades
+- quando clicar no botão gerar sprint abrir um popup para definir tempo de sprint, descrição e confirmar a criação do sprint
+- excluir atividade não funciona
+- OK - Caso tenha algum sprint ativo, não deixar começar outro sprint em paralelo
 
-Kanban
-- Problema com a data
-- Definir como a data deve aparecer 
-- Perguntar pro andre como vai ficar isso de finalizar o sprint
-- Botão de Adicionar nova atividade
-- Tratar pra das 9 as 18	
-- Quando muda de dia, calcular as flags
+Toast
+- Quando aparece a mensagem agora o toast está gigante	
 
-Teste de Aceitação
-- Perguntar pro andre como vai ficar isso de finalizar os testes
+Tabelas
+- Quando não tiver nenhum registro deixar uma linha em branco falando que não tem nenhum registro selecionado
+
+Product Burndown
+- Pontos vs sprints
 
 Sprint Burndown
-- Calcular por mês
+- Calcular por dia/mes/ano
 
 Cadastrar Usuário
 - Não tem
 
+Assuntos
+- Criar tela que cadastra tópicos de assuntos para lições aprendidas
+
 Login
 - Não tem
 
-Cadastrar Projeto
-- Não tem
+Projeto
+- Cadastrar Projeto
+- Consultar Projetos
+- Deixar a aplicação inteira disponível para o projeto que estiver selecionado no momento
 
-Consultar Projetos
-- Não tem
-
-Product Backlog
-- Flag quando atividade estiver em algum sprint
-- Perguntar pro andre se quando tem uma atividade da historia no sprint, se pode se adicionar mais atividades na historia ou não
-
-Lições aprendidas
-- Fazer filtro por lições
-- Perguntar pro andre sobre assuntos padrões
-- Ligar com projeto, pra no popup deixar como o projeto ativo
-
-Release
-- Perguntar pro andre como vai ficar isso de um release iniciar(release é por historia, mas e se colocar outras historias no sprint, como fica?)
-- Filtrar por releases (select box)
-
-Apontamentos
-- Como após o apontamento a história volta pro Product Backlog?
+Inserir
+- Passar projeto pra i18n
+- Colocaar projeto totalmente orientado a objetos/dao/factory
+- Colocar todos os toast de confirmação e erro
+- Criar serviços OData pra realizar as pesquisas
+- Criar relatório com detalhes das atividades do sprint. Atrasadas ou não etc.(Colocar um farol tipo sap)
 
 Problemas Gerais
+- Arrumar todas as descrições com número máximo de palavras
 - Contas do kanban não estão prontas para administrar diferença entre mês
+- fazer todos os callback de error do factory
+- Algumas telas estão chamando o endpoint de histórias diversas vezes sem necessidade
 
 Perguntas Gerais
-- Cada projeto vai ser cadastrado por empresa? Ou as lições aprendidas só vão ser válidas por projeto?
+----- Cada projeto vai ser cadastrado por empresa? Ou as lições aprendidas só vão ser válidas por projeto?
+----- Qual tipo de criptografia deve ser utilizada?

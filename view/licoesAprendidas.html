@@ -1,22 +1,22 @@
 <div class="col-md-12">
-        <button class="button-location col-md-1" type="button" ng-click="openDialogCriarLicao(null)">Novo</button>
+        <button class="btn btn-default button-location col-md-2 sprint-backlog-header" type="button" ng-click="openDialogCriarLicao(null)"><span>Criar Lição Aprendida</span></button>
 </div>
 <div class="col-md-12">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			Lições Aprendidas
+	<div class="widget-box"">
+		<div class="widget-title"><span class="icon"> <i class="icon-th"></i></span>
+			<h5>Lições Aprendidas</h5>
 		</div>
 		<!-- /.panel-heading -->
-		<div class="panel-body">
+		<div class="widget-content nopadding">
 			<div class="dataTable_wrapper">
-				<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+				<table width="100%" class="table table-bordered table-striped" id="dataTables-example">
 					<thead>
 						<tr>
 							<th class="col-md-1">Nome (Projeto)</th>
-							<th class="col-md-5">Data</th>
-							<th class="col-md-5">Assunto</th>
+							<th class="col-md-1">Data</th>
+							<th class="col-md-1">Assunto</th>
 							<th class="col-md-1">Participante</th>
-							<th class="col-md-1">Descrição</th>
+							<th class="col-md-7">Descrição</th>
 						</tr>
 					</thead>
 					<tbody class="noselect" 
@@ -26,10 +26,10 @@
 							ng-repeat="licao in licoes"
 							taskID={{licao.idLicao}}>
 							<td class="col-md-1" index={{$index}}>{{licao.projeto}}</td>
-							<td class="col-md-5">{{licao.dataLicao | date:'dd/MM/yyyy'}}</td>
-							<td class="col-md-5">{{licao.assunto}}</td>
-							<td class="col-md-5">{{licao.usuario}}</td>
-							<td class="col-md-5">{{licao.descricao}}</td>
+							<td class="col-md-1">{{licao.dataLicao | date:'dd/MM/yyyy'}}</td>
+							<td class="col-md-1">{{licao.assunto}}</td>
+							<td class="col-md-1">{{licao.usuario}}</td>
+							<td class="col-md-7">{{licao.descricao}}</td>
 						</tr>
 					</tbody>
 				</table>

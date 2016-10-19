@@ -4,72 +4,37 @@
     <h3 class="modal-title dialog-title">Lições Aprendidas</h3>
 </div>
 <div class="modal-body">
-    <div class="row">
+    <div class="control-group col-md-12">
         <div class="col-md-12 dialog-settings">
             <label class="col-md-4">Nome do Projeto:</label>
             <pre class="sprint-text col-md-6">Projeto 1</pre>
         </div>
-        <div class="col-md-6 dialog-settings">
-            <label class="col-md-5">Data:</label>
+        <div class="col-md-12 dialog-settings">
+            <label class="col-md-4">Data:</label>
             <pre class="sprint-text col-md-6">{{dialog.dataLicao | date:'dd/MM/yyyy'}}</pre>
         </div>
-        <!-- <div class="col-md-6 dialog-settings">
-            <label class="col-md-5">Data Fim:</label>
-            <pre class="sprint-text col-md-6">{{dialog.dataFim}}  {{dialog.horaFim}}</pre>
-        </div> -->
-    </div>
-    <div class="row row-space">
-        <div class="col-md-6 dialog-settings">
-            <label class="col-md-5">Participante:</label>
+        <div class="col-md-12 control-space dialog-settings">
+            <label class="col-md-4">Participante:</label>
             <div class="dialog-div-input col-md-6">
                 <select class="form-control" ng-model= "participantes.selected" ng-options="opt.nome for opt in participantes.options"></select>
             </div>
         </div>
-    </div>
-    <div class="row row-space">
-        <div class="col-md-6 dialog-settings">
-            <label class="col-md-5">Assunto:</label>
+        <div class="col-md-12 control-space dialog-settings">
+            <label class="col-md-4">Assunto:</label>
             <div class="dialog-div-input col-md-6">
-                <!-- <select class="form-control" ng-model="dialog.estimativa.selected" ng-options="opt for opt in dialog.estimativa.options"></select> -->
-                <textarea class="form-control" ng-model="dialog.assunto">{{dialog.assunto}}</textarea>
+                <select class="form-control" ng-model= "assuntos.selected" ng-options="opt.nome for opt in assuntos.options"></select>
+            </div>
+        </div>
+        <div class="control-space col-md-12 dialog-settings">
+            <label class="col-md-2">Descrição:</label>
+            <div class="controls col-md-10">
+                <textarea class="form-control col-md-12 dialog-act-descr" ng-model="dialog.descricao">{{dialog.descricao}}</textarea>
             </div>
         </div>
     </div>
-    <div class="row">
-        <label class="col-md-12">Descrição:</label>
-        <textarea class="form-control col-md-12 dialog-act-descr" ng-model="dialog.descricao">{{dialog.descricao}}</textarea>
-    </div>
-
-
-<!--     <div class="form-group">
-        <label>Selected:</label> 
-        <input type="text" class="form-control" required ng-model="dialog.selected.label">
-        </input>
-    </div>
-    <div class="form-group">
-        <label>Cidade:</label> 
-        <input type="text" class="form-control" required ng-model="dialog.dataAmazon.city_name">
-        </input>
-    </div> -->
+    <div class="row-fluid"></div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-success button-location col-md-3" type="button" ng-click="save(dialog, participantes.selected)">Salvar</button> 
-    <button class="btn btn-danger button-location col-md-3" type="button" data-toggle="modal" data-target="#popupDelete">Excluir</button>
+    <button class="btn btn-success button-location col-md-3" type="button" ng-click="save(dialog, participantes.selected, assuntos.selected)">Salvar</button> 
+    <button class="btn btn-danger button-location col-md-3" type="button" ng-click="cancelar()">Cancelar</button>
 </div>
-<div id="popupDelete" class="modal fade col-md-12" role="dialog" ><!-- style="z-index: 1600;display:inline-table" -->
-    <div class="modal-dialog modal-dialog-custom">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title dialog-title">Confirmação</h3>
-            </div>
-            <div class="modal-body">
-                <label>Deseja excluir o registro?</label> 
-           <div class="modal-footer">
-                <button type="button" class="btn btn-default" ng-click="delete()" data-dismiss="modal">Sim</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
-            </div>
-            </div>      
-        </div>
-    </div>
-</div>  

@@ -52,11 +52,10 @@ td{
  * browsers we can use event.offsetY for this.
  */
 .simpleDemo ul[dnd-list] li {
-    background-color: #fff;
-    border: 1px solid #DDD;
+
 /*    border-top-right-radius: 4px;
     border-top-left-radius: 4px;*/
-    border-radius: 10px;
+  background-color:#08C;
     display: block;
     /*padding: 10px 15px;*/
     /*margin-bottom: -1px;*/
@@ -70,11 +69,11 @@ td{
     color: #3c763d;
 }*/
 
-ul[dnd-list] li:hover{
-    background-color: #DDD;
+ul[dnd-list] li:hover .kanban-content{
+    background-color: #333131;
 }
 ul[dnd-list] li:hover .kanban-gear{
-    background-color: #AAA;
+    background-color: #333131;
 }
 ul[dnd-list] li:hover .kanban-header{
     border-bottom: 1px solid #AAA;  
@@ -141,6 +140,7 @@ tbody[dnd-list] .dndPlaceholder {
 /*KANBAN CUSTOMIZED STYLE*/
 .kanban-square{
     padding: 0px 2.5px 0px 2.5px;
+
 }
 .kanban-act-square{
     height: 95px;
@@ -148,8 +148,13 @@ tbody[dnd-list] .dndPlaceholder {
     margin-bottom: 10px;
     cursor: grab;
     position: relative;
+        /*SOMBRA*/
+    box-shadow: 2px 2px 5px #2E363F;
+    -webkit-box-shadow: 2px 2px 5px #2E363F;
+    -moz-box-shadow: 2px 2px 5px #2E363F;
+    
 }
-.flag{  
+/*.flag{  
     width: 100%;
     border-bottom: 1px solid #DDD; 
     border-top-left-radius: 10px; 
@@ -167,25 +172,35 @@ tbody[dnd-list] .dndPlaceholder {
 }
 .flag.flag-blocked{
     background-color: #ddd;
-}
-.kanban-text{
+}*/
+/*.kanban-text{float: right;
+  586   margin: 8px 10px 0 0;
     padding-left: 5px;
     margin-top: 3px;
     display: inline-block;
     font-family: Calibri;
     width: 100%;
     word-wrap:break-word;
+}*/
+.kanban-text{
+    padding-left: 10px;
+    margin-top: 3px;
+    display: inline-block;
+    font-family: Arial;
+    color: white;
+    width: 100%;
+    word-wrap:break-word;
 }
 .kanban-text.kanban-text-id{
-    font-weight: 700;
-    font-size: 15px;
+    font-weight: 600;
+    font-size: 14px;
 }
 .kanban-text.kanban-text-main{
-    font-weight: 400;
+    font-weight: 600;
     font-size: 14px;
 }
 .kanban-text.kanban-text-time{
-    font-weight: 100;
+    font-weight: 600;
     font-size: 14px;
 }
 .div-kanban-pic{
@@ -207,7 +222,25 @@ tbody[dnd-list] .dndPlaceholder {
     width: 19px;
     padding: 3px 2.5px 3px 2.5px;
     cursor: pointer;
+    color: white;
+}
+.kanban-user{
+    position: absolute;
+    right: 2px;
+    height: 19px;
+    width: 19px;
+    padding: 3px 2.5px 3px 2.5px;
+    cursor: pointer;
+    color: white;
+}
+.kanban-alert{
+    position: absolute;
+    right: 2px;
+    height: 19px;
+    width: 19px;
+    padding: 3px 2.5px 3px 2.5px;
     border-radius: 6px;
+    color: white;
 }
 .kanban{
     padding: 0px;
@@ -218,18 +251,39 @@ tbody[dnd-list] .dndPlaceholder {
 .kanban-header{
     border-bottom: 1px solid #DDD;     
     padding: 0px;
+    width: 100%;
+}
+.kanban-atividade{  
+    border-bottom: 1px solid #DDD; 
+    padding: 0px;
+}
+.kanban-historia{
+    padding: 0px;
 }
 .kanban-footer{
     border-top: 1px solid #DDD;
     padding-left: 0px; 
     bottom: 0px;
-    height: 40px;
+    /*height: 40px;*/
     width: 100%;
 }
 .kanban-content{
     height: 100%;
     width: 100%;
     display: block;
+    text-align: -webkit-left;
+}
+.kanban-content.k-success{
+    background-color: #28b779;
+}
+.kanban-content.k-warning{
+    background-color: #FFB848;
+}
+.kanban-content.k-error{
+    background-color: #CC0000;
+}
+.kanban-content.k-blocked{
+    background-color: #ddd;
 }
 .sprint-text{
     font-family: Calibri;
@@ -341,4 +395,33 @@ form.tab-form-demo .tab-pane {
     padding-left: 0px;
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+/*Alert*/
+.alert-color{
+    color: red; 
+}
+.impedimento-text{
+    font-family: Calibri;
+    word-wrap:break-word;
+}
+pre {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+.confirm-color{
+    color:#00CC00;
+}
+.error-color{
+    color:red;
+}
+.none-color{
+    color:#DD6;
+}
+
+.control-space{
+    padding-bottom: 10px;
 }

@@ -1,0 +1,175 @@
+.icon-white,
+.nav-pills>.active>a>[class^="icon-"],
+.nav-pills>.active>a>[class*=" icon-"],
+.nav-list>.active>a>[class^="icon-"],
+.nav-list>.active>a>[class*=" icon-"],
+.navbar-inverse-theme .nav>.active>a>[class^="icon-"],
+.navbar-inverse-theme .nav>.active>a>[class*=" icon-"],
+.dropdown-menu>li>a:hover>[class^="icon-"],
+.dropdown-menu>li>a:focus>[class^="icon-"],
+.dropdown-menu>li>a:hover>[class*=" icon-"],
+.dropdown-menu>li>a:focus>[class*=" icon-"],
+.dropdown-menu>.active>a>[class^="icon-"],
+.dropdown-menu>.active>a>[class*=" icon-"],
+.dropdown-submenu:hover>a>[class^="icon-"],
+.dropdown-submenu:focus>a>[class^="icon-"],
+.dropdown-submenu:hover>a>[class*=" icon-"],
+.dropdown-submenu:focus>a>[class*=" icon-"] {
+    background-image: url("../img/glyphicons-halflings-white.png")
+}
+
+.navbar-inverse-theme .navbar-inner {
+    background-color: #1b1b1b;
+    background-image: -moz-linear-gradient(top, #222, #111);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#222), to(#111));
+    background-image: -webkit-linear-gradient(top, #222, #111);
+    background-image: -o-linear-gradient(top, #222, #111);
+    background-image: linear-gradient(to bottom, #222, #111);
+    background-repeat: repeat-x;
+    border-color: #252525;
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ff222222', endColorstr='#ff111111', GradientType=0)
+}
+
+.navbar-inverse-theme .brand,
+.navbar-inverse-theme .nav>li>a {
+    color: #999;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25)
+}
+
+.navbar-inverse-theme .brand:hover,
+.navbar-inverse-theme .nav>li>a:hover,
+.navbar-inverse-theme .brand:focus,
+.navbar-inverse-theme .nav>li>a:focus {
+    color: #fff
+}
+
+.navbar-inverse-theme .brand {
+    color: #999
+}
+
+.navbar-inverse-theme .navbar-text {
+    color: #999
+}
+
+.navbar-inverse-theme .nav>li>a:focus,
+.navbar-inverse-theme .nav>li>a:hover {
+    color: #fff;
+    background-color: transparent
+}
+
+.navbar-inverse-theme .nav .active>a,
+.navbar-inverse-theme .nav .active>a:hover,
+.navbar-inverse-theme .nav .active>a:focus {
+    color: #fff;
+    background-color: #111
+}
+
+.navbar-inverse-theme .navbar-link {
+    color: #999
+}
+
+.navbar-inverse-theme .navbar-link:hover,
+.navbar-inverse-theme .navbar-link:focus {
+    color: #fff
+}
+
+.navbar-inverse-theme .divider-vertical {
+    border-right-color: #222;
+    border-left-color: #111
+}
+
+.navbar-inverse-theme .nav li.dropdown.open>.dropdown-toggle,
+.navbar-inverse-theme .nav li.dropdown.active>.dropdown-toggle,
+.navbar-inverse-theme .nav li.dropdown.open.active>.dropdown-toggle {
+    color: #fff;
+    background-color: #111
+}
+
+.navbar-inverse-theme .nav li.dropdown>a:hover .caret,
+.navbar-inverse-theme .nav li.dropdown>a:focus .caret {
+    border-top-color: #fff;
+    border-bottom-color: #fff
+}
+
+.navbar-inverse-theme .nav li.dropdown>.dropdown-toggle .caret {
+    border-top-color: #999;
+    border-bottom-color: #999
+}
+
+.navbar-inverse-theme .nav li.dropdown.open>.dropdown-toggle .caret,
+.navbar-inverse-theme .nav li.dropdown.active>.dropdown-toggle .caret,
+.navbar-inverse-theme .nav li.dropdown.open.active>.dropdown-toggle .caret {
+    border-top-color: #fff;
+    border-bottom-color: #fff
+}
+
+.navbar-inverse-theme .navbar-search .search-query {
+    color: #fff;
+    background-color: #515151;
+    border-color: #111;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.15);
+    -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.15);
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none
+}
+
+.navbar-inverse-theme .navbar-search .search-query:-moz-placeholder {
+    color: #ccc
+}
+
+.navbar-inverse-theme .navbar-search .search-query:-ms-input-placeholder {
+    color: #ccc
+}
+
+.navbar-inverse-theme .navbar-search .search-query::-webkit-input-placeholder {
+    color: #ccc
+}
+
+.navbar-inverse-theme .navbar-search .search-query:focus,
+.navbar-inverse-theme .navbar-search .search-query.focused {
+    padding: 5px 15px;
+    color: #333;
+    text-shadow: 0 1px 0 #fff;
+    background-color: #fff;
+    border: 0;
+    outline: 0;
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.15)
+}
+
+.navbar-inverse-theme .btn-navbar {
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background-color: #0e0e0e;
+    *background-color: #040404;
+    background-image: -moz-linear-gradient(top, #151515, #040404);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#151515), to(#040404));
+    background-image: -webkit-linear-gradient(top, #151515, #040404);
+    background-image: -o-linear-gradient(top, #151515, #040404);
+    background-image: linear-gradient(to bottom, #151515, #040404);
+    background-repeat: repeat-x;
+    border-color: #040404 #040404 #000;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ff151515', endColorstr='#ff040404', GradientType=0);
+    filter: progid: DXImageTransform.Microsoft.gradient(enabled=false)
+}
+
+.navbar-inverse-theme .btn-navbar:hover,
+.navbar-inverse-theme .btn-navbar:focus,
+.navbar-inverse-theme .btn-navbar:active,
+.navbar-inverse-theme .btn-navbar.active,
+.navbar-inverse-theme .btn-navbar.disabled,
+.navbar-inverse-theme .btn-navbar[disabled] {
+    color: #fff;
+    background-color: #040404;
+    *background-color: #000
+}
+
+.navbar-inverse-theme .btn-navbar:active,
+.navbar-inverse-theme .btn-navbar.active {
+    background-color: #000 \9
+}

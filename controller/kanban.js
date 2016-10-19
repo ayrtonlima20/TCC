@@ -1,7 +1,7 @@
 angular.module("demo").controller("KanbanController", function($scope, atividades, sprint) {
 
     $scope.dataAmazon = null;   
-    sprint.success(function(data) {
+    sprint.getAtivo().success(function(data) {
         $scope.sprint = data[0];
     });
     $scope.alerts = [];
@@ -33,6 +33,7 @@ angular.module("demo").controller("KanbanController", function($scope, atividade
                 dataInicio: item.dataInicio,
                 dataFim: item.dataFim,
                 estimativa: item.duracao,
+                impedimento: item.impedimento,
                 flag: item.flag
             };
 
@@ -59,5 +60,28 @@ angular.module("demo").controller("KanbanController", function($scope, atividade
             //     };
             // };
         }, 100);
+    };
+    $scope.finalizarSprint = function(done){
+        var hist = [];
+        var histDone = [];
+        for (var i = 0; i < done.length; i++) {
+            if ($.inArray(done[i].idHistoria, hist) === -1) {
+                hist.push(done[i].idHistoria);
+                histDone[histDone.length] = [];
+                console.log(histDone[histDone.length - 1]);
+                for (var j = 0; j < done.length; j++) {
+                    if (done[i].idHistoria === done[j].idHistoria) {
+                        histDone[histDone.length - 1].push({
+                            "idHistoria": done[j].idHistoria,
+                            "idAtividade": done[j].idAtividade
+                        });
+                    };
+                };
+            };
+        };
+        console.log(histDone);
+        sprint.finalizarSprint(histDone).success(function(data){
+
+        });
     };
 });

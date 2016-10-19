@@ -3,6 +3,10 @@ angular.module("demo").controller("TesteAceitacao", function($scope, historias, 
 		selected:null,
 		options:[]
 	};
+	$scope.status = {
+		"correto": 'correto',
+		"incorreto": 'incorreto'
+	}
 	$scope.testesAceitacao = [];
 	$scope.fields = {
 		acao: "",
@@ -39,10 +43,15 @@ angular.module("demo").controller("TesteAceitacao", function($scope, historias, 
 		});
 	};
 	$scope.fillTestes = function(idHistoria){
-		console.log(idHistoria);
 		testeAceitacao.get(idHistoria).success(function(data) {
 			$scope.testesAceitacao = data;
 		});
 	};
+	$scope.setStatusTeste = function(teste, status){
+		var  resultado = status;
+		testeAceitacao.setStatus(teste.idTeste,status).success(function(data){
+			$scope.fillTestes(teste.idHistoria);
+		});
+	};	
 
 });

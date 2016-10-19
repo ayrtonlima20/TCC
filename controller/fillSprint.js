@@ -1,4 +1,4 @@
-angular.module("demo").controller("FillSprintCtrl", function($scope, historias) {
+angular.module("demo").controller("FillSprintCtrl", function($scope, historias,sprint) {
 	$scope.historias = {};
 	// $scope.table = {
 	// 	selected:null,
@@ -66,5 +66,23 @@ angular.module("demo").controller("FillSprintCtrl", function($scope, historias) 
                 });
             };
         }, 100);
+    };
+    $scope.gerarSprint = function(historias){
+    	var ativo = $scope.getSprintActive();
+    	// gerar alerta de erro caso ja exista sprint ativo
+    	if (ativo = true) {
+    		// erro
+    	}else{
+    		// continua
+    	}
+    };
+    $scope.getSprintActive = function(){
+    	var result = null;
+    	sprint.getAtivo().success(function(data){
+    		result = true;
+    	}).error(function(data){
+    		result = false;
+    	});
+    	return result;
     };
 });

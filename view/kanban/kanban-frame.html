@@ -4,7 +4,7 @@
     </div>
     <!-/.col-lg-12 ->
 </div>   -->
-<div class="row sprint-header" ng-controller="DateParserCtrl">
+<div class="row-fluid sprint-header" ng-controller="DateParserCtrl">
         <div class="sprint-div-description col-md-6">
             <label class="sprint-label col-md-2">Descrição: </label>
             <div class="sprint-text sprint-description col-md-8">{{sprint.descricao}}</div>
@@ -18,24 +18,28 @@
             <pre class="sprint-text sprint-input-date col-md-6">{{sprint.dataFim}}</pre>
         </div>
 </div>
-<div class="simpleDemo row">
-    <div class="col-md-12">
-        <div class="row">
-            <div ng-repeat="(listName, list) in models.lists" class="kanban-square col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <div ng-if="listName == 'ToDo'" class="col-md-11">{{listName}}</div>
-                            <div ng-if="listName == 'ToDo'" class="glyphicon glyphicon-plus" ng-click="adicionarAtividade(null)"></div>
-                            <div ng-if="listName != 'ToDo'"> {{listName}}</div>
-                        </h3>
-                    </div>
-                    <div class="panel-body" ng-include="'view/kanban/kanban.html'"></div>
+<div class="simpleDemo">
+    <div class="col-md-12 ">
+        <button class="btn btn-default button-location col-md-2 sprint-backlog-header" data-toggle="modal" data-target="#popupFinalizarSprint" type="button" ng-click="finalizarSprint(models.lists.Done)">Finalizar Sprint</button>
+    </div>
+    <div class="row-fluid col-md-12">
+        <div ng-repeat="(listName, list) in models.lists" class="kanban-square col-md-3">
+            <div class="widget-box">
+                <div class="widget-title"><span ng-class="listName == 'ToDo'?'icon':''"> <i ng-class="listName == 'ToDo'?'glyphicon glyphicon-plus':''"></i></span>
+                    <h5 ng-if="listName == 'ToDo'">{{listName}}</h5>
+                    <!-- <h5 ng-if="listName == 'ToDo'" class="col-md-11">{{listName}}</h5> -->
+                    <h5 ng-if="listName != 'ToDo'">{{listName}}</h5>
                 </div>
+                <!-- <div class="widget-title">
+                    <div ng-if="listName == 'ToDo'" class="col-md-11">{{listName}}</div>
+                    <div ng-if="listName == 'ToDo'" class="glyphicon glyphicon-plus" ng-click="adicionarAtividade(null)"></div>
+                    <div ng-if="listName != 'ToDo'"> {{listName}}</div>
+                </div> -->
+                <div class="widget-content" ng-include="'view/kanban/kanban.html'"></div>
             </div>
         </div>
-        <div view-source="simple"></div>
     </div>
+    <div view-source="simple"></div>
     <!-- <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -46,5 +50,26 @@
             </div>
         </div>
     </div> -->
+</div>
+<div id="popupFinalizarSprint" class="modal fade col-md-12" role="dialog" ><!-- style="z-index: 1600;display:inline-table" -->
+    <div class="modal-dialog modal-dialog-custom">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title dialog-title">Finalizar Sprint</h3>
+            </div> 
+            <div class="modal-body">
+                    <div class="control-group control-space col-md-12">
+                        <label class="col-md-12">Existem atividades em andamento, deseja finalizar o Sprint e retornar as atividades em andamento para o Product Backlog?</label>
+                    </div>
+            </div>     
+            <div class="row-fluid"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Sim</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
+            </div> 
+        </div>
+    </div>
 </div>
 <uib-alert class="alert-scrum repeat-item" ng-repeat="alert in alerts" type="{{alert.type}}" dismiss-on-timeout="2500" close="closeAlert($index)">{{alert.msg}}</uib-alert>

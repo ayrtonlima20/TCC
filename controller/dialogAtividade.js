@@ -16,6 +16,7 @@ angular.module('demo').controller('TabsActCtrl', function ($scope, $window,  $ui
             templateUrl: 'view/dialogAtividade.html',
             controller: 'ModalAtividadeCtrl',
             size: size,
+            backdrop: "static",
             resolve: {
                 items: function () {
                     var indexPart = 0; 
