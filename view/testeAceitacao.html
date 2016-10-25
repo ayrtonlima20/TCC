@@ -55,9 +55,9 @@
 							<td class="col-md-5">{{teste.acao}}</td>
 							<td class="col-md-5">{{teste.resultado}}</td>
 							<td class="col-md-2">
-								<div class="glyphicon glyphicon-ok col-md-4" ng-class="'{{teste.status}}'==='{{status.correto}}'?'confirm-color':''" ng-click="setStatusTeste(teste, status.correto)"></div>
-								<div class="glyphicon glyphicon-remove col-md-4" ng-class="'{{teste.status}}'==='{{status.incorreto}}'?'error-color':''" ng-click="setStatusTeste(teste, status.incorreto)"></div>
-								<div class="glyphicon glyphicon-ban-circle col-md-4" ng-class="'{{teste.status}}'===''?'none-color':''" ng-click="setStatusTeste(teste, '')"></div>
+								<div class="glyphicon glyphicon-ok col-md-4 btn-click-cursor" ng-class="'{{teste.status}}'==='{{status.correto}}'?'confirm-color':''" ng-click="setStatusTeste(teste, status.correto)"></div>
+								<div class="glyphicon glyphicon-remove col-md-4 btn-click-cursor" ng-class="'{{teste.status}}'==='{{status.incorreto}}'?'error-color':''" ng-click="setStatusTeste(teste, status.incorreto)"></div>
+								<div class="glyphicon glyphicon-ban-circle col-md-4 btn-click-cursor" ng-class="'{{teste.status}}'===''?'none-color':''" ng-click="setStatusTeste(teste, '')"></div>
 							</td>
 							<td class="col-md-0.5 glyphicon glyphicon-trash act-open" ng-click="excluirTeste(teste.idTeste)"></td>
 						</tr>

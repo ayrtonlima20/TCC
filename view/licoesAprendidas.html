@@ -16,7 +16,8 @@
 							<th class="col-md-1">Data</th>
 							<th class="col-md-1">Assunto</th>
 							<th class="col-md-1">Participante</th>
-							<th class="col-md-7">Descrição</th>
+							<th class="col-md-6">Descrição</th>
+							<th class="col-md-1">Excluir</th>
 						</tr>
 					</thead>
 					<tbody class="noselect" 
@@ -30,6 +31,7 @@
 							<td class="col-md-1">{{licao.assunto}}</td>
 							<td class="col-md-1">{{licao.usuario}}</td>
 							<td class="col-md-7">{{licao.descricao}}</td>
+							<td class="col-md-1 glyphicon glyphicon-trash act-open" ng-click="excluirLicao(licao.idLicao)"></td>
 						</tr>
 					</tbody>
 				</table>

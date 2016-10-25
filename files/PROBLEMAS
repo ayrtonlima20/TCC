@@ -7,7 +7,14 @@ Kanban
 - OK - Adicionar um popover pra dizer qual o impedimento em cima do icone de impedimento
 - OK - Botão de bloquear atividade abre uma página para registrar impedimento
 - OK - Caso a atividade tenha impedimento no popup de atividades aparecer o impedimento da atividade
-- Ter um botão de finalizar sprint, quando finalizar aparecer um popup de confirmarção pra ver se as histórias voltam pro productBacklog
+- REFAZER - Ter um botão de finalizar sprint, quando finalizar aparecer um popup de confirmarção pra ver se as histórias voltam pro productBacklog
+- OK - Quando finalizar o sprint adicionar a flag de finalizado ao sprint
+- Se der algum erro, fazer um roll back
+- OK - Quando finalizar um sprint atualizar o idSprint das atividades pra null
+- Criar uma tabela de sprint/atividade pra saber qual sprint a atividade está ou cria atividades novas e finaliza aquela que estava no sprint
+- Quando finalizar o sprint, não deixar entrar mais na tela do kanban até ter outro sprint ativo
+- Quando finalizar o sprint redirecionar para a tela do sprint backlog automaticamente 
+- pensar em uma lógica melhor para o finalizar sprint
 - Quando muda de dia, calcular as flags(não calcular só por hora, mas por dia/mes/ano)
 - Botão de Adicionar nova atividade
 - Bloquear arrastar atividade por usuário
@@ -28,6 +35,7 @@ Teste de aceitação
 - Se for com erro gera impedimento com o erro de teste de aceitação(cara marcar que ta com erro e qual é o erro)
 
 Product Backlog
+- Quando adicionar uma historia, mudar o finalizado dela pra false	
 - Quando historia vai pro sprint, ela sai da fila de prioridade, mas caso volte, volta em prioridade 1
 - OK - Backlog é estimado em tamanho, não em esforço 
 - Quando arrastar a historia, arrumar a prioridade dela automaticamente
@@ -46,17 +54,21 @@ Apontamentos
 ----- quando finalizar o sprint como vai ser isso de ir para o product backlog?
 
 Atividades
+- Quando adicionar uma atividade mudar o finalizado dela pra false
 - OK - Medido em esforço
 ----- Nome está como estimativa, deixar estimativa ou mudar para esforço?
 - Mudar o banco de duração pra esforço	
 - Mudar toda lógica/banco do flag de vez ser cor, passar a ser atrasada, ok,almost ok
 
 Sprint backlog
-- Gerar Sprint não funciona 
+- OK - Gerar Sprint não funciona 
+- Quando a historia tem items mas está no product backlog deixar algum icone indicando isso
+- update não está funcionando
 - Quando gerar sprint verificar se história tem atividades no sprint ativo, se tiver não mostra essa história no product backlog
 - Ao gerar sprint redefinir prioridades das histórias, para que deixem de estar nas prioridades
 - quando clicar no botão gerar sprint abrir um popup para definir tempo de sprint, descrição e confirmar a criação do sprint
 - excluir atividade não funciona
+- Quando tem uma historia sem nenhuma atividade, avisar que irá retornar essa historia para o product backlog
 - OK - Caso tenha algum sprint ativo, não deixar começar outro sprint em paralelo
 
 Toast
@@ -69,6 +81,8 @@ Product Burndown
 - Pontos vs sprints
 
 Sprint Burndown
+- Colocar trativa caso não tenha sprint ativo (pegar o ultimo sprint(MAX DATA))
+- Selecionar o Sprint desejado para ver o gráfico
 - Calcular por dia/mes/ano
 
 Cadastrar Usuário
@@ -101,3 +115,6 @@ Problemas Gerais
 Perguntas Gerais
 ----- Cada projeto vai ser cadastrado por empresa? Ou as lições aprendidas só vão ser válidas por projeto?
 ----- Qual tipo de criptografia deve ser utilizada?
+----- Quando um sprint é finalizado as atividades são mantidas e criadas novas ou se mantem tudo da outra inclusive estado no kanban?
+----- Quando uma atividade estava em done, ela volta mesmo assim pro to do?
+----- Em teste de aceitação, como marcar uma atividade com um impedimento sendo que não temos atividade e o teste é feito por historia

@@ -1,4 +1,4 @@
-angular.module("demo").controller("KanbanController", function($scope, atividades, sprint) {
+angular.module("demo").controller("KanbanController", function($scope, $location,atividades, sprint) {
 
     $scope.dataAmazon = null;   
     sprint.getAtivo().success(function(data) {
@@ -81,7 +81,7 @@ angular.module("demo").controller("KanbanController", function($scope, atividade
         };
         console.log(histDone);
         sprint.finalizarSprint(histDone).success(function(data){
-
-        });
+            // $location.path("fillSprint");  
+        });   
     };
 });

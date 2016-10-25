@@ -20,7 +20,7 @@
 </div>
 <div class="simpleDemo">
     <div class="col-md-12 ">
-        <button class="btn btn-default button-location col-md-2 sprint-backlog-header" data-toggle="modal" data-target="#popupFinalizarSprint" type="button" ng-click="finalizarSprint(models.lists.Done)">Finalizar Sprint</button>
+        <button class="btn btn-default button-location col-md-2 sprint-backlog-header" data-toggle="modal" data-target="#popupFinalizarSprint" type="button" >Finalizar Sprint</button>
     </div>
     <div class="row-fluid col-md-12">
         <div ng-repeat="(listName, list) in models.lists" class="kanban-square col-md-3">
@@ -66,7 +66,7 @@
             </div>     
             <div class="row-fluid"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Sim</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="finalizarSprint(models.lists.Done)">Sim</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
             </div> 
         </div>

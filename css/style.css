@@ -272,6 +272,7 @@ tbody[dnd-list] .dndPlaceholder {
     width: 100%;
     display: block;
     text-align: -webkit-left;
+    cursor:-webkit-grab;
 }
 .kanban-content.k-success{
     background-color: #28b779;
@@ -424,4 +425,7 @@ pre {
 
 .control-space{
     padding-bottom: 10px;
+}
+.btn-click-cursor{
+    cursor: pointer;
 }

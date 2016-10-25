@@ -46,7 +46,12 @@ angular.module("demo").controller("LicoesAprendidasCtrl", function($scope, $uibM
 	    });
   	};	
 
-
+	$scope.excluirLicao = function(idLicao){
+		licoesAprendidas.delete(idLicao).success(function(data) {
+            var index = $("[taskID='" + idLicao + "']").children().attr('index');
+            $scope.licoes.splice(index,1);
+		});
+	};
 
 	// $scope.adicionarApontamento = function(fields, idAtividade, idHistoria){
 	// 	apontamento.create(idHistoria, idAtividade, fields.apontamento).success(function(data) {

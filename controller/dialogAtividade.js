@@ -167,7 +167,7 @@ angular.module('demo').controller('ModalAtividadeCtrl', function ($scope, $uibMo
             // title:'Atividade '+ ($scope.atividades.length + 1),
             // content: {
                 idAtividade: null,
-                idSprint: 1,
+                idSprint: null,
                 idHistoria: null,
                 idParticipante: null,
                 nome:'Atividade '+ ($scope.atividades.length + 1),

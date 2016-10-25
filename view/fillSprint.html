@@ -1,5 +1,5 @@
 <div class="col-md-12">
-	<button class="btn btn-default button-location col-md-2 sprint-backlog-header" data-toggle="modal" data-target="#popupCriarSprint" type="button" >Gerar Sprint</button>
+	<button class="btn btn-default button-location col-md-2 sprint-backlog-header" data-toggle="modal" data-target="#popupCriarSprint" type="button" ng-click="gerarSprint()">Gerar Sprint</button>
 </div>
 <div ng-repeat="(tableName, tables) in table.historias"  
 	class="col-md-6">
@@ -57,9 +57,8 @@
     </div> -->
 
     <!-- dialog related to block activity button -->
-<div id="popupCriarSprint" class="modal fade col-md-12" role="dialog" ><!-- style="z-index: 1600;display:inline-table" -->
+<!-- <div id="popupCriarSprint" class="modal fade col-md-12" role="dialog" >
     <div class="modal-dialog modal-dialog-custom">
-        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -76,6 +75,6 @@
             </div> 
         </div>
     </div>
-</div>
+</div> -->
 <uib-alert class="alert-scrum repeat-item" ng-repeat="alert in alerts" type="{{alert.type}}" dismiss-on-timeout="2500" close="closeAlert($index)">{{alert.msg}}</uib-alert>
 	

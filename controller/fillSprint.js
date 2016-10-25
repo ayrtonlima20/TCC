@@ -1,4 +1,4 @@
-angular.module("demo").controller("FillSprintCtrl", function($scope, historias,sprint) {
+angular.module("demo").controller("FillSprintCtrl", function($scope, $location,historias,sprint, atividades) {
 	$scope.historias = {};
 	// $scope.table = {
 	// 	selected:null,
@@ -32,7 +32,7 @@ angular.module("demo").controller("FillSprintCtrl", function($scope, historias,s
 	// 	}
 	// };
     $scope.alerts = [];
-	historias.get().success(function(data) {
+	historias.getHistSprintBacklog().success(function(data) {
     	$scope.table = {
 			selected:null,
 			historias:{
@@ -67,22 +67,43 @@ angular.module("demo").controller("FillSprintCtrl", function($scope, historias,s
             };
         }, 100);
     };
-    $scope.gerarSprint = function(historias){
+    $scope.gerarSprint = function(){
     	var ativo = $scope.getSprintActive();
-    	// gerar alerta de erro caso ja exista sprint ativo
-    	if (ativo = true) {
-    		// erro
-    	}else{
-    		// continua
-    	}
+    	sprint.getAtivo().success(function(data){
+            if (data.length > 0) {
+                alert("Existe um sprint em andamento. Finalize um sprint para iniciar outro");
+            }else{
+                // chamar tela dialogGerarSprint
+                var newSprint = {
+                    nome: "Sprint 3", 
+                    dataInicio: new Date(2016, 9, 20), 
+                    dataFim: new Date(2016, 9, 30), 
+                    descricao: "Sprint teste Gerar Sprint"
+                };
+                var ativs = null;
+                atividades.getAtividadesNewSprint().success(function(data){
+                    ativs = data;
+                    sprint.criarSprint(newSprint).success(function(data){
+                        sprint.getAtivo().success(function(data){
+                            atividades.setSprintAtividade(ativs,data[0].idSprint).success(function(data){
+                                // show message success
+                                alert("Novo Sprint Iniciado");
+                                $location.path( "kanban" );
+                            });                     
+                        });
+                    });
+                });
+            }
+    	}).error(function(data){
+    	});
     };
     $scope.getSprintActive = function(){
-    	var result = null;
     	sprint.getAtivo().success(function(data){
-    		result = true;
+    		console.log(true);
+    		return true;
     	}).error(function(data){
-    		result = false;
+    		console.log(false);
+    		return false;
     	});
-    	return result;
     };
 });

@@ -36,7 +36,7 @@ models.sequelize.sync().then(function() {
 							  "		INNER JOIN historias as hist ON hist.idHistoria = act.idHistoria" +
 							  "		LEFT JOIN usuarios as user ON user.idUsuario = act.idParticipante"+
 							  "		INNER JOIN sprint ON sprint.idSprint = act.idSprint"+
-							  "		WHERE sprint.active = 'X'" + 
+							  "		WHERE sprint.active = true" + 
 							  "		ORDER BY idAtividade",function(err,data){
 						if(err) throw err;
 						var models = {
@@ -91,6 +91,49 @@ models.sequelize.sync().then(function() {
 				};
 
 				// console.log('Connection established');
+				con.end(function(err) {
+					console.log("123");
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
+			});
+		});
+		app.get('/getAtividadesNewSprint', function (req, res) {
+			var con = mysql.createConnection({
+				host: "localhost",
+			  	user: "root",
+			  	password: "root",
+				database: "scrum"
+			});
+			con.connect(function(err){
+				var dataInicio, dataFim;
+				if(err){
+					console.log('Error connecting to Atividades database');
+					return;
+				}else{
+					con.query(	" SELECT act.* FROM historias AS hist  " +
+								" INNER JOIN atividades AS act " +
+								" ON act.idHistoria = hist.idHistoria " +
+								" AND hist.status = 'SprintBacklog' " +
+								" AND act.finalizado = false " +
+								" AND act.idSprint IS null " + 
+								// " INNER JOIN sprint " +
+								// " ON sprint.idSprint = act.idSprint " +
+								// " AND sprint.active = false " +
+								" WHERE hist.finalizado = false",function(err,data){
+						if(err) throw err;
+						
+		   				res.end( JSON.stringify(data) );
+					});
+				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
+
+				// console.log('Connection established');
 			});
 		});
 		app.get('/listUsuarios', function (req, res) {
@@ -110,6 +153,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data) );
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.get('/listAssuntos', function (req, res) {
@@ -129,6 +177,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data) );
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.get('/listHistorias', function (req, res) {
@@ -143,13 +196,48 @@ models.sequelize.sync().then(function() {
 					console.log('Error connecting to Historias Database');
 					return;
 				}else{
-					con.query('SELECT * FROM historias ORDER BY prioridade',function(err,data){
+					con.query('SELECT * FROM historias WHERE finalizado != true ORDER BY prioridade',function(err,data){
 						if(err) throw err;
 		   				res.end( JSON.stringify(data) );
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
+		app.get('/listHistSprintBacklog', function (req, res) {
+			var con = mysql.createConnection({
+				host: "localhost",
+			  	user: "root",
+			  	password: "root",
+				database: "scrum"
+			});
+			con.connect(function(err){
+				if(err){
+					console.log('Error connecting to Historias Database');
+					return;
+				}else{
+					con.query(	" SELECT hist.* " +
+								" FROM historias as hist " +
+								" LEFT JOIN atividades as act  " +
+								" ON act.idHistoria = hist.idHistoria " +
+								" WHERE hist.finalizado = false AND act.idSprint is null " +
+								" GROUP BY hist.idHistoria " +
+								" ORDER BY hist.prioridade",function(err,data){
+						if(err) throw err;
+		   				res.end( JSON.stringify(data) );
+					});
+				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
+			});
+		});		
 		app.post('/setStatusHistoria', function (req, res) {
 			var con = mysql.createConnection({
 				host: "localhost",
@@ -170,6 +258,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/setStatusTeste', function (req, res) {
@@ -196,6 +289,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/editarHistoria', function (req, res) {
@@ -218,6 +316,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/setReleaseHistoria', function (req, res) {
@@ -240,6 +343,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.get('/getSprintActive', function (req, res) {
@@ -254,7 +362,7 @@ models.sequelize.sync().then(function() {
 					console.log('Error connecting to Sprint Database');
 					return;
 				}else{
-					con.query('SELECT * FROM sprint WHERE active = "X"',function(err,data){
+					con.query('SELECT * FROM sprint WHERE active = true',function(err,data){
 						if(err) throw err;
 						var dataInicio, dataFim;
 						for (var i = 0; i < data.length; i++) {
@@ -265,9 +373,15 @@ models.sequelize.sync().then(function() {
 							dataFim = new Date(data[i].dataFim);
 							data[i].dataFim = getDateFormatDDMMYY(dataFim);
 						};
+						console.log("data1",data);
 		   				res.end( JSON.stringify(data) );
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/setSprint', function (req, res) {
@@ -288,6 +402,11 @@ models.sequelize.sync().then(function() {
 						if(err) throw err;
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/setAtividade', function (req, res) {
@@ -332,6 +451,11 @@ models.sequelize.sync().then(function() {
 						});
 					};
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/setImpedimento', function (req, res) {
@@ -356,6 +480,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/setStatusAtividade', function (req, res) {
@@ -442,6 +571,58 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
+			});
+		});
+
+		app.post('/setSprintAtividade', function (req, res) {
+			var con = mysql.createConnection({
+				host: "localhost",
+			  	user: "root",
+			  	password: "root",
+				database: "scrum"
+			});
+			con.connect(function(err){
+				if(err){
+					console.log('Error connecting to Sprint Database');
+					return;
+				}else{	
+					var atividades  = req.body.atividades === (undefined || null) ? null : req.body.atividades;
+					var idSprint  = req.body.idSprint === (undefined || null) ? null : req.body.idSprint;
+					console.log(atividades);
+					var queryAct = "(";
+					for (var i = 0; i < atividades.length; i++) {
+						if (i != 0) {
+							queryAct += "," + atividades[i].idAtividade;
+						}else{
+							queryAct +=  atividades[i].idAtividade;
+						}
+					}
+					queryAct +=")";
+					console.log(queryAct)
+					if (atividades.length > 0) {
+						con.query('update atividades set idSprint = ' + idSprint + 
+								  ' where idAtividade in '   + queryAct,function(err,data){
+							if(err) throw err;
+							// data.dataInicio = dataInicio;
+							// data.horaInicio = horaInicio;
+							// data.dataFim = dataFim;
+							// data.horaFim = horaFim;
+			   				res.end( JSON.stringify(data));
+						});
+					}else{
+						throw err;
+					}
+				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/finalizarSprint', function (req, res) {
@@ -456,97 +637,90 @@ models.sequelize.sync().then(function() {
 					console.log('Error connecting to Sprint Database');
 					return;
 				}else{	
-					var done = req.body === (undefined || null) ? [] : req.body;
-					var queryWhere = "";
-					for (var i = 0; i < done.length; i++) {
-						if (i === 0) {
-							queryWhere += ' act.idHistoria in (' + done[i][0].idHistoria;
-						}else{
-							queryWhere += ',' + done[i][0].idHistoria;
-						}
-					};
-					queryWhere += ')';
-					con.query(' select act.idAtividade, act.nome as atividade, act.idHistoria, hist.nome as historia from atividades as act ' + 
-							  ' inner join historias as hist on hist.idHistoria = act.idHistoria ' +
-							  ' inner join sprint on sprint.idSprint = act.idSprint and sprint.active = "X" ' +
-							  ' where ' + queryWhere + ' order by act.idHistoria, act.idAtividade',function(err,data){//order by act.idHistoria, act.idAtividade
+					var sprint = null;
+					con.query( " SELECT act.idHistoria, act.idAtividade, act.idSprint from ( select final.idHistoria FROM atividades as final  "+
+								" INNER JOIN (SELECT done.idHistoria, done.idSprint FROM atividades as done  "+
+								" INNER JOIN sprint  "+
+								" ON sprint.idSprint = done.idSprint "+
+								" AND sprint.active = true "+
+								" INNER JOIN atividades as todas "+
+								" ON todas.idHistoria = done.idHistoria "+
+								" AND todas.idSprint = done.idSprint "+
+								" AND todas.dataFim IS NULL "+
+								" WHERE done.dataFim IS NOT NULL  "+
+								" GROUP BY idHistoria, idSprint) as done "+
+								" ON final.idHistoria != done.idHistoria  "+
+								" AND final.idSprint = done.idSprint " + 
+								" WHERE final.dataFim IS NOT NULL  "+
+								" GROUP BY final.idHistoria) as final "+
+								" INNER JOIN atividades as act "+
+								" ON act.idHistoria = final.idHistoria",function(err,data){//order by act.idHistoria, act.idAtividade
 						if(err) throw err;
-						
-				        var hists = [];
-				        var select = [];
-				        var notfound = [];
-				        var notfoundIds = []; 
-				        var found = false;
-				        var upd = [];
-				        var queryHist = "";
-				        var queryAct = "";
-				        // monta um array dos selects para poder comparar com o que vem do sprint
-				        for (var i = 0; i < data.length; i++) {
-				            if (hists.indexOf(data[i].idHistoria) === -1) {
-				                hists.push(data[i].idHistoria);
-				                select[select.length] = [];
-				                for (var j = 0; j < data.length; j++) {
-				                    if (data[i].idHistoria === data[j].idHistoria) {
-				                        select[select.length - 1].push({
-				                            "idHistoria": data[j].idHistoria,
-				                            "idAtividade": data[j].idAtividade
-				                        });
-				                    };
-				                };
-				            };
-				        };
-				        //loop no retorno do select para comparar se tudo o que veio da coluna do sprint(done) está feito
-				        // e pode ser considerado a historia como terminada
-				        for (var i = 0; i < select.length; i++) {
-				        	for (var j = 0; j < done.length; j++) {
-				        		if (select[i][0].idHistoria === done[j][0].idHistoria) {
-				        			for (var x = 0; x < select[i].length; x++) {
-					        			for (var y = 0; y < done[j].length; y++) {
-					        				if (select[i][x].idAtividade === done[j][y].idAtividade) {
-					        					found = true;
-					        					break;
-					        				}
-					        			}
-					        			if (!found) {
-				        					notfound.push({
-				        						idAtividade:select[i][x].idAtividade,
-				        						idHistoria:select[i][x].idHistoria
-				        					});
-				        					notfoundIds.push(select[i][x].idHistoria);
-					        			}
-					        			found = false;
-				        			}
-				        			break;
-				        		}
-				        	}
-				        }
-	        			for (var i = 0; i < done.length; i++) {
-	        				if (notfoundIds.indexOf(done[i][0].idHistoria) === -1) {
+						var queryUpdHist = "( ";
+						var queryUpdAct = "( ";
+						if (data.length > 0) {
+							sprint = data[0].idSprint;
+						}
+						for (var i = 0; i < data.length; i++) {
+							if (i === 0) {
+								queryUpdAct += data[i].idAtividade;
+								queryUpdHist += data[i].idHistoria;
+							}else{
+								queryUpdAct += " , " + data[i].idAtividade;
+								queryUpdHist += " , " + data[i].idHistoria;
+							}
+						}
+						queryUpdAct += ")";
+						queryUpdHist += ")";
+						if (data.length > 0) {
+							con.query( " update atividades set finalizado = true where idAtividade in " + queryUpdAct,function(err,data){
+								if(err) throw err;
+								con.query( " update historias set finalizado = true where idHistoria in " + queryUpdHist,function(err,data){
+									if(err) throw err;
+					   				// res.end( JSON.stringify(data));
+								});
+							});
+						}
+				
+						con.query(  " select ativ.* from(  " +
+									" 	select act.* from atividades as act " +
+									" 	inner join sprint  " +
+									" 	on sprint.idSprint = act.idSprint " +
+									" 	and sprint.active = true " +
+									" 	where act.dataFim is null) notDone " +
+									" inner join atividades ativ " +
+									" on ativ.idHistoria = notDone.idHistoria " +
+									" and ativ.idSprint = notDone.idSprint " +
+									" group by ativ.idAtividade,ativ.idHistoria,ativ.idSprint " ,function(err,data){//order by act.idHistoria, act.idAtividade
+							if(err) throw err;
+							var queryRetAct = "( ";
+							var action = null;
+							if (data.length > 0) {
+								sprint = data[0].idSprint;
+								action = true;
+							}
+							for (var i = 0; i < data.length; i++) {
 								if (i === 0) {
-									queryHist += ' idHistoria in (' + done[i][0].idHistoria;
+									queryRetAct += data[i].idAtividade;
 								}else{
-									queryHist += ',' + done[i][0].idHistoria;
+									queryRetAct += " , " + data[i].idAtividade;
 								}
-			        			for (var j = 0; j < done[i][j].length; j++) {
-									if (j === 0) {
-										queryAct += ' idAtividade in (' + done[i][j].idAtividade;
-									}else{
-										queryAct += ',' + done[i][j].idAtividade;
-									}
-			        			}
-	        				}
-	        			}
-	        			console.log("teste");
-	        			if (queryHist != "") {
-	        				queryHist += ')';	
-	        			}
-	        			if (queryAct != "") {
-	        				queryAct += ')';	
-	        			}
-	        			console.log(queryAct);
-	        			console.log(queryHist);
-				        console.log("notfound",notfound);
-		   				res.end( JSON.stringify(data));
+							}
+							queryRetAct += " )";
+							console.log("query",data);
+			   				// res.end( JSON.stringify(data));
+							con.query( " update sprint set active = false, finalizado = true where idSprint = " + sprint,function(err,data){
+								if(err) throw err;
+								if (action = true) {
+									con.query( " update atividades set idSprint = null where idAtividade in " + queryRetAct,function(err,data){
+										if(err) throw err;
+						   				res.end( JSON.stringify(data));
+									});
+								}else{
+									res.end( JSON.stringify(data));
+								}
+							});
+						});
 					});
 				};
 			});
@@ -570,6 +744,33 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
+			});
+		});
+		app.post('/deleteLicaoAprendida', function (req, res) {
+			var con = mysql.createConnection({
+				host: "localhost",
+			  	user: "root",
+			  	password: "root",
+				database: "scrum"
+			});
+			con.connect(function(err){
+				if(err){
+					console.log('Error connecting to Sprint Database');
+					return;
+				}else{	
+					var idLicao = req.body.idLicao === undefined ? 0 : req.body.idLicao;
+
+					con.query('delete from licoes where idLicao = ' + idLicao,function(err,data){
+						if(err) throw err;
+		   				res.end( JSON.stringify(data));
+					});
+				};
+				con.end(function(err) {});
 			});
 		});
 		app.post('/createAtividades', function(req, res){
@@ -595,13 +796,13 @@ models.sequelize.sync().then(function() {
 								 atividades[i].idSprint + ",'" + atividades[i].nome + "'," +  atividades[i].estimativas.selected +
 								 ",'" + atividades[i].descricao + "', str_to_date('" + getDateFormatDDMMYY(dataAtual) +  
 								 getTimeFormatHHMMSS(dataAtual) + "' ,'%d-%m-%Y %H:%i:%s')" +
-								 ",'" + atividades[i].prioridades.selected + "', 'green')";
+								 ",'" + atividades[i].prioridades.selected + "', 'green', false)";
 						if ((i + 1) < atividades.length) {
 							query += ",";
 						}
 					};
 					con.query('insert into atividades (idAtividade, idHistoria, status, idSprint,'+ 
-							  'nome, duracao, descricao, dataCriacao, prioridade, flag)values' + query ,function(err,data){
+							  'nome, duracao, descricao, dataCriacao, prioridade, flag, finalizado)values' + query ,function(err,data){
 
 							  // 'on duplicated key update idHistoria = values(idHistoria),' +
 							  // 'idParticipante = values(idParticipante), idSprint = values(idSprint),' + 
@@ -610,6 +811,46 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
+			});
+		});
+		app.post('/criarSprint', function(req, res){
+			var con = mysql.createConnection({
+				host: "localhost",
+			  	user: "root",
+			  	password: "root",
+				database: "scrum"
+			});
+			con.connect(function(err){
+				if(err){
+					console.log('Error connecting to Create Database');
+					return;
+				}else{	
+					var query = "";
+					var sprint = req.body === (undefined || null) ? null : req.body;
+					var dataIni = new Date(sprint.dataInicio);
+					var dataFim = new Date(sprint.dataFim);
+					var dataFIM= new Date(sprint.dataInicio);
+					query += "('" + sprint.nome + "'," + 
+							 "str_to_date('" + getDateFormatDDMMYY(dataIni) +  getTimeFormatHHMMSS(dataIni) + "' ,'%d-%m-%Y %H:%i:%s')," +
+							 "str_to_date('" + getDateFormatDDMMYY(dataFim) +  getTimeFormatHHMMSS(dataFim) + "' ,'%d-%m-%Y %H:%i:%s'),'" +
+							 sprint.descricao + "',false,true)";
+					
+					con.query("insert into sprint (nome, dataInicio, dataFim, descricao, finalizado, active )values" + query ,function(err,data){
+
+						if(err) throw err;
+		   				res.end( JSON.stringify(data));
+					});
+				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/createHistoria', function(req, res){
@@ -638,6 +879,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/createRelease', function(req, res){
@@ -663,6 +909,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/createApontamento', function(req, res){
@@ -687,6 +938,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/createLicaoAprendida', function(req, res){
@@ -716,6 +972,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/getLicoesAprendidas', function(req, res){
@@ -742,6 +1003,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/getApontamento', function (req, res) {
@@ -768,6 +1034,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/getApontamentos', function (req, res) {
@@ -798,6 +1069,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/deleteApontamento', function (req, res) {
@@ -818,6 +1094,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/getAtividadesSprintBacklog', function (req, res) {
@@ -834,12 +1115,23 @@ models.sequelize.sync().then(function() {
 				}else{	
 					var idHistoria = req.body.idHistoria === undefined ? 0 : req.body.idHistoria;
 
-					con.query('select * from atividades where idHistoria = ' + idHistoria +
-						 	  ' and status = "ToDo"',function(err,data){
+					con.query(	" SELECT act.* FROM historias AS hist " +
+								" INNER JOIN atividades AS act " +
+								" ON act.idHistoria = hist.idHistoria " +
+								" AND act.finalizado = false " +
+								// " INNER JOIN sprint " +
+								// " ON sprint.idSprint = act.idSprint " +
+								// " AND sprint.active = false " +
+								" WHERE hist.finalizado = false AND hist.idHistoria = " + idHistoria ,function(err,data){//+' and status = "ToDo"'
 						if(err) throw err;
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/getAtividades', function (req, res) {
@@ -861,6 +1153,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/getAtividade', function (req, res) {
@@ -882,6 +1179,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/getTesteAceitacao', function (req, res) {
@@ -903,6 +1205,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/deleteTesteAceitacao', function (req, res) {
@@ -923,6 +1230,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/createTesteAceitacao', function (req, res) {
@@ -946,6 +1258,11 @@ models.sequelize.sync().then(function() {
 		   				res.end( JSON.stringify(data));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		app.post('/getSprintBurndown', function (req, res) {
@@ -963,7 +1280,7 @@ models.sequelize.sync().then(function() {
 					con.query(" SELECT act.*, sprint.dataInicio as sprintInicio, sprint.dataFim as sprintFim" +  
 							  "     FROM atividades as act" +
 							  "		INNER JOIN sprint ON sprint.idSprint = act.idSprint" +
-							  "		WHERE sprint.active = 'X' ORDER BY dataCriacao",function(err,data){
+							  "		WHERE sprint.active = true ORDER BY dataCriacao",function(err,data){
 						if(err) throw err;
 						var retorno = [];	
 						var dias = [];
@@ -1044,6 +1361,11 @@ models.sequelize.sync().then(function() {
 		   				res.end(JSON.stringify(retorno));
 					});
 				};
+				con.end(function(err) {
+				  // The connection is terminated gracefully
+				  // Ensures all previously enqueued queries are still
+				  // before sending a COM_QUIT packet to the MySQL server.
+				});
 			});
 		});
 		function getDataFim(date, estimativa, horaTrabInicio, horaTrabFim){

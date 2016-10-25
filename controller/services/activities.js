@@ -10,6 +10,15 @@ angular.module("demo").factory('atividades', ['$http', function($http) {
       return err; 
     });
   };
+  atividades.getAtividadesNewSprint = function(){
+    return $http.get('http://127.0.0.1:8090/getAtividadesNewSprint') 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    });
+  };
   atividades.create = function(dataCreate){
     return $http.post('http://127.0.0.1:8090/createAtividades', dataCreate) 
     .success(function(data) { 
@@ -42,6 +51,18 @@ angular.module("demo").factory('atividades', ['$http', function($http) {
     // var atividade = {"idAtividade": idAtividade,
     //                  "status": status};
     return $http.post('http://127.0.0.1:8090/setStatusAtividade', atividade) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  atividades.setSprintAtividade = function (atividades, idSprint) {
+    param = { idSprint: idSprint,
+      atividades: atividades
+    };
+    return $http.post('http://127.0.0.1:8090/setSprintAtividade', param) 
     .success(function(data) { 
       return data; 
     }) 
@@ -131,6 +152,15 @@ angular.module("demo").factory('historias', ['$http', function($http) {
         return err; 
       });
   }; 
+  historias.getHistSprintBacklog = function(){
+    return $http.get('http://127.0.0.1:8090/listHistSprintBacklog') 
+      .success(function(data) { 
+        return data; 
+      }) 
+      .error(function(err) { 
+        return err; 
+      });
+  };   
   historias.updateStatus = function (historia) {
     return $http.post('http://127.0.0.1:8090/setStatusHistoria', historia) 
     .success(function(data) { 
@@ -183,6 +213,16 @@ angular.module("demo").factory('sprint', ['$http', function($http) {
   sprints.finalizarSprint = function (done) {
 
     return $http.post('http://127.0.0.1:8090/finalizarSprint', done) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  sprints.criarSprint = function (sprint) {
+
+    return $http.post('http://127.0.0.1:8090/criarSprint', sprint) 
     .success(function(data) { 
       return data; 
     }) 
@@ -329,6 +369,16 @@ angular.module("demo").factory('licoesAprendidas', ['$http', function($http) {
   var licoesAprendidas = {};
   licoesAprendidas.create = function (licaoAprendida) {
     return $http.post('http://127.0.0.1:8090/createLicaoAprendida', licaoAprendida) 
+    .success(function(data) { 
+      return data; 
+    }) 
+    .error(function(err) { 
+      return err; 
+    }); 
+  };
+  licoesAprendidas.delete = function (idLicao) {
+    var licao = {idLicao:idLicao};
+    return $http.post('http://127.0.0.1:8090/deleteLicaoAprendida', licao) 
     .success(function(data) { 
       return data; 
     }) 
