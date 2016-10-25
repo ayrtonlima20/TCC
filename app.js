@@ -31,7 +31,7 @@ models.sequelize.sync().then(function() {
 					console.log('Error connecting to Atividades database');
 					return;
 				}else{
-					con.query(" SELECT act.*, user.nome as participante, user.foto, hist.nome as historyName" +  
+					con.query(" SELECT act.*, user.nome as participante, user.foto, hist.nome as historia" +  
 							  "     FROM atividades as act" +
 							  "		INNER JOIN historias as hist ON hist.idHistoria = act.idHistoria" +
 							  "		LEFT JOIN usuarios as user ON user.idUsuario = act.idParticipante"+
@@ -112,6 +112,25 @@ models.sequelize.sync().then(function() {
 				};
 			});
 		});
+		app.get('/listAssuntos', function (req, res) {
+			var con = mysql.createConnection({
+				host: "localhost",
+			  	user: "root",
+			  	password: "root",
+				database: "scrum"
+			});
+			con.connect(function(err){
+				if(err){
+					console.log('Error connecting to Usuarios database');
+					return;
+				}else{
+					con.query('SELECT * FROM assuntos',function(err,data){
+						if(err) throw err;
+		   				res.end( JSON.stringify(data) );
+					});
+				};
+			});
+		});
 		app.get('/listHistorias', function (req, res) {
 			var con = mysql.createConnection({
 				host: "localhost",
@@ -147,6 +166,32 @@ models.sequelize.sync().then(function() {
 					var status = req.body.status === undefined ? "ProductBacklog" : req.body.status;
 					con.query('update historias set status = "' + status +
 						'" where idHistoria = ' + idHistoria,function(err,data){
+						if(err) throw err;
+		   				res.end( JSON.stringify(data));
+					});
+				};
+			});
+		});
+		app.post('/setStatusTeste', function (req, res) {
+			var con = mysql.createConnection({
+				host: "localhost",
+			  	user: "root",
+			  	password: "root",
+				database: "scrum"
+			});
+			con.connect(function(err){
+				if(err){
+					console.log('Error connecting to Historia Database');
+					return;
+				}else{	
+					console.log(req.body);
+					var idTeste = req.body.idTeste === undefined || req.body.idTeste === null? 0 : req.body.idTeste;
+					var status = req.body.status === undefined || req.body.status === null? "" : req.body.status;
+					console.log(idTeste);
+					console.log(status);
+					con.query('update testeAceitacao set status = "' + status +
+						'" where idTeste = '+ idTeste ,function(err,data){
+							console.log(data);
 						if(err) throw err;
 		   				res.end( JSON.stringify(data));
 					});
@@ -263,15 +308,16 @@ models.sequelize.sync().then(function() {
 					}else{
 						atividades[0] = req.body;
 					};
+					console.log(atividades);
 					for (var i = 0; i < atividades.length; i++) {
-						var idAtividade = atividades[i].idAtividade === undefined || atividades[i].bloqueada ===  null ? 0 : atividades[i].idAtividade;
-						var idParticipante = atividades[i].idParticipante === undefined || atividades[i].bloqueada ===  null ? 0 : atividades[i].idParticipante;
-						var idHistoria = atividades[i].idHistoria === undefined || atividades[i].bloqueada ===  null ? 0 : atividades[i].idHistoria;
-						var nome = atividades[i].nome === undefined || atividades[i].bloqueada ===  null ? "" : atividades[i].nome;
-						var duracao = atividades[i].duracao === undefined || atividades[i].bloqueada ===  null ? 8 : atividades[i].duracao;
-						var descricao = atividades[i].descricao === undefined || atividades[i].bloqueada ===  null ? "" : atividades[i].descricao;
+						var idAtividade = atividades[i].idAtividade === undefined || atividades[i].idAtividade ===  null ? 0 : atividades[i].idAtividade;
+						var idParticipante = atividades[i].idParticipante === undefined || atividades[i].idParticipante ===  null ? 0 : atividades[i].idParticipante;
+						var idHistoria = atividades[i].idHistoria === undefined || atividades[i].idHistoria ===  null ? 0 : atividades[i].idHistoria;
+						var nome = atividades[i].nome === undefined || atividades[i].nome ===  null ? "" : atividades[i].nome;
+						var duracao = atividades[i].duracao === undefined || atividades[i].duracao ===  null ? 8 : atividades[i].duracao;
+						var descricao = atividades[i].descricao === undefined || atividades[i].descricao ===  null ? "" : atividades[i].descricao;
 						var bloqueada = atividades[i].bloqueada === null || atividades[i].bloqueada === undefined  ? "" : atividades[i].bloqueada;
-						var prioridade = atividades[i].prioridade === undefined || atividades[i].bloqueada ===  null  ? 0 : atividades[i].prioridade;
+						var prioridade = atividades[i].prioridade === undefined || atividades[i].prioridade ===  null  ? 0 : atividades[i].prioridade;
 						
 						con.query('update atividades set idParticipante = '+ idParticipante + 
 									', idHistoria = ' + idHistoria +
@@ -285,6 +331,30 @@ models.sequelize.sync().then(function() {
 			   				res.end( JSON.stringify(data));
 						});
 					};
+				};
+			});
+		});
+		app.post('/setImpedimento', function (req, res) {
+			var con = mysql.createConnection({
+				host: "localhost",
+			  	user: "root",
+			  	password: "root",
+				database: "scrum"
+			});
+			con.connect(function(err){
+				if(err){
+					console.log('Error connecting to Atividades Database');
+					return;
+				}else{	
+					var idAtividade = req.body.idAtividade === undefined || req.body.idAtividade === null ? 0 : req.body.idAtividade;
+					var impedimento = req.body.impedimento === undefined || req.body.impedimento === null ? "" : req.body.impedimento;
+					var bloqueada = req.body.bloqueada === undefined || req.body.bloqueada === null ? "" : req.body.bloqueada;
+
+					con.query('update atividades set impedimento = "' + impedimento + 
+						'", bloqueada = "' + bloqueada + '" where idAtividade = ' + idAtividade,function(err,data){
+						if(err) throw err;
+		   				res.end( JSON.stringify(data));
+					});
 				};
 			});
 		});
@@ -528,9 +598,9 @@ models.sequelize.sync().then(function() {
 					var licao = req.body === undefined ? null : req.body;
 					var dataAtual = new Date();
 					query = "(" + "str_to_date('" + getDateFormatDDMMYY(dataAtual) +  getTimeFormatHHMMSS(dataAtual) + "' ,'%d-%m-%Y %H:%i:%s')" + 
-					",'" + licao.assunto + "'," + licao.idUsuario + "," + licao.idProjeto + ",'" + licao.descricao + "')";
+					",'" + licao.idAssunto + "'," + licao.idUsuario + "," + licao.idProjeto + ",'" + licao.descricao + "')";
 					console.log(req.body);
-					con.query('insert into licoes (dataLicao, assunto, idUsuario, idProjeto, descricao) values ' + query ,function(err,data){
+					con.query('insert into licoes (dataLicao, idAssunto, idUsuario, idProjeto, descricao) values ' + query ,function(err,data){
 
 						// 'on duplicated key update idHistoria = values(idHistoria),' +
 						// 'idParticipante = values(idParticipante), idSprint = values(idSprint),' + 
@@ -553,9 +623,10 @@ models.sequelize.sync().then(function() {
 					console.log('Error connecting to Create Database');
 					return;
 				}else{	
-					con.query("SELECT licoes.*, user.nome as usuario, proj.nome as projeto FROM licoes " +
+					con.query("SELECT licoes.*, user.nome as usuario, proj.nome as projeto, assu.nome as assunto FROM licoes " +
 								"INNER JOIN usuarios as user on user.idUsuario = licoes.idUsuario " +
-								"INNER JOIN projetos as proj on proj.idProjeto = licoes.idProjeto ",function(err,data){
+								"INNER JOIN projetos as proj on proj.idProjeto = licoes.idProjeto " +
+								"INNER JOIN assuntos as assu on assu.idAssunto = licoes.idAssunto " ,function(err,data){
 
 						// 'on duplicated key update idHistoria = values(idHistoria),' +
 						// 'idParticipante = values(idParticipante), idSprint = values(idSprint),' + 
@@ -808,13 +879,12 @@ models.sequelize.sync().then(function() {
 									// 		retorno[i].dia = dias[i];
 									// 	}
 									// }else{
-										console.log(dias[i]);
-										console.log(parseInt(getDia(data[j].dataInicio)));
-										console.log(parseInt(getDia(data[j].dataCriacao)));
-										console.log("--------------------");
-									if ((dias[i] === parseInt(getDia(data[j].dataInicio)) && 
-											parseInt(getDia(data[j].dataCriacao)) <= parseInt(getDia(data[j].dataInicio))) || 
-										(dias[i] <= parseInt(getDia(sprintInicio)) && data[j].dataInicio === null )) {//dataCriacao
+									// if ((dias[i] === parseInt(getDia(data[j].dataInicio)) && 
+									// 		parseInt(getDia(data[j].dataCriacao)) <= parseInt(getDia(data[j].dataInicio))) || 
+									// 	(dias[i] <= parseInt(getDia(sprintInicio)) && data[j].dataInicio === null )) {//dataCriacao
+									if (dias[i] === parseInt(getDia(data[j].dataCriacao)) || 
+										(dias[i] === parseInt(getDia(sprintInicio)) && 
+										parseInt(getDia(data[j].dataCriacao)) <= parseInt(getDia(sprintInicio)))) {//dataCriacao
 										// console.log(dias[i]);
 										// console.log(parseInt(getDia(data[j].dataInicio)));
 										// console.log("---------------");
@@ -824,6 +894,16 @@ models.sequelize.sync().then(function() {
 										if (retorno[i].estimativa === undefined) {
 											retorno[i].estimativa = 0;
 										}
+										// if (parseInt(getDia(data[j].dataCriacao)) > 9) {
+										// 	console.log("dia atual",dias[i]);
+										// 	console.log("dia inicio",parseInt(getDia(data[j].dataInicio)));
+										// 	console.log("dia criacao", parseInt(getDia(data[j].dataCriacao)));
+										// 	console.log("sprint inicio", parseInt(getDia(sprintInicio)));
+										// 	console.log("estimativa total",retorno[i].estimativa);
+										// 	console.log("estimativa atividade",data[j].duracao);
+										// 	console.log("--------------------");
+
+										// };
 										retorno[i].dia = dias[i];
 										retorno[i].estimativa += data[j].duracao;
 									};
